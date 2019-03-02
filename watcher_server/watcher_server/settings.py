@@ -49,7 +49,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'watcher_camera.urls'
+ROOT_URLCONF = 'watcher_server.urls'
 
 TEMPLATES = [
     {
@@ -67,7 +67,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'watcher_camera.wsgi.application'
+WSGI_APPLICATION = 'watcher_server.wsgi.application'
 
 
 # Database
