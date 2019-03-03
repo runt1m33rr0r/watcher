@@ -1,0 +1,6 @@
+.sidebar-wrapper {
+  min-height: calc(100vh - 48px);
+  max-height: calc(100vh - 48px);
+  overflow-y: scroll;
+  overflow-x: hidden;
+}

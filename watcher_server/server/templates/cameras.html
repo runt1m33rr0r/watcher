@@ -6,7 +6,26 @@
 {% endblock %}
 
 {% block content %}
-    <section id="page">
+    <section class="container-fluid" id="wrapper">
+        <section class="row">
+            <section class="sidebar-wrapper col col-sm-4 col-md-2 col-lg-2 sidebar bg-dark">
+                <nav class="nav navbar-dark bg-dark flex-column">
+                    <li class="nav-item dropdown">
+                        <button class="btn dropdown-toggle shadow-none text-light" href="#" data-toggle="dropdown">Dropdown</button>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item " href="#">Action</a>
+                            <a class="dropdown-item" href="#">Another action</a>
+                            <a class="dropdown-item" href="#">Something else here</a>
+                        </div>
+                    </li>
+                </nav>
+            </section>
             
+            <div class="mt-4 ml-4 col">
+                <h1>Simple Sidebar</h1>
+                <p>The starting state of the menu will appear collapsed on smaller screens, and will appear non-collapsed on larger screens. When toggled using the button below, the menu will change.</p>
+                <p>Make sure to keep all page content within the <code>#page-content-wrapper</code>. The top navbar is optional, and just for demonstration. Just create an element with the <code>#menu-toggle</code> ID which will toggle the menu when clicked.</p>
+            </div>
+        </section>
     </section>
 {% endblock %}
