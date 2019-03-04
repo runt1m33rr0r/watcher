@@ -19,3 +19,7 @@ html, body {
 .nav-link {
   padding: .3rem 1rem;
 }
+
+#close-button {
+  margin-top: 0.5rem;
+}
