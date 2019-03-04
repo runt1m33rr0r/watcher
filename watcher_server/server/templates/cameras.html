@@ -2,7 +2,7 @@
 
 {% block css %}
     {% load static %}
-    <link rel="stylesheet" href="{% static "cameras.css" %}">
+    <link rel="stylesheet" href="{% static "styles/cameras.css" %}">
 {% endblock %}
 
 {% block content %}
@@ -35,21 +35,6 @@
 {% endblock %}
 
 {% block scripts %}
-    <script>
-        $("#open-button").css("display", "none");
-
-        $("#close-button").click(function(e) {
-            e.preventDefault();
-
-            $("#sidebar").css("display", "none");
-            $("#open-button").css("display", "inline-block");
-        });
-
-        $("#open-button").click(function(e) {
-            e.preventDefault();
-
-            $("#sidebar").css("display", "inline-block");
-            $("#open-button").css("display", "none");
-        });
-    </script>
+    {% load static %}
+    <script src="{% static "scripts/cameras.js" %}"></script>
 {% endblock %}

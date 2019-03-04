@@ -1,11 +1,8 @@
-html, body {
-  height: 100%;
-}
-
-#content {
-  padding-top: 56px;
-  height: 100%;
-  background-color: #f5f5f5;
+.sidebar-wrapper {
+  min-height: calc(100vh - 48px);
+  max-height: calc(100vh - 48px);
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
 
 .item {
