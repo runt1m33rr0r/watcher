@@ -8,15 +8,16 @@
 {% block content %}
     <section class="container-fluid" id="wrapper">
         <section class="row">
-            <section class="sidebar-wrapper col col-sm-4 col-md-2 col-lg-2 sidebar bg-dark">
-                <nav class="nav navbar-dark bg-dark flex-column">
-                    <li class="nav-item dropdown">
-                        <button class="btn dropdown-toggle shadow-none text-light" href="#" data-toggle="dropdown">Dropdown</button>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item " href="#">Action</a>
-                            <a class="dropdown-item" href="#">Another action</a>
-                            <a class="dropdown-item" href="#">Something else here</a>
-                        </div>
+            <section class="sidebar-wrapper col col-sm-4 col-md-2 col-lg-2 sidebar">
+                <nav class="nav flex-column">
+                    <li class="nav-item item">
+                        <a class="nav-link font-weight-bold text-dark" href="#">item</a>
+                    </li>
+                    <li class="nav-item subitem">
+                        <a class="nav-link text-secondary" href="#">item</a>
+                    </li>
+                    <li class="nav-item subitem">
+                        <a class="nav-link text-secondary" href="#">item</a>
                     </li>
                 </nav>
             </section>
