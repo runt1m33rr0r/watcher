@@ -1,8 +1,11 @@
-.sidebar-wrapper {
-  min-height: calc(100vh - 48px);
-  max-height: calc(100vh - 48px);
+#sidebar {
+  min-height: calc(100vh - 56px);
   overflow-y: scroll;
   overflow-x: hidden;
+}
+
+#close-button {
+  margin-top: 0.5rem;
 }
 
 .item {
@@ -15,8 +18,4 @@
 
 .nav-link {
   padding: .3rem 1rem;
-}
-
-#close-button {
-  margin-top: 0.5rem;
 }
