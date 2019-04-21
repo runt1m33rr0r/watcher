@@ -2,11 +2,11 @@
 
 {% block css %}
     {% load static %}
-    <link rel="stylesheet" href="{% static "login.css" %}">
+    <link rel="stylesheet" href="{% static "styles/login.css" %}">
 {% endblock %}
 
 {% block content %}
-    <article class="text-center" id="page">
+    <section class="text-center d-flex flex-column justify-content-center align-items-center" id="page"> 
         <form class="form-signin">
             <h1 class="h3 mb-3 font-weight-normal">Sign in</h1>
             <label for="userInput" class="sr-only">User name</label>
@@ -15,5 +15,5 @@
             <input type="password" id="inputPassword" class="form-control" placeholder="Password" required="">
             <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
         </form>
-    </article>
+    </section>
 {% endblock %}

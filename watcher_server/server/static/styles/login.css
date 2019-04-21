@@ -1,20 +1,15 @@
 #page {
   height: 100%;
-  display: flex;
-  align-items: center;
+  width: 100%;
 }
 
 .form-signin {
-  width: 100%;
-  max-width: 330px;
+  min-width: 300px;
   padding: 15px;
-  margin: auto;
 }
-  
+
 .form-signin .form-control {
-  position: relative;
   box-sizing: border-box;
-  height: auto;
   padding: 10px;
   font-size: 16px;
 }
