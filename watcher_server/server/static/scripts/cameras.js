@@ -1,15 +1,11 @@
-$("#open-button").css("display", "none");
+var open = false;
 
-$("#close-button").click(function(e) {
-    e.preventDefault();
-
-    $("#sidebar").css("display", "none");
-    $("#open-button").css("display", "inline-block");
-});
-
-$("#open-button").click(function(e) {
-    e.preventDefault();
-
-    $("#sidebar").css("display", "inline-block");
-    $("#open-button").css("display", "none");
+$("#content").click(function(e) {
+    if (open) {
+        $("#sidebar").addClass("open");
+        open = false;
+    } else {
+        $("#sidebar").removeClass("open");
+        open = true;
+    }
 });
