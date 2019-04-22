@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block css %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static "styles/register.css" %}">
+{% endblock %}
+
+{% block content %}
+    <section class="text-center d-flex flex-column justify-content-center align-items-center" id="page"> 
+        <form class="form-signin was-validated" action="/register" method="post">
+            {% csrf_token %}
+            <h1 class="h3 mb-3 font-weight-normal">Register</h1>
+            <label for="userInput" class="sr-only">User name</label>
+            <input name="username" type="text" id="userInput" class="form-control is-invalid" placeholder="User name" required="" autofocus="">
+            <label for="inputPassword" class="sr-only">Password</label>
+            <input name="password" type="password" id="inputPassword" class="form-control is-invalid" placeholder="Password" required="">
+            <label for="repeatPassword" class="sr-only">Password</label>
+            <input type="password" id="repeatPassword" class="form-control is-invalid" placeholder="Repeat password" required="">
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
+        </form>
+    </section>
+{% endblock %}
