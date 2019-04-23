@@ -1,18 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="02e39af7-9f9a-4682-9ab9-6e6082a55b52" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/watcher.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/watcher_server/server/static/styles/register.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/watcher_server/server/templates/register.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/watcher_server/server/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/watcher_server/server/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/watcher_server/server/templates/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/watcher_server/server/templates/login.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/watcher_server/server/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/watcher_server/server/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/watcher_server/server/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/watcher_server/server/views.py" afterDir="false" />
-    </list>
+    <list default="true" id="02e39af7-9f9a-4682-9ab9-6e6082a55b52" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -97,7 +86,7 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="100" />
     <option name="y" value="47" />
     <option name="width" value="1400" />
@@ -190,8 +179,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="27" width="1600" height="873" extended-state="7" />
-    <editor active="true" />
+    <frame x="0" y="27" width="1600" height="873" extended-state="6" />
     <layout>
       <window_info id="Favorites" side_tool="true" />
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.1851617" />

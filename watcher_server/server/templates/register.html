@@ -6,17 +6,26 @@
 {% endblock %}
 
 {% block content %}
-    <section class="text-center d-flex flex-column justify-content-center align-items-center" id="page"> 
-        <form class="form-signin was-validated" action="/register" method="post">
+    <section class="d-flex flex-column justify-content-center align-items-center" id="page"> 
+        <form class="form-signin needs-validation" action="/register" method="post">
             {% csrf_token %}
-            <h1 class="h3 mb-3 font-weight-normal">Register</h1>
+            <h1 class="text-center h3 mb-3 font-weight-normal">Register</h1>
+
             <label for="userInput" class="sr-only">User name</label>
-            <input name="username" type="text" id="userInput" class="form-control is-invalid" placeholder="User name" required="" autofocus="">
+            <input name="username" type="text" id="userInput" class="form-control" placeholder="User name" required="" autofocus="">
+
             <label for="inputPassword" class="sr-only">Password</label>
-            <input name="password" type="password" id="inputPassword" class="form-control is-invalid" placeholder="Password" required="">
+            <input name="password" type="password" id="inputPassword" class="form-control" placeholder="Password" required="">
+
             <label for="repeatPassword" class="sr-only">Password</label>
-            <input type="password" id="repeatPassword" class="form-control is-invalid" placeholder="Repeat password" required="">
+            <input type="password" id="repeatPassword" class="form-control" placeholder="Repeat password" required="">
+
             <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
         </form>
     </section>
+{% endblock %}
+
+{% block scripts %}
+    {% load static %}
+    <script src="{% static "scripts/register.js" %}"></script>
 {% endblock %}

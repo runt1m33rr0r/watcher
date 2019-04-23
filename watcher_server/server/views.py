@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.contrib.auth.models import User
 from django.http import HttpResponse
+from django.db.utils import IntegrityError
 
 
 def index(request):
@@ -13,11 +14,12 @@ def login(request):
 
 def register(request):
     if request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        user = User.objects.create_user(username=username, email=None, password=password)
-        user.save()
-
-        print(User.objects.get(username='d'))
+        try:
+            username = request.POST.get('username')
+            password = request.POST.get('password')
+            user = User.objects.create_user(username=username, email=None, password=password)
+            user.save()
+        except IntegrityError:
+            print('user already exists')
 
     return render(request, 'register.html')
