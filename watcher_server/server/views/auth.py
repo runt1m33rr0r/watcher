@@ -1,12 +1,8 @@
-from django.shortcuts import render, redirect
-from django.contrib.auth.models import User
-from django.http import HttpResponse
 from django.db.utils import IntegrityError
 from django.contrib.auth import authenticate, login as django_login, logout as django_logout
-
-
-def index(request):
-    return render(request, 'cameras.html')
+from django.contrib.auth.models import User
+from django.shortcuts import render, redirect
+from .main import index
 
 
 def login(request):
