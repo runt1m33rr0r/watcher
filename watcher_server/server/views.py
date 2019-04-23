@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.http import HttpResponse
 from django.db.utils import IntegrityError
-from django.contrib.auth import authenticate, login as django_login
+from django.contrib.auth import authenticate, login as django_login, logout as django_logout
 
 
 def index(request):
@@ -25,6 +25,12 @@ def login(request):
             return render(request, 'login.html', context)
 
     return render(request, 'login.html')
+
+
+def logout(request):
+    django_logout(request)
+
+    return redirect(index)
 
 
 def register(request):

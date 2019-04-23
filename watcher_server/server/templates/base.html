@@ -32,13 +32,23 @@
                         <a class="nav-link disabled" href="#">Disabled</a>
                     </li>
                 </ul>
+                <ul class="navbar-nav">
+                    {% if user.is_authenticated %}
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" data-toggle="dropdown">{{ user.get_username }}</a>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <a class="dropdown-item" href="/logout">Log out</a>
+                            </div>
+                        </li>
+                    {% endif %}
+                </ul>
             </div>
         </nav>
 
         <section id="main">
             {% if error %}
                 <div class="alert alert-danger error-message" role="alert">
-                    {{message}}
+                    {{ message }}
                 </div>
             {% endif %}
             {% block content %}{% endblock %}
