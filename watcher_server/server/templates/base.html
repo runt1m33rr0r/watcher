@@ -36,6 +36,11 @@
         </nav>
 
         <section id="main">
+            {% if error %}
+                <div class="alert alert-danger error-message" role="alert">
+                    {{message}}
+                </div>
+            {% endif %}
             {% block content %}{% endblock %}
         </section>
         
