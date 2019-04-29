@@ -1,6 +1,5 @@
 #person {
     padding-top: 1rem;
-    padding-bottom: 1rem;
 }
 
 #fileImage {
@@ -9,6 +8,14 @@
 
 #imageForm {
     margin-top: 1rem;
+}
+
+#personImages:last-child {
+    padding-bottom: 1rem;
+}
+
+#personImages {
+    padding-top: 1rem;
 }
 
 .carousel-item {
