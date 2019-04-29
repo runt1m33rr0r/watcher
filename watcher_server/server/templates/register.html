@@ -6,8 +6,8 @@
 {% endblock %}
 
 {% block content %}
-    <section class="d-flex flex-column justify-content-center align-items-center" id="page"> 
-        <form class="form-signin needs-validation" action="/register" method="post">
+    <section class="d-flex flex-column" id="page"> 
+        <form class="form-signin needs-validation center-flex-item" action="/register" method="post">
             {% csrf_token %}
             <h1 class="text-center h3 mb-3 font-weight-normal">Register</h1>
 

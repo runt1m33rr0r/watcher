@@ -14,3 +14,7 @@ html, body {
   text-align: center;
   width: 100%;
 }
+
+.center-flex-item {
+  margin: auto;
+}

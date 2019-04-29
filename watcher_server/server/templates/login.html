@@ -6,8 +6,8 @@
 {% endblock %}
 
 {% block content %}
-    <section class="text-center d-flex flex-column justify-content-center align-items-center" id="page"> 
-        <form class="form-signin was-validated" action="/login" method="post">
+    <section class="text-center d-flex flex-column" id="page"> 
+        <form class="form-signin was-validated center-flex-item" action="/login" method="post">
             {% csrf_token %}
             <h1 class="h3 mb-3 font-weight-normal">Sign in</h1>
             <label for="userInput" class="sr-only">User name</label>
