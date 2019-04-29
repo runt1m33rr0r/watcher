@@ -55,7 +55,7 @@
     $("form").on("submit", function(ev) {
         if (!usernameValid || !passwordValid) {
             ev.preventDefault();
-            event.stopPropagation();
+            ev.stopPropagation();
         }
     });
 })();
