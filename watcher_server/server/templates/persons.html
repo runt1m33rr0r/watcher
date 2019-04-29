@@ -21,11 +21,11 @@
 {% endblock %}
 
 {% block page_content %}
-<section id="person" class="d-flex w-100 h-100">
-    <section class="center-flex-item">
+<section id="person" class="d-flex flex-row flex-wrap w-100 h-100">
+    <section id="imageFormContainer" class="center-flex-item">
         <img src="https://static.cdprojektred.com/thewitcher.com/media/wallpapers/witcher3/full/witcher3_en_wallpaper_the_witcher_3_wild_hunt_ciri_meditating_1920x1200_1446715311.png" class="d-block w-100" id="fileImage">
 
-        <form method="post" id="imageForm">
+        <form id="imageForm" method="post">
             <div class="custom-file">
                 <input type="file" class="custom-file-input" id="imageInput" required>
                 <label class="custom-file-label" for="imageInput">Choose image...</label>
