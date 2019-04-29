@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block css %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static "styles/sidebar.css" %}">
+    {% block sidebar_css %}{% endblock %}
+{% endblock %}
+
+{% block content %}
+    <section class="container-fluid">
+        <section class="row" >
+            <section class="col" id="sidebar">
+                {% block sidebar_content %}{% endblock %}
+            </section>
+            
+            <section class="col" id="content">
+                {% block page_content %}{% endblock %}
+            </section>
+        </section>
+    </section>
+{% endblock %}
+
+{% block scripts %}
+    {% load static %}
+    <script src="{% static "scripts/sidebar.js" %}"></script>
+    {% block sidebar_scripts %}{% endblock %}
+{% endblock %}
