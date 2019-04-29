@@ -21,17 +21,19 @@
 {% endblock %}
 
 {% block page_content %}
-<section id="person" class="d-flex flex-column w-100 h-100">
-    <img src="https://static.cdprojektred.com/thewitcher.com/media/wallpapers/witcher3/full/witcher3_en_wallpaper_the_witcher_3_wild_hunt_ciri_meditating_1920x1200_1446715311.png" class="d-block w-100 center-flex-item" id="fileImage">
+<section id="person" class="d-flex w-100 h-100">
+    <section class="center-flex-item">
+        <img src="https://static.cdprojektred.com/thewitcher.com/media/wallpapers/witcher3/full/witcher3_en_wallpaper_the_witcher_3_wild_hunt_ciri_meditating_1920x1200_1446715311.png" class="d-block w-100" id="fileImage">
 
-    <form method="post" id="imageForm" class="center-flex-item">
-        <div class="custom-file">
-            <input type="file" class="custom-file-input" id="imageInput" required>
-            <label class="custom-file-label" for="imageInput">Choose image...</label>
-            <div class="invalid-feedback">Please choose a valid file!</div>
-        </div>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Add image</button>
-    </form>
+        <form method="post" id="imageForm">
+            <div class="custom-file">
+                <input type="file" class="custom-file-input" id="imageInput" required>
+                <label class="custom-file-label" for="imageInput">Choose image...</label>
+                <div class="invalid-feedback">Please choose a valid file!</div>
+            </div>
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Add image</button>
+        </form>
+    </section>
 
     <div id="personImages" class="carousel slide center-flex-item" data-ride="carousel">
         <ol class="carousel-indicators">
