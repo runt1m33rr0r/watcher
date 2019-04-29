@@ -35,3 +35,7 @@
         position: relative;
     }
 }
+
+.sidebar-search {
+    margin-top: 1rem;
+}

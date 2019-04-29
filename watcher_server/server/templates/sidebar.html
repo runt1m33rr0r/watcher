@@ -10,7 +10,12 @@
     <section class="container-fluid">
         <section class="row" >
             <section class="col" id="sidebar">
-                {% block sidebar_content %}{% endblock %}
+                <nav class="nav flex-column" id="sidebar-items">
+                    <li class="nav-item item sidebar-search">
+                        <input type="text" class="form-control" placeholder="Search...">
+                    </li>
+                    {% block sidebar_content %}{% endblock %}
+                </nav>
             </section>
             
             <section class="col" id="content">
