@@ -23,6 +23,12 @@
     overflow: hidden;
 }
 
+.carousel-item a {
+    position: absolute;
+    bottom: 1em;
+    left: 1em;
+}
+
 @media (min-width: 800px) {
     #personImages {
         width: 30rem;
