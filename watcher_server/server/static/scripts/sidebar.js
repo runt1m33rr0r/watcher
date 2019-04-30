@@ -3,16 +3,18 @@
 
     var open = true;
 
-    var element = document.getElementById('content');
-    var swipeDetector = new Hammer(element);
-    swipeDetector.on("swipeleft", function() {
+    var leftElement = document.getElementById('sidebar');
+    var swipeLeftDetector = new Hammer(leftElement);
+    swipeLeftDetector.on("swipeleft", function() {
         if (open) {
             $("#sidebar").addClass("open");
             open = false;
         }
     });
 
-    swipeDetector.on("swiperight", function() {
+    var rightElement = document.getElementById('content');
+    var swipeRightDetector = new Hammer(rightElement);
+    swipeRightDetector.on("swiperight", function() {
         if (!open) {
             $("#sidebar").removeClass("open");
             open = true;
