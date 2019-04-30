@@ -3,11 +3,17 @@
 
     var open = false;
 
-    $("#content").click(function(e) {
+    var element = document.getElementById('content');
+    var swipeDetector = new Hammer(element);
+    swipeDetector.on("swipeleft", function() {
         if (open) {
             $("#sidebar").addClass("open");
             open = false;
-        } else {
+        }
+    });
+
+    swipeDetector.on("swiperight", function() {
+        if (!open) {
             $("#sidebar").removeClass("open");
             open = true;
         }
