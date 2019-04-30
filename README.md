@@ -10,3 +10,4 @@
 7. page for system status - number of cameras, number of persons, number of found persons, etc.
 8. camera software with gui - almost done
 9. maybe password changing
+10. maybe recognition from image taken from camera or file

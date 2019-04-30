@@ -1,7 +1,7 @@
 (function() {
     'use strict';
 
-    var open = false;
+    var open = true;
 
     var element = document.getElementById('content');
     var swipeDetector = new Hammer(element);
