@@ -7,3 +7,7 @@ def cameras(request):
 
 def persons(request):
     return render(request, 'persons.html')
+
+
+def detections(request):
+    return render(request, 'detections.html')

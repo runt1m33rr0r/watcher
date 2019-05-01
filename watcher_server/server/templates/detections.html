@@ -1,0 +1,84 @@
+{% extends "sidebar.html" %}
+
+{% block sidebar_css %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static "styles/detections.css" %}">
+{% endblock %}
+
+{% block sidebar_content %}
+    <li class="nav-item">
+        <a class="nav-link font-weight-bold text-dark" href="#">item</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link font-weight-bold text-dark" href="#">item</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link font-weight-bold text-dark" href="#">item</a>
+    </li>
+{% endblock %}
+
+{% block page_content %}
+    <nav id="topNav">
+        <ul class="pagination justify-content-center">
+            <li class="page-item disabled">
+                <a class="page-link" href="#" tabindex="-1">Previous</a>
+            </li>
+            <li class="page-item active">
+                <a class="page-link" href="#">1</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="#">2</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="#">3</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="#">Next</a>
+            </li>
+        </ul>
+    </nav>
+
+    <section class="d-flex flex-column">
+        <div class="card mb-3 center-flex-item">
+            <img src="https://s2.gaming-cdn.com/images/products/268/screenshot/the-witcher-3-wild-hunt-wallpaper-5.jpg" class="card-img-top">
+            <div class="card-body">
+                <h5 class="card-title">Name</h5>
+                <p class="card-text"><small class="text-muted">Detected on ...</small></p>
+            </div>
+        </div>
+        <div class="card mb-3 center-flex-item">
+            <img src="https://s2.gaming-cdn.com/images/products/268/screenshot/the-witcher-3-wild-hunt-wallpaper-5.jpg" class="card-img-top">
+            <div class="card-body">
+                <h5 class="card-title">Name</h5>
+                <p class="card-text"><small class="text-muted">Detected on ...</small></p>
+            </div>
+        </div>
+        <div class="card mb-3 center-flex-item">
+            <img src="https://s2.gaming-cdn.com/images/products/268/screenshot/the-witcher-3-wild-hunt-wallpaper-5.jpg" class="card-img-top">
+            <div class="card-body">
+                <h5 class="card-title">Name</h5>
+                <p class="card-text"><small class="text-muted">Detected on ...</small></p>
+            </div>
+        </div>
+
+        <nav>
+            <ul class="pagination justify-content-center">
+                <li class="page-item disabled">
+                    <a class="page-link" href="#" tabindex="-1">Previous</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="#">1</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="#">2</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="#">3</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="#">Next</a>
+                </li>
+            </ul>
+        </nav>
+    </section>
+{% endblock %}
