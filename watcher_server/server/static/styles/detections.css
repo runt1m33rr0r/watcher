@@ -3,5 +3,11 @@
 }
 
 .card {
-    width: 80%;
+    width: 100%;
+}
+
+@media (min-width: 800px) {
+    .card {
+        width: 80%;
+    }
 }
