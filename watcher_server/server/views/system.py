@@ -15,3 +15,7 @@ def detections(request):
 
 def verified(request):
     return render(request, 'verified.html')
+
+
+def recognition(request):
+    return render(request, 'recognition.html')

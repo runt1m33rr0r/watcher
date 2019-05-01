@@ -12,4 +12,4 @@
 9. page with unverified detections - almost done
 10. page with verified detections - almost done
 11. maybe password changing
-12. maybe recognition from image taken from camera or file
+12. maybe recognition from image taken from camera or file - almost done

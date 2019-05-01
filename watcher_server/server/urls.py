@@ -10,5 +10,6 @@ urlpatterns = [
     path('cameras', views.cameras, name='cameras'),
     path('persons', views.persons, name='persons'),
     path('detections', views.detections, name='detections'),
-    path('verified', views.verified, name="verified")
+    path('verified', views.verified, name="verified"),
+    path('recognition', views.recognition, name="recognition")
 ]
