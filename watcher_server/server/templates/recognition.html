@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block css %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static "styles/recognition.css" %}">
+{% endblock %}
+
+{% block content %}
+    <section class="text-center d-flex flex-column h-100">
+        <form class="form-signin was-validated center-flex-item" id="imageForm">
+            {% csrf_token %}
+            <h1 class="h3 mb-3 mt-1 font-weight-normal">Send image for recognition</h1>
+
+            <img class="d-block w-100 mb-1" id="fileImage" src="">
+
+            <div class="custom-file mb-1">
+                <input type="file" class="custom-file-input" id="imageInput" required>
+                <label class="custom-file-label" for="imageInput">Choose image...</label>
+                <div class="invalid-feedback">Please choose a valid file!</div>
+            </div>
+            <button class="btn btn-lg btn-primary btn-block mb-1 center-flex-item" type="submit">Send</button>
+        </form>
+    </section>
+{% endblock %}
+
+{% block scripts %}
+    {% load static %}
+    <script src="{% static "scripts/image-input.js" %}"></script>
+{% endblock %}

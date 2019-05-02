@@ -1,13 +1,21 @@
 (function() {
     'use strict';
 
-    var open = false;
+    var open = true;
 
-    $("#content").click(function(e) {
+    var leftElement = document.getElementById('sidebar');
+    var swipeLeftDetector = new Hammer(leftElement);
+    swipeLeftDetector.on("swipeleft", function() {
         if (open) {
             $("#sidebar").addClass("open");
             open = false;
-        } else {
+        }
+    });
+
+    var rightElement = document.getElementById('content');
+    var swipeRightDetector = new Hammer(rightElement);
+    swipeRightDetector.on("swiperight", function() {
+        if (!open) {
             $("#sidebar").removeClass("open");
             open = true;
         }
@@ -16,7 +24,7 @@
     $(".sidebar-search input").on("input", function() {
         var searchedVal = $(this).val().toLowerCase();
 
-        $.each($("#sidebar-items .nav-link"), function() {
+        $.each($("#sidebarItems .nav-item .nav-link"), function() {
             var currentVal = $(this).text().toLowerCase();
 
             if (!currentVal.includes(searchedVal)) {

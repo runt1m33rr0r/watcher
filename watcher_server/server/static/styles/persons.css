@@ -1,40 +1,49 @@
-#person {
+#person:first-child {
     padding-top: 1rem;
 }
 
 #fileImage {
     max-width: 20rem;
+    max-height: 40rem;
 }
 
 #imageForm {
     margin-top: 1rem;
 }
 
-#personImages:last-child {
+#imagesContainer {
+    height: 15rem;
+    padding-top: 1rem;
     padding-bottom: 1rem;
 }
 
-#personImages {
-    padding-top: 1rem;
+#images {
+    height: 100%;
+    width: 20rem;
+    overflow-x: hidden;
+    overflow-y: scroll;
 }
 
-.carousel-item {
-    max-height: 20rem;
-    overflow: hidden;
+.image {
+    position: relative;
 }
 
-.carousel-item a {
+.image a {
     position: absolute;
     bottom: 1em;
     left: 1em;
 }
 
 @media (min-width: 800px) {
-    #personImages {
-        width: 30rem;
+    #person:first-child {
+        padding-top: 0rem;
     }
-    
-    .carousel-item {
-        max-height: 30rem;
+
+    #imagesContainer {
+        height: 100%;
+    }
+
+    #images {
+        width: 30rem;
     }
 }

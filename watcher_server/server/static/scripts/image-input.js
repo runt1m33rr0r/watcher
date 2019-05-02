@@ -2,14 +2,14 @@
     'use strict';
 
     var fileImage = $("#fileImage");
-    if ($("fileImage").attr("src") == "") {
+    if (fileImage.attr("src") == "") {
         fileImage.hide();
     }
     
     var validImageTypes = ['image/jpeg', 'image/png'];
     var isFileValid = false;
 
-    $("#imageForm div input").on("input", function() {
+    $("#imageInput").on("input", function() {
         var file = $(this).prop('files')[0];
         var fileType = file["type"];
 
