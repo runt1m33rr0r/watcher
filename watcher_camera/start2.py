@@ -6,7 +6,7 @@ import time
 def check_images(images, known_encoding):
     batch_of_face_locations = face_recognition.batch_face_locations(
             images, 
-            number_of_times_to_upsample=0, 
+            number_of_times_to_upsample=0,
             batch_size=len(images))
 
     for frame_number_in_batch, face_locations in enumerate(batch_of_face_locations):
@@ -26,7 +26,7 @@ def start_capturing():
     frames = []
     frame_count = 0
 
-    image = face_recognition.load_image_file("images/ciri1.jpg")
+    image = face_recognition.load_image_file('images/ciri/ciri1.jpg')
     encoding = face_recognition.face_encodings(image)
 
     video_capture = cv2.VideoCapture(0)
