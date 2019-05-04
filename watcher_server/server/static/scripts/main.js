@@ -18,7 +18,6 @@
                 return false;
             } else {
                 dropdown.removeClass("active");
-                return false;
             }
         });
     });
