@@ -67,7 +67,11 @@
 
         <section id="main">
             {% if error %}
-                <div class="alert alert-danger error-message" role="alert">
+                <div class="alert alert-danger message" role="alert">
+                    {{ message }}
+                </div>
+            {% elif success %}
+                <div class="alert alert-success message" role="alert">
                     {{ message }}
                 </div>
             {% endif %}

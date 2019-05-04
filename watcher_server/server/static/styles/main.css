@@ -10,7 +10,7 @@ html, body {
   overflow: auto;
 }
 
-.error-message {
+.message {
   position: fixed;
   text-align: center;
   width: 100%;

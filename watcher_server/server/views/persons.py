@@ -23,6 +23,9 @@ def add_person(request):
             person.save()
             image.save()
             person.images.add(image)
+
+            ctx = {'success': True, 'message': 'Created person!'}
+            return render(request, 'add-person.html', context=ctx)
         else:
             ctx = {'error': True, 'message': 'The form is invalid!'}
             return render(request, 'add-person.html', context=ctx)
