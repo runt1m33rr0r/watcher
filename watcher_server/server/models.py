@@ -9,3 +9,19 @@ class Camera(models.Model):
 class City(models.Model):
     name = models.CharField(max_length=100, unique=True)
     cameras = models.ManyToManyField(Camera)
+
+
+class Image(models.Model):
+    file = models.ImageField()
+
+
+class Person(models.Model):
+    name = models.CharField(max_length=100)
+    images = models.ManyToManyField(Image)
+
+
+class Detection(models.Model):
+    date = models.CharField(max_length=100, unique=True)
+    city = models.ForeignKey(City, on_delete=models.CASCADE)
+    camera = models.ForeignKey(Camera, on_delete=models.CASCADE)
+    image = models.ImageField()

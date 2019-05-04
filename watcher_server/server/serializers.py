@@ -1,4 +1,4 @@
-from .models import Camera, City
+from .models import Camera, City, Detection
 from rest_framework import serializers
 
 
@@ -12,3 +12,9 @@ class CitySerializer(serializers.ModelSerializer):
     class Meta:
         model = City
         fields = ('name',)
+
+
+class DetectionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Detection
+        fields = ('date', 'city', 'camera', 'image')
