@@ -8,4 +8,18 @@
             $(this).removeClass("active");
         }
     });
+
+    $.each($(".dropdown"), function() {
+        var dropdown = $(this)
+        
+        $.each(dropdown.find(".dropdown-menu .dropdown-item"), function() {
+            if ($(this).attr("href") == window.location.pathname) {
+                dropdown.addClass("active");
+                return false;
+            } else {
+                dropdown.removeClass("active");
+                return false;
+            }
+        });
+    });
 })();
