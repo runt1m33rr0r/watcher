@@ -1,6 +1,8 @@
 import cv2
 import threading
 from time import sleep
+from processing import process_video_frame
+from api import register_camera
 
 
 class Camera(object):
@@ -14,6 +16,8 @@ class Camera(object):
 
             while Camera.get_frame() is None:
                 sleep(0.1)
+
+            register_camera()
 
     @staticmethod
     def get_frame():
@@ -32,9 +36,5 @@ class Camera(object):
             if not success:
                 continue
 
-            ret, jpeg = cv2.imencode('.jpg', image)
+            Camera._frame = process_video_frame(image)
 
-            if not ret:
-                continue
-
-            Camera._frame = jpeg.tobytes()
