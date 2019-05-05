@@ -26,3 +26,7 @@ class Detection(models.Model):
     city = models.ForeignKey(City, on_delete=models.CASCADE)
     camera = models.ForeignKey(Camera, on_delete=models.CASCADE)
     image = models.ImageField()
+
+
+class ClassifierCreationDate(models.Model):
+    date = models.DateTimeField(auto_now=True)

@@ -13,6 +13,7 @@ from watchdog.events import LoggingEventHandler
 from time import sleep
 from .classifier import save_classifier
 from .classifier import classifier_path
+from ..models import ClassifierCreationDate
 
 
 def resize_image(image):
@@ -78,6 +79,15 @@ class FileEvent(LoggingEventHandler):
         folder_modified = True
 
 
+def save_date():
+    date = None
+    if ClassifierCreationDate.objects.filter().exists():
+        date = ClassifierCreationDate.objects.get()
+    else:
+        date = ClassifierCreationDate()
+    date.save()
+
+
 def training_thread():
     global folder_modified
 
@@ -96,6 +106,7 @@ def training_thread():
             classifier = train(os.path.abspath('./media'))
             
             save_classifier(classifier)
+            save_date()
             
             folder_modified = False
         
