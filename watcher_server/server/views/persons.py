@@ -1,9 +1,10 @@
+import os
 from django.shortcuts import render, redirect
 from django.core.exceptions import ValidationError
 from django.http import JsonResponse
-import os
 from ..forms import AddPersonForm, UploadImageForm
 from ..models import Person, Image
+from ..utils.storage import set_save_location, delete_file
 
 
 def add_person(request):
@@ -12,8 +13,8 @@ def add_person(request):
 
         if form.is_valid():
             data = form.cleaned_data
-            image = Image(image_file=data['image'])
             person = Person(name=data['name'])
+            image = Image(image_file=data['image'])
 
             try:
                 image.full_clean()
@@ -23,6 +24,7 @@ def add_person(request):
                 return render(request, 'add-person.html', context=ctx)
             
             person.save()
+            set_save_location(person.name)
             image.save()
             person.images.add(image)
 
@@ -76,8 +78,8 @@ def person_images(request, person_id):
 
         if form.is_valid():
             data = form.cleaned_data
-            image = Image(image_file=data['image'])
             person = Person.objects.get(id=person_id)
+            image = Image(image_file=data['image'])
 
             try:
                 image.full_clean()
@@ -86,6 +88,7 @@ def person_images(request, person_id):
                 ctx['message'] = e
                 return render(request, 'persons.html', context=ctx)
 
+            set_save_location(person.name)
             image.save()
             person.images.add(image)
             
@@ -103,7 +106,7 @@ def person_image(request, person_id, image_id):
         person = Person.objects.get(id=person_id)
         image = person.images.get(id=image_id)
         
-        os.remove(image.image_file.path)
+        delete_file(image.image_file.path)
         image.delete()
 
         return JsonResponse({ 'success': True, 'message': 'Image deleted!' })
