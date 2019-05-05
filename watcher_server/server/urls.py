@@ -1,5 +1,4 @@
 from django.urls import path
-
 from . import views
 
 urlpatterns = [
@@ -10,6 +9,7 @@ urlpatterns = [
     path('cameras', views.cameras, name='cameras'),
     path('cameras/register', views.register_camera, name='register_camera'),
     path('persons', views.persons, name='persons'),
+    path('persons/<int:person_id>/', views.persons, name='person'),
     path('persons/add', views.add_person, name='add_person'),
     path('detections', views.detections, name='detections'),
     path('verified', views.verified, name="verified"),

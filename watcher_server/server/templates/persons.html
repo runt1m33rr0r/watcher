@@ -6,54 +6,45 @@
 {% endblock %}
  
 {% block sidebar_content %}
-    <li class="nav-item item">
-        <a class="nav-link text-dark text-bold font-weight-bold" href="#">Pesho</a>
-    </li>
-    <li class="nav-item item">
-        <a class="nav-link text-dark" href="#">Gosho</a>
-    </li>
-    <li class="nav-item item">
-        <a class="nav-link text-dark" href="#">Kolio</a>
-    </li>
-    <li class="nav-item item">
-        <a class="nav-link text-dark" href="#">Koce</a>
-    </li>
+    {% for person in persons %}
+        {% if person.id == chosen.id %}
+            <li class="nav-item item">
+                <a class="nav-link text-dark text-bold font-weight-bold" href="/persons/{{ person.id }}">{{ person.name }}</a>
+            </li>
+        {% else %}
+            <li class="nav-item item">
+                <a class="nav-link text-dark" href="/persons/{{ person.id }}">{{ person.name }}</a>
+            </li>
+        {% endif %}
+    {% endfor %}
 {% endblock %}
 
 {% block page_content %}
 <section id="person" class="d-flex flex-row flex-wrap w-100 h-100">
     <section id="imageFormContainer" class="center-flex-item">
-        <img src="" class="d-block w-100 mt-1" id="fileImage">
+        {% if chosen %}
+            <img src="" class="d-block w-100 mt-1" id="fileImage">
 
-        <form id="imageForm" method="post">
-            {% csrf_token %}
-            <div class="custom-file mb-1">
-                <input type="file" class="custom-file-input" id="imageInput" required>
-                <label class="custom-file-label" for="imageInput">Choose image...</label>
-                <div class="invalid-feedback">Please choose a valid file!</div>
-            </div>
-            <button class="btn btn-lg btn-primary btn-block mb-1" type="submit">Add image</button>
-        </form>
+            <form id="imageForm" method="post" enctype="multipart/form-data" action="/persons/{{ chosen.id }}/">
+                {% csrf_token %}
+                <div class="custom-file mb-1">
+                    <input type="file" name="image" class="custom-file-input" id="imageInput" required>
+                    <label class="custom-file-label" for="imageInput">Choose image...</label>
+                    <div class="invalid-feedback">Please choose a valid file!</div>
+                </div>
+                <button class="btn btn-lg btn-primary btn-block mb-1" type="submit">Add image</button>
+            </form>
+        {% endif %}
     </section>
 
     <section id="imagesContainer" class="center-flex-item">
         <div id="images">
-            <div class="image">
-                <img class="w-100" src="https://static.cdprojektred.com/thewitcher.com/media/wallpapers/witcher3/full/witcher3_en_wallpaper_the_witcher_3_wild_hunt_geralt_with_trophies_2560x1600_1449484679.png">
-                <a href="#" class="btn btn-secondary btn-lg active" role="button">Delete</a>
-            </div>
-            <div class="image">
-                <img class="w-100" src="https://static.cdprojektred.com/thewitcher.com/media/wallpapers/witcher3/full/witcher3_en_wallpaper_the_witcher_3_wild_hunt_geralt_with_trophies_2560x1600_1449484679.png">
-                <a href="#" class="btn btn-secondary btn-lg active" role="button">Delete</a>
-            </div>
-            <div class="image">
-                <img class="w-100" src="https://static.cdprojektred.com/thewitcher.com/media/wallpapers/witcher3/full/witcher3_en_wallpaper_the_witcher_3_wild_hunt_geralt_with_trophies_2560x1600_1449484679.png">
-                <a href="#" class="btn btn-secondary btn-lg active" role="button">Delete</a>
-            </div>
-            <div class="image">
-                <img class="w-100" src="https://static.cdprojektred.com/thewitcher.com/media/wallpapers/witcher3/full/witcher3_en_wallpaper_the_witcher_3_wild_hunt_geralt_with_trophies_2560x1600_1449484679.png">
-                <a href="#" class="btn btn-secondary btn-lg active" role="button">Delete</a>
-            </div>
+            {% for image in images %}
+                <div class="image">
+                    <img class="w-100" src="{{ image.image_file.url }}">
+                    <a href="#" class="btn btn-secondary btn-lg active" role="button">Delete</a>
+                </div>
+            {% endfor %}
         </div>
     </section>
 </section>
