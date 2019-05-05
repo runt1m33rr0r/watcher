@@ -12,6 +12,7 @@ from watchdog.observers import Observer
 from watchdog.events import LoggingEventHandler
 from time import sleep
 from .classifier import save_classifier
+from .classifier import classifier_path
 
 
 def resize_image(image):
@@ -78,14 +79,18 @@ class FileEvent(LoggingEventHandler):
 
 
 def training_thread():
+    global folder_modified
+
     event_handler = FileEvent()
     observer = Observer()
     path = os.path.abspath('./media')
     observer.schedule(event_handler, path, recursive=True)
     observer.start()
 
+    if os.path.isfile(classifier_path):
+        folder_modified = False
+
     while True:
-        global folder_modified
         if folder_modified:
             print('training')
             classifier = train(os.path.abspath('./media'))
