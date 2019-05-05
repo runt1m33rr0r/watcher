@@ -28,7 +28,7 @@
     position: relative;
 }
 
-.image a {
+.image button {
     position: absolute;
     bottom: 1em;
     left: 1em;

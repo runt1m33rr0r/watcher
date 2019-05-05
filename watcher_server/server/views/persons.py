@@ -1,5 +1,7 @@
 from django.shortcuts import render, redirect
 from django.core.exceptions import ValidationError
+from django.http import JsonResponse
+import os
 from ..forms import AddPersonForm, UploadImageForm
 from ..models import Person, Image
 
@@ -58,11 +60,18 @@ def persons(request, person_id=None):
                 return redirect(f'/persons/{persons.first().id}')
 
         return render(request, 'persons.html', ctx)
-    elif request.method == 'POST':
-        ctx = {}
+
+
+def person_images(request, person_id):
+    if request.method == 'POST':
         persons = Person.objects.all()
         chosen = Person.objects.get(id=person_id)
         images = chosen.images.all()
+        ctx = {
+            'persons': persons,
+            'chosen': chosen,
+            'images': images
+        }
         form = UploadImageForm(request.POST, request.FILES)
 
         if form.is_valid():
@@ -73,31 +82,28 @@ def persons(request, person_id=None):
             try:
                 image.full_clean()
             except ValidationError as e:
-                ctx = {
-                    'persons': persons,
-                    'chosen': chosen,
-                    'images': images,
-                    'error': True, 'message': e
-                }
+                ctx['error'] = True
+                ctx['message'] = e
                 return render(request, 'persons.html', context=ctx)
 
             image.save()
             person.images.add(image)
             
-            ctx = {
-                'persons': persons,
-                'chosen': chosen,
-                'images': images,
-                'success': True, 
-                'message': 'Added image!'
-            }
+            ctx['success'] = True
+            ctx['message'] = 'Added image!'
         else:
-            ctx = {
-                'persons': persons,
-                'chosen': chosen,
-                'images': images,
-                'error': True, 
-                'message': 'The data provided is invalid!'
-            }
+            ctx['error'] = True
+            ctx['message'] = 'The data provided is invalid!'
         
         return render(request, 'persons.html', context=ctx)
+
+
+def person_image(request, person_id, image_id):
+    if request.method == 'DELETE':
+        person = Person.objects.get(id=person_id)
+        image = person.images.get(id=image_id)
+        
+        os.remove(image.image_file.path)
+        image.delete()
+
+        return JsonResponse({ 'success': True, 'message': 'Image deleted!' })
