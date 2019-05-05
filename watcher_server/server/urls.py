@@ -18,5 +18,7 @@ urlpatterns = [
     
     path('detections', views.detections, name='detections'),
     path('verified', views.verified, name="verified"),
-    path('recognition', views.recognition, name="recognition")
+    path('recognition', views.recognition, name='recognition'),
+
+    path('classifier', views.get_classifier_file, name='get_classifier')
 ]

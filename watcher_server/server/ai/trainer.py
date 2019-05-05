@@ -2,7 +2,6 @@ import math
 from sklearn import neighbors
 import os
 import os.path
-import pickle
 from PIL import Image
 import face_recognition
 from face_recognition.face_recognition_cli import image_files_in_folder
@@ -12,8 +11,7 @@ import threading
 from watchdog.observers import Observer
 from watchdog.events import LoggingEventHandler
 from time import sleep
-import pickle
-from watcher_server.settings import BASE_DIR
+from .classifier import save_classifier
 
 
 def resize_image(image):
@@ -91,16 +89,8 @@ def training_thread():
         if folder_modified:
             print('training')
             classifier = train(os.path.abspath('./media'))
-            classifier_dir = os.path.join(BASE_DIR, 'classifier')
-            classifier_path = f'{classifier_dir}/knn_model.clf'
-
-            if not os.path.isdir(classifier_dir):
-                os.mkdir(classifier_dir)
-
-            with open(classifier_path, 'wb') as f:
-                pickle.dump(classifier, f)
-
-            print('saved classifier')
+            
+            save_classifier(classifier)
             
             folder_modified = False
         
