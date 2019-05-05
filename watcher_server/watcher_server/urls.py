@@ -18,7 +18,7 @@ from django.urls import path, include
 from django.contrib.staticfiles.urls import static
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from .settings import MEDIA_ROOT, MEDIA_URL
-from server.ai.trainer import start_training_thread
+
 
 urlpatterns = [
     path('', include('server.urls')),
@@ -27,5 +27,3 @@ urlpatterns = [
 
 urlpatterns += staticfiles_urlpatterns()
 urlpatterns += static(MEDIA_URL, document_root=MEDIA_ROOT)
-
-start_training_thread()

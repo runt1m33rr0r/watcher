@@ -116,3 +116,5 @@ def training_thread():
 def start_training_thread():
     thread = threading.Thread(target=training_thread)
     thread.start()
+
+    print('thread started')

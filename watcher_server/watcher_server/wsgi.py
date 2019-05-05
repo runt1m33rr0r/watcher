@@ -11,6 +11,10 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
+from server.ai.trainer import start_training_thread
+
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'watcher_server.settings')
 
 application = get_wsgi_application()
+
+start_training_thread()
