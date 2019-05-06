@@ -13,8 +13,8 @@ classifier_path = os.path.join(classifier_dir, 'classifier.clf')
 classifier_date_path = os.path.join(classifier_dir, 'date.pkl')
 
 
-def alert(names, frame):
-    print(names)
+def alert(name, frame):
+    print(name)
 
 
 def register_camera():

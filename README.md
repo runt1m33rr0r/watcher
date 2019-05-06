@@ -3,7 +3,7 @@
 # todo
 1. registration, login, logout: done
 2. user authorization(permissions)
-3. page with camera list and monitoring: almost done
+3. page with camera list and monitoring: done
 4. page for adding persons: done
 5. notification on detection
 6. page for system settings - train model, accuracy threshold for cameras
