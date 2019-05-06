@@ -17,15 +17,16 @@ class Image(models.Model):
 
 
 class Person(models.Model):
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=100, unique=True)
     images = models.ManyToManyField(Image)
 
 
 class Detection(models.Model):
-    date = models.CharField(max_length=100)
     city = models.ForeignKey(City, on_delete=models.CASCADE)
     camera = models.ForeignKey(Camera, on_delete=models.CASCADE)
-    image = models.ImageField()
+    person = models.ForeignKey(Person, on_delete=models.CASCADE)
+    image = models.ForeignKey(Image, on_delete=models.CASCADE)
+    date = models.DateTimeField(auto_now_add=True)
 
 
 class ClassifierCreationDate(models.Model):

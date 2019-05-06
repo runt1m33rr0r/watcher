@@ -5,9 +5,13 @@ import pickle
 from datetime import datetime
 
 
+camera_name = 'camera4'
+camera_city = 'Pernik'
 base_url = 'http://localhost:8000/'
 classifier_url = f'{base_url}classifier'
 camera_register_url = f'{base_url}cameras/register'
+add_detection_url = f'{base_url}detections/add'
+
 classifier_date = f'{base_url}classifier/date'
 classifier_dir = os.path.abspath('./classifier/')
 classifier_path = os.path.join(classifier_dir, 'classifier.clf')
@@ -17,10 +21,11 @@ alerts = {}
 
 
 def alert(name, frame):
+    should_alert = False
+
     if not alerts.get(name):
         alerts[name] = datetime.utcnow()
-        
-        print(name)
+        should_alert = True
     else:
         now = datetime.utcnow()
         last_alerted = alerts[name]
@@ -28,12 +33,15 @@ def alert(name, frame):
         
         if diff.seconds / 60 > alert_timeout_minutes:
             alerts[name] = now
-
-            print(name)
+            should_alert = True
+        
+    if should_alert:
+        data = { 'name': name, 'image': frame, 'camera_name': camera_name, 'city': camera_city }
+        requests.post(url=add_detection_url, data=data)
 
 
 def register_camera():
-    data = { 'city': 'Pernik', 'name': 'camera4', 'url': 'http://localhost:5000/feed5' }
+    data = { 'city': camera_city, 'name': camera_name, 'url': 'http://localhost:5000/feed' }
     requests.post(url=camera_register_url, json=data)
 
 

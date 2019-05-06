@@ -4,7 +4,8 @@ from django.http import HttpResponse, JsonResponse
 from django.views.static import serve
 from django.views.decorators.csrf import csrf_exempt
 from ..ai.classifier import classifier_path
-from ..models import ClassifierCreationDate, City
+from ..models import ClassifierCreationDate, City, Detection, Person, Camera, Image
+from ..utils.storage import set_save_location, DETECTIONS_FOLDER_NAME
 
 
 def cameras(request):
@@ -79,3 +80,24 @@ def get_classifier_date(request):
             return JsonResponse({ 'date': date.date })
         else:
             return JsonResponse({ 'date': None })
+
+
+@csrf_exempt
+def add_detection(request):
+    if request.method == 'POST':
+        person_name = request.POST['name']
+        person = Person.objects.get(name=person_name)
+        camera_name = request.POST['camera_name']
+        camera = Camera.objects.get(name=camera_name)
+        city_name = request.POST['city']
+        city = City.objects.get(name=city_name)
+        image_file = request.POST['image']
+        image = Image(image_file=image_file)
+
+        set_save_location(f'{DETECTIONS_FOLDER_NAME}')
+        image.save()
+
+        detection = Detection(city=city, camera=camera, person=person, image=image)
+        detection.save()
+
+        return HttpResponse({})

@@ -38,6 +38,9 @@ class ImageProcessor(object):
             cv2.putText(frame, name, (left + 6, bottom - 6), font, 1.0, (255, 255, 255), 1)
 
     def predict(self, image):
+        if not self.classifier:
+            return []
+
         image = cv2.resize(image, (0, 0), fx=0.5, fy=0.5)
         converted_frame = image[:, :, ::-1]
         face_locations = face_recognition.face_locations(image, model='cnn')
