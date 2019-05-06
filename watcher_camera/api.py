@@ -36,8 +36,8 @@ def alert(name, frame):
             should_alert = True
         
     if should_alert:
-        data = { 'name': name, 'image': frame, 'camera_name': camera_name, 'city': camera_city }
-        requests.post(url=add_detection_url, data=data)
+        data = { 'name': name, 'camera_name': camera_name, 'city': camera_city }
+        requests.post(url=add_detection_url, data=data, files={'image': ('image.jpg', frame)})
 
 
 def register_camera():
@@ -51,6 +51,8 @@ def create_classifier_dir():
 
 
 def download_classifier():
+    print('pulled new classifier')
+    
     create_classifier_dir()
 
     response = urllib.request.urlopen(classifier_url)

@@ -1,8 +1,14 @@
 import os
+import io
+import base64
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
 from django.views.static import serve
 from django.views.decorators.csrf import csrf_exempt
+from django.core.files import File
+from rest_framework.parsers import JSONParser, FileUploadParser, MultiPartParser
+from rest_framework.decorators import api_view
+from rest_framework.decorators import parser_classes
 from ..ai.classifier import classifier_path
 from ..models import ClassifierCreationDate, City, Detection, Person, Camera, Image
 from ..utils.storage import set_save_location, DETECTIONS_FOLDER_NAME
@@ -91,7 +97,7 @@ def add_detection(request):
         camera = Camera.objects.get(name=camera_name)
         city_name = request.POST['city']
         city = City.objects.get(name=city_name)
-        image_file = request.POST['image']
+        image_file = request.FILES['image']
         image = Image(image_file=image_file)
 
         set_save_location(f'{DETECTIONS_FOLDER_NAME}')
