@@ -2,6 +2,7 @@ import urllib.request
 import os
 import requests
 import pickle
+from datetime import datetime
 
 
 base_url = 'http://localhost:8000/'
@@ -11,10 +12,24 @@ classifier_date = f'{base_url}classifier/date'
 classifier_dir = os.path.abspath('./classifier/')
 classifier_path = os.path.join(classifier_dir, 'classifier.clf')
 classifier_date_path = os.path.join(classifier_dir, 'date.pkl')
+alert_timeout_minutes = 3
+alerts = {}
 
 
 def alert(name, frame):
-    print(name)
+    if not alerts.get(name):
+        alerts[name] = datetime.utcnow()
+        
+        print(name)
+    else:
+        now = datetime.utcnow()
+        last_alerted = alerts[name]
+        diff = now - last_alerted
+        
+        if diff.seconds / 60 > alert_timeout_minutes:
+            alerts[name] = now
+
+            print(name)
 
 
 def register_camera():
