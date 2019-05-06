@@ -4,7 +4,7 @@ from django.core.exceptions import ValidationError
 from django.http import JsonResponse
 from ..forms import AddPersonForm, UploadImageForm
 from ..models import Person, Image
-from ..utils.storage import set_save_location, delete_file
+from ..utils.storage import set_save_location, delete_file, PERSONS_FOLDER_NAME
 
 
 def add_person(request):
@@ -24,7 +24,7 @@ def add_person(request):
                 return render(request, 'add-person.html', context=ctx)
             
             person.save()
-            set_save_location(person.name)
+            set_save_location(f'{PERSONS_FOLDER_NAME}/{person.name}')
             image.save()
             person.images.add(image)
 
@@ -88,7 +88,7 @@ def person_images(request, person_id):
                 ctx['message'] = e
                 return render(request, 'persons.html', context=ctx)
 
-            set_save_location(person.name)
+            set_save_location(f'{PERSONS_FOLDER_NAME}/{person.name}')
             image.save()
             person.images.add(image)
             

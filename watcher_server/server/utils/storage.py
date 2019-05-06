@@ -1,6 +1,8 @@
 import os
 
 
+PERSONS_FOLDER_NAME = 'persons'
+DETECTIONS_FOLDER_NAME = 'detections'
 save_location = ''
 
 

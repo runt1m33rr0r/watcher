@@ -14,6 +14,7 @@ from time import sleep
 from .classifier import save_classifier
 from .classifier import classifier_path
 from ..models import ClassifierCreationDate
+from ..utils.storage import PERSONS_FOLDER_NAME
 
 
 def resize_image(image):
@@ -93,17 +94,14 @@ def training_thread():
 
     event_handler = FileEvent()
     observer = Observer()
-    path = os.path.abspath('./media')
+    path = os.path.abspath(f'./media/{PERSONS_FOLDER_NAME}')
     observer.schedule(event_handler, path, recursive=True)
     observer.start()
-
-    if os.path.isfile(classifier_path):
-        folder_modified = False
 
     while True:
         if folder_modified:
             print('training')
-            classifier = train(os.path.abspath('./media'))
+            classifier = train(os.path.abspath(f'./media/{PERSONS_FOLDER_NAME}'))
             
             save_classifier(classifier)
             save_date()
