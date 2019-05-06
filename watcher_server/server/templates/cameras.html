@@ -6,19 +6,32 @@
 {% endblock %}
 
 {% block sidebar_content %}
-    <li class="nav-item item">
-        <a class="nav-link font-weight-bold text-dark" href="#">item</a>
-    </li>
-    <li class="nav-item subitem">
-        <a class="nav-link text-secondary" href="#">item</a>
-    </li>
-    <li class="nav-item subitem">
-        <a class="nav-link text-secondary" href="#">item</a>
-    </li>
+    {% for city in cities %}
+        {% if city.id == chosen_city.id %}
+            <li class="nav-item item">
+                <a class="nav-link font-weight-bold text-dark" href="/cameras/{{ city.id }}">{{ city.name }}</a>
+            </li>
+            {% for camera in cameras %}
+                {% if camera.id == chosen_camera.id %}
+                    <li class="nav-item subitem">
+                        <a class="nav-link text-dark" href="/cameras/{{ city.id }}/{{ camera.id }}">{{ camera.name }}</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item subitem">
+                        <a class="nav-link text-secondary" href="/cameras/{{ city.id }}/{{ camera.id }}">{{ camera.name }}</a>
+                    </li>
+                {% endif %}
+            {% endfor %}
+        {% else %}
+            <li class="nav-item item">
+                <a class="nav-link text-dark" href="/cameras/{{ city.id }}">{{ city.name }}</a>
+            </li>
+        {% endif %}
+    {% endfor %}
 {% endblock %}
 
 {% block page_content %}
-    <h1>Simple Sidebar</h1>
-    <p>The starting state of the menu will appear collapsed on smaller screens, and will appear non-collapsed on larger screens. When toggled using the button below, the menu will change.</p>
-    <p>Make sure to keep all page content within the <code>#page-content-wrapper</code>. The top navbar is optional, and just for demonstration. Just create an element with the <code>#menu-toggle</code> ID which will toggle the menu when clicked.</p>
+    <section class="d-flex flex-row w-100 h-100">
+        <img src="{{ chosen_camera.url }}" class="center-flex-item">
+    </section>
 {% endblock %}

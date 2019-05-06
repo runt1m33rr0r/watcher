@@ -18,7 +18,7 @@ def alert(names, frame):
 
 
 def register_camera():
-    data = { 'city': 'Pernik', 'name': 'camera1', 'url': 'http://localhost:5000/feed' }
+    data = { 'city': 'Pernik', 'name': 'camera4', 'url': 'http://localhost:5000/feed5' }
     requests.post(url=camera_register_url, json=data)
 
 

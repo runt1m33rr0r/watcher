@@ -8,6 +8,8 @@ urlpatterns = [
     path('logout', views.logout, name='logout'),
 
     path('cameras', views.cameras, name='cameras'),
+    path('cameras/<int:city_id>/', views.city, name='city'),
+    path('cameras/<int:city_id>/<int:camera_id>', views.camera, name='camera'),
     path('cameras/register', views.register_camera, name='register_camera'),
 
     path('persons', views.persons, name='persons'),
