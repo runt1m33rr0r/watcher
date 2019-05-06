@@ -4,8 +4,10 @@ import requests
 import pickle
 
 
-classifier_url = 'http://localhost:8000/classifier'
-classifier_date = 'http://localhost:8000/classifier/date'
+base_url = 'http://localhost:8000/'
+classifier_url = f'{base_url}classifier'
+camera_register_url = f'{base_url}cameras/register'
+classifier_date = f'{base_url}classifier/date'
 classifier_dir = os.path.abspath('./classifier/')
 classifier_path = os.path.join(classifier_dir, 'classifier.clf')
 classifier_date_path = os.path.join(classifier_dir, 'date.pkl')
@@ -16,7 +18,8 @@ def alert(names, frame):
 
 
 def register_camera():
-    pass
+    data = { 'city': 'Pernik', 'name': 'camera1', 'url': 'http://localhost:5000/feed' }
+    requests.post(url=camera_register_url, json=data)
 
 
 def create_classifier_dir():

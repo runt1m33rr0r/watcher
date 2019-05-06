@@ -10,6 +10,7 @@ from ..models import City
 def register_camera(request):
     if request.method == 'POST':
         data = JSONParser().parse(request)
+        print(data)
         city = City.objects.filter(name=data.get('city'))
 
         if city.exists():
