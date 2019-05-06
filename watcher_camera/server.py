@@ -1,16 +1,17 @@
 from flask import Flask, Response
 from camera import Camera
 from time import sleep
+from api import get_classifier_date
 
 
 app = Flask(__name__)
-camera = Camera()
+Camera.initialize()
 
 
 def gen():
     while True:
         sleep(0.1)
-        yield (b'--frame\r\n'b'Content-Type: image/jpeg\r\n\r\n' + camera.get_frame() + b'\r\n\r\n')
+        yield (b'--frame\r\n'b'Content-Type: image/jpeg\r\n\r\n' + Camera.get_frame() + b'\r\n\r\n')
 
 
 @app.route('/feed')

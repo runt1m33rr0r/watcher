@@ -2,14 +2,16 @@ import cv2
 import threading
 from time import sleep
 from processing import process_video_frame
-from api import register_camera
+from api import register_camera, update_classifier
 
 
 class Camera(object):
     _frame = None
     _thread = None
 
-    def __init__(self):
+
+    @staticmethod
+    def initialize():
         if Camera._thread is None:
             Camera._thread = threading.Thread(target=Camera._run_camera)
             Camera._thread.start()
@@ -18,6 +20,8 @@ class Camera(object):
                 sleep(0.1)
 
             register_camera()
+            update_classifier()
+        
 
     @staticmethod
     def get_frame():
