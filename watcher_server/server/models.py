@@ -27,6 +27,7 @@ class Detection(models.Model):
     person = models.ForeignKey(Person, on_delete=models.CASCADE)
     image = models.ForeignKey(Image, on_delete=models.CASCADE)
     date = models.DateTimeField(auto_now_add=True)
+    verified = models.BooleanField(default=False)
 
 
 class ClassifierCreationDate(models.Model):

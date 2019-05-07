@@ -19,7 +19,6 @@ urlpatterns = [
     path('persons/<int:person_id>/images/<int:image_id>', views.person_image, name='person_image'),
     
     path('detections', views.detections, name='detections'),
-    path('detections/add', views.add_detection, name='add_detection'),
     path('verified', views.verified, name="verified"),
     path('recognition', views.recognition, name='recognition'),
 

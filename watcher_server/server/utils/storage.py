@@ -16,6 +16,9 @@ def set_save_location(location):
 
 
 def delete_file(file_path):
+    if not os.path.isfile(file_path):
+        return
+
     dir_path = os.path.dirname(file_path)
 
     os.remove(file_path)

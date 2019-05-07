@@ -10,7 +10,7 @@ camera_city = 'Pernik'
 base_url = 'http://localhost:8000/'
 classifier_url = f'{base_url}classifier'
 camera_register_url = f'{base_url}cameras/register'
-add_detection_url = f'{base_url}detections/add'
+add_detection_url = f'{base_url}detections'
 
 classifier_date = f'{base_url}classifier/date'
 classifier_dir = os.path.abspath('./classifier/')

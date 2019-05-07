@@ -2,12 +2,13 @@
     margin-top: 1rem;
 }
 
-.card {
-    width: 100%;
+.card-columns {
+    column-count: 1;
+    width: 95%;
 }
 
 @media (min-width: 800px) {
-    .card {
-        width: 80%;
+    .card-columns {
+        column-count: 2;
     }
 }

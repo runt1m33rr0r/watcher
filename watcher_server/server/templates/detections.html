@@ -12,10 +12,6 @@
     </li>
 {% endblock %}
 
-{% block sidebar_bottom %}
-    <img class="align-self-end w-100" src="https://s2.gaming-cdn.com/images/products/268/screenshot/the-witcher-3-wild-hunt-wallpaper-5.jpg">
-{% endblock %}
-
 {% block page_content %}
     <div class="modal fade" id="imageModal" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -54,18 +50,19 @@
     </nav>
 
     <section class="d-flex flex-column">
-        <div class="card mb-3 center-flex-item">
-            <img src="https://s2.gaming-cdn.com/images/products/268/screenshot/the-witcher-3-wild-hunt-wallpaper-5.jpg" class="card-img-top">
-            <div class="card-body">
-                <h5 class="card-title">Name</h5>
-                <p class="card-text"><small class="text-muted">Detected on ...</small></p>
-                <a href="#" class="btn btn-primary" role="button">Accurate</a>
-                <a href="#" class="btn btn-secondary" role="button">False positive</a>
-            </div>
-            <div class="card-footer text-muted">
-                2 days ago
-            </div>
-        </div>
+        <div class="card-columns center-flex-item">
+            {% for detection in detections %}
+                <div class="card text-white bg-dark border-primary mb-3">
+                    <img class="card-img-top h-10" src="/media/{{ detection.image.image_file.name }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ detection.person.name }} in {{ detection.city.name }}</h5>
+                        <p class="card-text"><small class="text-muted">{{ detection.date }}</small></p>
+                        <button detection="{{ detection.id }}" class="btn btn-primary accurate-button">Accurate</button>
+                        <button detection="{{ detection.id }}" class="btn btn-secondary false-button">False positive</button>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>        
 
         <nav>
             <ul class="pagination justify-content-center">
@@ -87,4 +84,9 @@
             </ul>
         </nav>
     </section>
+{% endblock %}
+
+{% block sidebar_scripts %}
+    {% load static %}
+    <script src="{% static "scripts/detections.js" %}"></script>
 {% endblock %}
