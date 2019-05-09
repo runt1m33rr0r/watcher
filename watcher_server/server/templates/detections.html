@@ -3,6 +3,7 @@
 {% block sidebar_css %}
     {% load static %}
     <link rel="stylesheet" href="{% static "styles/detections.css" %}">
+    <link rel="stylesheet" href="{% static "styles/detections-list.css" %}">
 {% endblock %}
 
 {% block sidebar_content %}
@@ -52,8 +53,8 @@
     <section class="d-flex flex-column">
         <div class="card-columns center-flex-item">
             {% for detection in detections %}
-                <div class="card text-white bg-dark border-primary mb-3">
-                    <img class="card-img-top h-10" src="/media/{{ detection.image.image_file.name }}">
+                <div class="card text-white bg-dark border-primary">
+                    <img class="card-img-top" src="/media/{{ detection.image.image_file.name }}">
                     <div class="card-body">
                         <h5 class="card-title">{{ detection.person.name }} in {{ detection.city.name }}</h5>
                         <p class="card-text"><small class="text-muted">{{ detection.date }}</small></p>
@@ -89,4 +90,5 @@
 {% block sidebar_scripts %}
     {% load static %}
     <script src="{% static "scripts/detections.js" %}"></script>
+    <script src="{% static "scripts/detections-list.js" %}"></script>
 {% endblock %}

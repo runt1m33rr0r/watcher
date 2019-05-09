@@ -1,13 +1,3 @@
 #topNav {
     margin-top: 1rem;
 }
-
-.card {
-    width: 100%;
-}
-
-@media (min-width: 800px) {
-    .card {
-        width: 80%;
-    }
-}

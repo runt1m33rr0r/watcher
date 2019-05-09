@@ -3,6 +3,7 @@
 {% block sidebar_css %}
     {% load static %}
     <link rel="stylesheet" href="{% static "styles/verified.css" %}">
+    <link rel="stylesheet" href="{% static "styles/detections-list.css" %}">
 {% endblock %}
 
 {% block sidebar_content %}
@@ -39,15 +40,16 @@
     </nav>
 
     <section class="d-flex flex-column">
-        <div class="card mb-3 center-flex-item">
-            <img src="https://s2.gaming-cdn.com/images/products/268/screenshot/the-witcher-3-wild-hunt-wallpaper-5.jpg" class="card-img-top">
-            <div class="card-body">
-                <h5 class="card-title">Name</h5>
-                <p class="card-text"><small class="text-muted">Detected on ...</small></p>
-            </div>
-            <div class="card-footer text-muted">
-                2 days ago
-            </div>
+        <div class="card-columns center-flex-item">
+            {% for detection in detections %}
+                <div class="card text-white bg-dark border-primary">
+                    <img class="card-img-top" src="/media/{{ detection.image.image_file.name }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ detection.person.name }} in {{ detection.city.name }}</h5>
+                        <p class="card-text"><small class="text-muted">{{ detection.date }}</small></p>
+                    </div>
+                </div>
+            {% endfor %}
         </div>
 
         <nav>
@@ -70,4 +72,9 @@
             </ul>
         </nav>
     </section>
+{% endblock %}
+
+{% block sidebar_scripts %}
+    {% load static %}
+    <script src="{% static "scripts/detections-list.js" %}"></script>
 {% endblock %}

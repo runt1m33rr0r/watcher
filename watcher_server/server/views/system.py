@@ -93,7 +93,18 @@ def detections(request):
 
 
 def verified(request):
-    return render(request, 'verified.html')
+    if request.method == 'GET':
+        detections = Detection.objects.filter(verified=True)
+
+        return render(request, 'verified.html', context={ 'detections': detections })
+    elif request.method == 'POST':
+        id = JSONParser().parse(request)['id']
+        detection = Detection.objects.get(id=id)
+        detection.verified = True
+        detection.save()
+
+        return JsonResponse({ 'success': True })
+
 
 
 def recognition(request):

@@ -1,0 +1,10 @@
+.card-columns {
+    column-count: 1;
+    width: 95%;
+}
+
+@media (min-width: 800px) {
+    .card-columns {
+        column-count: 2;
+    }
+}
