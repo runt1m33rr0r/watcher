@@ -78,6 +78,10 @@ def get_detections(request, verified, render_page, person_id):
 
     ctx['elements'] = paginator.get_page(page)
 
+    if len(detections) == 0:
+        ctx['success'] = True
+        ctx['message'] = 'There are no detections here!'
+
     return render(request, render_page, context=ctx)
 
 
