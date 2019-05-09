@@ -40,7 +40,9 @@
         </div>
     {% endfor %}
 
-    {% include "pagination.html" %}
+    <nav class="mt-3">
+        {% include "pagination.html" %}
+    </nav>
 
     <section class="d-flex flex-column">
         <div class="card-columns center-flex-item">
@@ -58,7 +60,9 @@
         </div>        
     </section>
 
-    {% include "pagination.html" %}
+    <nav>
+        {% include "pagination.html" %}
+    </nav>
 {% endblock %}
 
 {% block sidebar_scripts %}

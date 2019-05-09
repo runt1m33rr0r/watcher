@@ -73,7 +73,6 @@ def get_detections(request, verified, render_page, person_id):
 
     paginator = Paginator(detections, 1)
     page = request.GET.get('page')
-    print(page)
     if not page:
         page = 1
 
