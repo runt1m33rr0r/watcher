@@ -6,6 +6,7 @@ from django.http import HttpResponse, JsonResponse
 from django.views.static import serve
 from django.db.models import F
 from django.views.decorators.csrf import csrf_exempt
+from django.core.paginator import Paginator
 from rest_framework.parsers import JSONParser
 from ..ai.classifier import classifier_path
 from ..models import ClassifierCreationDate, City, Detection, Person, Camera, Image
@@ -57,22 +58,34 @@ def camera(request, city_id, camera_id):
         return render(request, 'cameras.html', context=ctx)
 
 
+def get_detections(request, verified, render_page, person_id):
+    detections = Detection.objects.filter(verified=verified).order_by('person__name')
+    persons = detections.values(
+        'person_id',
+        name=F('person__name'), 
+        photo=F('person__images__image_file')).distinct()
+    ctx = { 'elements': detections, 'persons': persons }
+
+    if person_id:
+        detections = detections.filter(person_id=person_id)
+        ctx['elements'] = detections
+        ctx['chosen'] = person_id
+
+    paginator = Paginator(detections, 1)
+    page = request.GET.get('page')
+    print(page)
+    if not page:
+        page = 1
+
+    ctx['elements'] = paginator.get_page(page)
+
+    return render(request, render_page, context=ctx)
+
+
 @csrf_exempt
 def detections(request, person_id=None):
     if request.method == 'GET':
-        detections = Detection.objects.filter(verified=False)
-        persons = detections.values(
-            'person_id',
-            name=F('person__name'), 
-            photo=F('person__images__image_file')).distinct()
-        ctx = { 'detections': detections, 'persons': persons }
-
-        if person_id:
-            detections = detections.filter(person_id=person_id)
-            ctx['detections'] = detections
-            ctx['chosen'] = person_id
-
-        return render(request, 'detections.html', context=ctx)
+        return get_detections(request, False, 'detections.html', person_id)
     elif request.method == 'POST':
         person_name = request.POST['name']
         person = Person.objects.get(name=person_name)
@@ -105,16 +118,7 @@ def detections(request, person_id=None):
 
 def verified(request, person_id=None):
     if request.method == 'GET':
-        detections = Detection.objects.filter(verified=False)
-        persons = detections.values('person_id', name=F('person__name')).distinct()
-        ctx = { 'detections': detections, 'persons': persons }
-
-        if person_id:
-            detections = detections.filter(person_id=person_id)
-            ctx['detections'] = detections
-            ctx['chosen'] = person_id
-
-        return render(request, 'verified.html', context=ctx)
+        return get_detections(request, True, 'verified.html', person_id)
     elif request.method == 'POST':
         id = JSONParser().parse(request)['id']
         detection = Detection.objects.get(id=id)
@@ -122,7 +126,6 @@ def verified(request, person_id=None):
         detection.save()
 
         return JsonResponse({ 'success': True })
-
 
 
 def recognition(request):

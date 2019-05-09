@@ -2,7 +2,6 @@
 
 {% block sidebar_css %}
     {% load static %}
-    <link rel="stylesheet" href="{% static "styles/detections.css" %}">
     <link rel="stylesheet" href="{% static "styles/detections-list.css" %}">
 {% endblock %}
 
@@ -24,7 +23,7 @@
 
 {% block page_content %}
     {% for person in persons %}
-        <div class="modal fade" id="{{ person.name }}" tabindex="-1" role="dialog">
+        <div class="modal fade" id="{{ person.name }}" role="dialog">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -41,29 +40,11 @@
         </div>
     {% endfor %}
 
-    <nav id="topNav">
-        <ul class="pagination justify-content-center">
-            <li class="page-item disabled">
-                <a class="page-link" href="#" tabindex="-1">Previous</a>
-            </li>
-            <li class="page-item active">
-                <a class="page-link" href="#">1</a>
-            </li>
-            <li class="page-item">
-                <a class="page-link" href="#">2</a>
-            </li>
-            <li class="page-item">
-                <a class="page-link" href="#">3</a>
-            </li>
-            <li class="page-item">
-                <a class="page-link" href="#">Next</a>
-            </li>
-        </ul>
-    </nav>
+    {% include "pagination.html" %}
 
     <section class="d-flex flex-column">
         <div class="card-columns center-flex-item">
-            {% for detection in detections %}
+            {% for detection in elements %}
                 <div class="card text-white bg-dark border-primary">
                     <img class="card-img-top" src="/media/{{ detection.image.image_file.name }}">
                     <div class="card-body">
@@ -77,25 +58,7 @@
         </div>        
     </section>
 
-    <nav>
-        <ul class="pagination justify-content-center">
-            <li class="page-item disabled">
-                <a class="page-link" href="#" tabindex="-1">Previous</a>
-            </li>
-            <li class="page-item">
-                <a class="page-link" href="#">1</a>
-            </li>
-            <li class="page-item">
-                <a class="page-link" href="#">2</a>
-            </li>
-            <li class="page-item">
-                <a class="page-link" href="#">3</a>
-            </li>
-            <li class="page-item">
-                <a class="page-link" href="#">Next</a>
-            </li>
-        </ul>
-    </nav>
+    {% include "pagination.html" %}
 {% endblock %}
 
 {% block sidebar_scripts %}
