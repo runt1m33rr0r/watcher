@@ -7,9 +7,16 @@
 {% endblock %}
 
 {% block sidebar_content %}
+    <li class="nav-item">
+        <a id="allLink" class="nav-link text-dark" href="/detections">All</a>
+    </li>
     {% for person in persons %}
         <li class="nav-item d-flex flex-row justify-content-between">
-            <a class="nav-link font-weight-bold text-dark" href="#">{{ person.name }}</a>
+            {% if person.person_id == chosen %}
+                <a class="nav-link font-weight-bold text-dark" href="/detections/{{ person.person_id }}">{{ person.name }}</a>
+            {% else %}
+                <a class="nav-link text-dark" href="/detections/{{ person.person_id }}">{{ person.name }}</a>
+            {% endif %}
             <button type="button" class="btn btn-dark mt-1 mb-1" data-toggle="modal" data-target="#{{ person.name }}">Image</button>
         </li>
     {% endfor %}
@@ -27,7 +34,7 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <img class="w-100" src="media/{{ person.photo }}">
+                        <img class="w-100" src="/media/{{ person.photo }}">
                     </div>
                 </div>
             </div>

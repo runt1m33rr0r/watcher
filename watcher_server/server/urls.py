@@ -19,7 +19,9 @@ urlpatterns = [
     path('persons/<int:person_id>/images/<int:image_id>', views.person_image, name='person_image'),
     
     path('detections', views.detections, name='detections'),
-    path('verified', views.verified, name="verified"),
+    path('detections/<int:person_id>', views.detections, name='detections_by_id'),
+    path('verified', views.verified, name='verified'),
+    path('verified/<int:person_id>', views.verified, name='verified_by_id'),
     path('recognition', views.recognition, name='recognition'),
 
     path('classifier', views.get_classifier_file, name='get_classifier'),

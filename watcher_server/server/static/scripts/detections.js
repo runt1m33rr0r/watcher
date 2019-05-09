@@ -1,5 +1,9 @@
 (function() {
     'use strict';
+
+    if (window.location.pathname == "/detections") {
+        $("#allLink").addClass("font-weight-bold");
+    }
     
     $(".false-button").on("click", function() {
         $.ajax({

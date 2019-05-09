@@ -58,11 +58,19 @@ def camera(request, city_id, camera_id):
 
 
 @csrf_exempt
-def detections(request):
+def detections(request, person_id=None):
     if request.method == 'GET':
         detections = Detection.objects.filter(verified=False)
-        persons = detections.values(name=F('person__name'), photo=F('person__images__image_file')).distinct()
+        persons = detections.values(
+            'person_id',
+            name=F('person__name'), 
+            photo=F('person__images__image_file')).distinct()
         ctx = { 'detections': detections, 'persons': persons }
+
+        if person_id:
+            detections = detections.filter(person_id=person_id)
+            ctx['detections'] = detections
+            ctx['chosen'] = person_id
 
         return render(request, 'detections.html', context=ctx)
     elif request.method == 'POST':
@@ -95,11 +103,16 @@ def detections(request):
         return JsonResponse({ 'success': True })
 
 
-def verified(request):
+def verified(request, person_id=None):
     if request.method == 'GET':
-        detections = Detection.objects.filter(verified=True)
-        persons = detections.values(name=F('person__name')).distinct()
+        detections = Detection.objects.filter(verified=False)
+        persons = detections.values('person_id', name=F('person__name')).distinct()
         ctx = { 'detections': detections, 'persons': persons }
+
+        if person_id:
+            detections = detections.filter(person_id=person_id)
+            ctx['detections'] = detections
+            ctx['chosen'] = person_id
 
         return render(request, 'verified.html', context=ctx)
     elif request.method == 'POST':
