@@ -33,6 +33,7 @@
                     <div class="card-body">
                         <h5 class="card-title">{{ detection.person.name }} in {{ detection.city.name }}</h5>
                         <p class="card-text"><small class="text-muted">{{ detection.date }}</small></p>
+                        <button detection="{{ detection.id }}" class="btn btn-danger delete-button">Delete</button>
                     </div>
                 </div>
             {% endfor %}

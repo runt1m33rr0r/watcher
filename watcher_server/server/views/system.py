@@ -81,6 +81,19 @@ def get_detections(request, verified, render_page, person_id):
     return render(request, render_page, context=ctx)
 
 
+def delete_detection(request):
+    data = JSONParser().parse(request)
+    detection_id = data['id']
+
+    detection = Detection.objects.get(id=detection_id)
+    image = detection.image
+    detection.delete()
+    delete_file(image.image_file.path)
+    image.delete()
+
+    return JsonResponse({ 'success': True })
+
+
 @csrf_exempt
 def detections(request, person_id=None):
     if request.method == 'GET':
@@ -103,16 +116,7 @@ def detections(request, person_id=None):
 
         return JsonResponse({ 'success': True })
     elif request.method == 'DELETE':
-        data = JSONParser().parse(request)
-        detection_id = data['id']
-
-        detection = Detection.objects.get(id=detection_id)
-        image = detection.image
-        detection.delete()
-        delete_file(image.image_file.path)
-        image.delete()
-
-        return JsonResponse({ 'success': True })
+        return delete_detection(request)
 
 
 def verified(request, person_id=None):
@@ -125,6 +129,8 @@ def verified(request, person_id=None):
         detection.save()
 
         return JsonResponse({ 'success': True })
+    elif request.method == 'DELETE':
+        return delete_detection(request)
 
 
 def recognition(request):
