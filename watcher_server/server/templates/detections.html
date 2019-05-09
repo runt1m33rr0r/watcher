@@ -7,28 +7,32 @@
 {% endblock %}
 
 {% block sidebar_content %}
-    <li class="nav-item d-flex flex-row justify-content-between">
-        <a class="nav-link font-weight-bold text-dark" href="#">item</a>
-        <button type="button" class="btn btn-dark mt-1 mb-1" data-toggle="modal" data-target="#imageModal">Image</button>
-    </li>
+    {% for person in persons %}
+        <li class="nav-item d-flex flex-row justify-content-between">
+            <a class="nav-link font-weight-bold text-dark" href="#">{{ person.name }}</a>
+            <button type="button" class="btn btn-dark mt-1 mb-1" data-toggle="modal" data-target="#{{ person.name }}">Image</button>
+        </li>
+    {% endfor %}
 {% endblock %}
 
 {% block page_content %}
-    <div class="modal fade" id="imageModal" tabindex="-1" role="dialog">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Title</h5>
-                    <button type="button" class="close" data-dismiss="modal">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <img class="w-100" src="https://s2.gaming-cdn.com/images/products/268/screenshot/the-witcher-3-wild-hunt-wallpaper-5.jpg">
+    {% for person in persons %}
+        <div class="modal fade" id="{{ person.name }}" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">{{ person.name }}</h5>
+                        <button type="button" class="close" data-dismiss="modal">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <img class="w-100" src="media/{{ person.photo }}">
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    {% endfor %}
 
     <nav id="topNav">
         <ul class="pagination justify-content-center">
@@ -64,27 +68,27 @@
                 </div>
             {% endfor %}
         </div>        
-
-        <nav>
-            <ul class="pagination justify-content-center">
-                <li class="page-item disabled">
-                    <a class="page-link" href="#" tabindex="-1">Previous</a>
-                </li>
-                <li class="page-item">
-                    <a class="page-link" href="#">1</a>
-                </li>
-                <li class="page-item">
-                    <a class="page-link" href="#">2</a>
-                </li>
-                <li class="page-item">
-                    <a class="page-link" href="#">3</a>
-                </li>
-                <li class="page-item">
-                    <a class="page-link" href="#">Next</a>
-                </li>
-            </ul>
-        </nav>
     </section>
+
+    <nav>
+        <ul class="pagination justify-content-center">
+            <li class="page-item disabled">
+                <a class="page-link" href="#" tabindex="-1">Previous</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="#">1</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="#">2</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="#">3</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="#">Next</a>
+            </li>
+        </ul>
+    </nav>
 {% endblock %}
 
 {% block sidebar_scripts %}

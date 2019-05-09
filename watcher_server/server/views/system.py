@@ -4,6 +4,7 @@ import base64
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
 from django.views.static import serve
+from django.db.models import F
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.parsers import JSONParser
 from ..ai.classifier import classifier_path
@@ -60,8 +61,10 @@ def camera(request, city_id, camera_id):
 def detections(request):
     if request.method == 'GET':
         detections = Detection.objects.filter(verified=False)
+        persons = detections.values(name=F('person__name'), photo=F('person__images__image_file')).distinct()
+        ctx = { 'detections': detections, 'persons': persons }
 
-        return render(request, 'detections.html', context={ 'detections': detections })
+        return render(request, 'detections.html', context=ctx)
     elif request.method == 'POST':
         person_name = request.POST['name']
         person = Person.objects.get(name=person_name)
@@ -95,8 +98,10 @@ def detections(request):
 def verified(request):
     if request.method == 'GET':
         detections = Detection.objects.filter(verified=True)
+        persons = detections.values(name=F('person__name')).distinct()
+        ctx = { 'detections': detections, 'persons': persons }
 
-        return render(request, 'verified.html', context={ 'detections': detections })
+        return render(request, 'verified.html', context=ctx)
     elif request.method == 'POST':
         id = JSONParser().parse(request)['id']
         detection = Detection.objects.get(id=id)
