@@ -9,7 +9,7 @@
 6. page for system settings - train model, accuracy threshold for cameras
 7. maybe page for system status - number of cameras, number of persons, number of found persons, etc.
 8. camera software - almost done
-9. page with unverified detections - almost done
-10. page with verified detections - almost done
+9. page with unverified detections - done
+10. page with verified detections - done
 11. maybe password changing
-12. maybe recognition from image taken from camera or file - almost done
+12. recognition from image taken from camera or file - done
