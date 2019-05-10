@@ -8,15 +8,6 @@ import face_recognition
 UNKNOWN = 'unknown'
 
 
-def process_image(image):
-    image = Image.open(image)
-    image = image.convert('RGB')
-    new = BytesIO()
-    image.save(new, 'jpeg')
-
-    return new
-
-
 class ImageProcessor(object):
     def __init__(self):
         self.classifier = get_classifier()

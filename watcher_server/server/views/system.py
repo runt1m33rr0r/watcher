@@ -8,7 +8,8 @@ from django.db.models import F
 from django.views.decorators.csrf import csrf_exempt
 from django.core.paginator import Paginator
 from rest_framework.parsers import JSONParser
-from ..ai.classifier import classifier_path
+from ..forms import UploadImageForm
+from ..ai.classifier import classifier_path, ImageProcessor
 from ..models import ClassifierCreationDate, City, Detection, Person, Camera, Image
 from ..utils.storage import set_save_location, DETECTIONS_FOLDER_NAME, delete_file
 
@@ -138,7 +139,15 @@ def verified(request, person_id=None):
 
 
 def recognition(request):
-    return render(request, 'recognition.html')
+    if request.method == 'GET':
+        return render(request, 'recognition.html', context={ 'processed': '' })
+    elif request.method == 'POST':
+        image = request.FILES['image']
+        processor = ImageProcessor()
+        processed = processor.process_frame(image)
+        processed = base64.b64encode(processed).decode('utf-8')
+
+        return render(request, 'recognition.html', context={ 'processed': str(processed) })
 
 
 @csrf_exempt

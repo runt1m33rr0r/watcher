@@ -63,20 +63,6 @@ def train(train_path):
     return knn_clf
 
 
-def predict(image, knn_clf, distance_threshold=0.6):
-    face_locations = face_recognition.face_locations(image, model='cnn')
-
-    if len(face_locations) == 0:
-        return []
-
-    faces_encodings = face_recognition.face_encodings(image, known_face_locations=face_locations)
-
-    closest_distances = knn_clf.kneighbors(faces_encodings, n_neighbors=1)
-    are_matches = [closest_distances[0][i][0] <= distance_threshold for i in range(len(face_locations))]
-
-    return [(pred, loc) if rec else ("unknown", loc) for pred, loc, rec in zip(knn_clf.predict(faces_encodings), face_locations, are_matches)]
-
-
 folder_modified = True
 
 
