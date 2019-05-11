@@ -62,6 +62,11 @@ def persons(request, person_id=None):
                 return redirect(f'/persons/{persons.first().id}')
 
         return render(request, 'persons.html', ctx)
+    elif request.method == 'DELETE':
+        person = Person.objects.get(id=person_id)
+        person.delete()
+
+        return JsonResponse({ 'success': True, 'message': 'Person deleted!' })
 
 
 def person_images(request, person_id):

@@ -17,4 +17,18 @@
             }
         });
     });
+
+    $(".delete-person").on("click", function() {
+        $.ajax({
+            url: $(this).attr("url"),
+            method: "DELETE",
+            success: function(data) {
+                if (data.success == true) {
+                    location.reload();
+                } else {
+                    showErrorMessage(data.message);
+                }
+            }
+        });
+    });
 })();

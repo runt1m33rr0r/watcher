@@ -7,15 +7,14 @@
  
 {% block sidebar_content %}
     {% for person in persons %}
-        {% if person.id == chosen.id %}
-            <li class="nav-item item">
+        <li class="nav-item d-flex flex-row justify-content-between">
+            {% if person.id == chosen.id %}
                 <a class="nav-link text-dark text-bold font-weight-bold" href="/persons/{{ person.id }}">{{ person.name }}</a>
-            </li>
-        {% else %}
-            <li class="nav-item item">
+            {% else %}
                 <a class="nav-link text-dark" href="/persons/{{ person.id }}">{{ person.name }}</a>
-            </li>
-        {% endif %}
+            {% endif %}
+            <button url="/persons/{{ person.id }}" type="button" class="btn btn-dark mt-1 mb-1 delete-person">Delete</button>
+        </li>
     {% endfor %}
 {% endblock %}
 
