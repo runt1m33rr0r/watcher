@@ -12,6 +12,7 @@ from ..forms import UploadImageForm
 from ..ai.classifier import classifier_path, ImageProcessor
 from ..models import ClassifierCreationDate, City, Detection, Person, Camera, Image
 from ..utils.storage import set_save_location, DETECTIONS_FOLDER_NAME, delete_file
+from ..utils.detections_watcher import detected
 
 
 def cameras(request):
@@ -142,6 +143,8 @@ def detections(request, person_id=None):
 
         detection = Detection(city=city, camera=camera, person=person, image=image)
         detection.save()
+
+        detected(person_name, camera_name, city_name, f'detections/{person.id}')
 
         return JsonResponse({ 'success': True })
     elif request.method == 'DELETE':

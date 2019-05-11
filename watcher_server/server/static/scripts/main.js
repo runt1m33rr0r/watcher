@@ -54,6 +54,50 @@
 
     $("#errorMessage").hide();
     $("#successMessage").hide();
+
+    function notify(title, content) {
+        var notificationClone = $("#templateNotification").clone();
+        notificationClone.addClass("notification");
+        notificationClone.find(".toast-title").html(title);
+        var today = new Date();
+        var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+        notificationClone.find(".toast-time").html(time);
+        notificationClone.find(".toast-body").html(content);
+
+        $("#notifications").append(notificationClone);
+        $(".notification").toast("show");
+    }
+
+    function initSocket() {
+        return new WebSocket("ws://" + window.location.host + "/notifications");
+    }
+
+    var notificationSocket = initSocket();
+
+    notificationSocket.onopen = function() {
+        console.log("opened");
+    }
+
+    notificationSocket.onmessage = function(e) {
+        var data = JSON.parse(e.data);
+        var detectionUrl = window.location.protocol + "//" + window.location.host + 
+            "/" + data["detection_url"];
+        var detectionLink = '<a href="' + detectionUrl + '">Open detection page.</a>'
+        
+        notify("Detected " + data["person_name"] + " in " + data["city_name"] + " by " + 
+            data["camera_name"] + ".",
+            detectionLink);
+    };
+
+    notificationSocket.onclose = function() {
+        console.log("closed");
+        notificationSocket = initSocket();
+    };
+
+    notificationSocket.onerror = function() {
+        console.log("errored");
+        notificationSocket = initSocket();
+    }
 })();
 
 function showMessage(successId, errorId, message) {

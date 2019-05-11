@@ -10,6 +10,14 @@ html, body {
   overflow: auto;
 }
 
+#notifications {
+  display: block;
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  z-index: 1000;
+}
+
 .message {
   position: fixed;
   text-align: center;
