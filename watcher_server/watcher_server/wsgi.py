@@ -12,9 +12,11 @@ import os
 from django.core.wsgi import get_wsgi_application
 
 from server.ai.trainer import start_training_thread
+from server.utils.cameras_watcher import start_watcher_thread
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'watcher_server.settings')
 
 application = get_wsgi_application()
 
 start_training_thread()
+start_watcher_thread()

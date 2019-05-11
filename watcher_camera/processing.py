@@ -1,7 +1,7 @@
 import cv2
 from PIL import Image
 from io import BytesIO
-from api import alert, get_classifier
+from api import alert, get_classifier, update_classifier
 import face_recognition
 
 
@@ -10,6 +10,7 @@ UNKNOWN = 'unknown'
 
 class ImageProcessor(object):
     def __init__(self):
+        update_classifier()
         self.classifier = get_classifier()
 
     def draw_boxes(self, frame, prediction):

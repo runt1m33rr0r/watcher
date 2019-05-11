@@ -14,6 +14,11 @@ def gen():
         yield (b'--frame\r\n'b'Content-Type: image/jpeg\r\n\r\n' + Camera.get_frame() + b'\r\n\r\n')
 
 
+@app.route('/')
+def index():
+    return 'hello'
+
+
 @app.route('/feed')
 def feed():
     return Response(gen(), mimetype='multipart/x-mixed-replace; boundary=frame')

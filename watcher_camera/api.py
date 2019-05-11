@@ -86,8 +86,8 @@ def save_classifier_date(date):
 def save_classifier(classifier):
     create_classifier_dir()
 
-    with open(classifier_path, 'wb') as f:  
-        pickle.dump(classifier, f)
+    with open(classifier_path, 'wb') as f:
+        f.write(classifier)
 
 
 def get_classifier_date():

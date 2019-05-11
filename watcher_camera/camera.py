@@ -1,7 +1,7 @@
 import cv2
 import threading
 from time import sleep
-from api import register_camera, update_classifier
+from api import register_camera
 from processing import ImageProcessor
 
 
@@ -22,7 +22,6 @@ class Camera(object):
                 sleep(0.1)
 
             register_camera()
-            update_classifier()
         
     @staticmethod
     def get_frame():
