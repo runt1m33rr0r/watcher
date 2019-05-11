@@ -84,9 +84,7 @@
             "/" + data["detection_url"];
         var detectionLink = '<a href="' + detectionUrl + '">Open detection page.</a>'
         
-        notify("Detected " + data["person_name"] + " in " + data["city_name"] + " by " + 
-            data["camera_name"] + ".",
-            detectionLink);
+        notify("Detected " + data["person_name"] + " in " + data["city_name"] + ".", detectionLink);
     };
 
     notificationSocket.onclose = function() {

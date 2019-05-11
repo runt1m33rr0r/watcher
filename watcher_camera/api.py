@@ -36,7 +36,7 @@ def alert(name, frame):
             should_alert = True
         
     if should_alert:
-        data = { 'name': name, 'camera_name': camera_name, 'city': camera_city }
+        data = { 'name': name, 'city': camera_city }
         requests.post(url=add_detection_url, data=data, files={'image': ('image.jpg', frame)})
 
 

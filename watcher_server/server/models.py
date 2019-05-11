@@ -23,7 +23,6 @@ class Person(models.Model):
 
 class Detection(models.Model):
     city = models.ForeignKey(City, on_delete=models.CASCADE)
-    camera = models.ForeignKey(Camera, on_delete=models.CASCADE)
     person = models.ForeignKey(Person, on_delete=models.CASCADE)
     image = models.ForeignKey(Image, on_delete=models.CASCADE)
     date = models.DateTimeField(auto_now_add=True)
