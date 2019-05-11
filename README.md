@@ -4,8 +4,8 @@
 1. registration, login, logout: done
 2. user authorization(permissions)
 3. page with camera list and monitoring: done
-4. page for adding persons: done
-5. notification on detection
+4. page for adding and deleting persons: almost done
+5. notification on detection: done
 6. page for system settings - train model, accuracy threshold for cameras
 7. maybe page for system status - number of cameras, number of persons, number of found persons, etc.
 8. camera software - almost done
