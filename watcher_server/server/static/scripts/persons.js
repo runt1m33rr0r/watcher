@@ -9,7 +9,7 @@
             method: "DELETE",
             success: function(data) {
                 if (data.success == true) {
-                    image.remove();
+                    image.parent().remove();
                     showSuccessMessage(data.message);
                 } else {
                     showErrorMessage(data.message);
