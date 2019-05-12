@@ -71,6 +71,8 @@ class ImageProcessor(object):
 
     @staticmethod
     def process_video_frame(frame):
+        name = UNKNOWN
+
         if ImageProcessor._can_process:
             prediction = ImageProcessor._predict(frame)
             ImageProcessor._draw_boxes(frame, prediction)
@@ -78,12 +80,13 @@ class ImageProcessor(object):
             for person in prediction:
                 name = person[0]
 
-                if name != UNKNOWN:
-                    alert(name, frame)
-
         ret, jpeg = cv2.imencode('.jpg', frame)
         if not ret:
             return
 
         frame = jpeg.tobytes()
+
+        if name != UNKNOWN:
+            alert(name, frame)
+        
         return frame
