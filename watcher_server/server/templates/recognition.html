@@ -6,9 +6,8 @@
 {% endblock %}
 
 {% block content %}
-    <section class="text-center d-flex flex-column h-100">
-        <form class="form-signin was-validated center-flex-item" enctype="multipart/form-data" id="imageForm" method="post"
-            action="/recognition">
+    <section class="text-center d-flex flex-column h-100 bg-black text-light">
+        <form class="form-signin was-validated center-flex-item" enctype="multipart/form-data" id="imageForm" method="post" action="/recognition">
             {% csrf_token %}
             <h1 class="h3 mb-3 mt-1 font-weight-normal">Send image for recognition</h1>
 

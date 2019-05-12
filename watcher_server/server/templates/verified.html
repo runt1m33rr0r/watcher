@@ -7,14 +7,14 @@
 
 {% block sidebar_content %}
     <li class="nav-item">
-        <a id="allLink" class="nav-link text-dark" href="/verified">All</a>
+        <a id="allLink" class="nav-link text-light" href="/verified">All</a>
     </li>
     {% for person in persons %}
         <li class="nav-item">
             {% if person.person_id == chosen %}
-                <a class="nav-link font-weight-bold text-dark" href="/verified/{{ person.person_id }}">{{ person.name }}</a>
+                <a class="nav-link font-weight-bold text-light" href="/verified/{{ person.person_id }}">{{ person.name }}</a>
             {% else %}
-                <a class="nav-link text-dark" href="/verified/{{ person.person_id }}">{{ person.name }}</a>
+                <a class="nav-link text-light" href="/verified/{{ person.person_id }}">{{ person.name }}</a>
             {% endif %}
         </li>
     {% endfor %}

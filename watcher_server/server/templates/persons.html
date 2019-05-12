@@ -9,44 +9,44 @@
     {% for person in persons %}
         <li class="nav-item d-flex flex-row justify-content-between">
             {% if person.id == chosen.id %}
-                <a class="nav-link text-dark text-bold font-weight-bold" href="/persons/{{ person.id }}">{{ person.name }}</a>
+                <a class="nav-link text-light text-bold font-weight-bold" href="/persons/{{ person.id }}">{{ person.name }}</a>
             {% else %}
-                <a class="nav-link text-dark" href="/persons/{{ person.id }}">{{ person.name }}</a>
+                <a class="nav-link text-light" href="/persons/{{ person.id }}">{{ person.name }}</a>
             {% endif %}
-            <button url="/persons/{{ person.id }}" type="button" class="btn btn-dark mt-1 mb-1 delete-person">Delete</button>
+            <button url="/persons/{{ person.id }}" type="button" class="btn btn-secondary mt-1 mb-1 delete-person">Delete</button>
         </li>
     {% endfor %}
 {% endblock %}
 
 {% block page_content %}
-<section id="person" class="d-flex flex-row flex-wrap w-100 h-100">
-    <section id="imageFormContainer" class="center-flex-item">
-        {% if chosen %}
-            <img src="" class="d-block w-100 mt-1" id="fileImage">
+    <section id="person" class="d-flex flex-row flex-wrap w-100 h-100">
+        <section id="imageFormContainer" class="center-flex-item">
+            {% if chosen %}
+                <img src="" class="d-block w-100 mt-1" id="fileImage">
 
-            <form id="imageForm" method="post" enctype="multipart/form-data" action="/persons/{{ chosen.id }}/images/">
-                {% csrf_token %}
-                <div class="custom-file mb-1">
-                    <input type="file" name="image" class="custom-file-input" id="imageInput" required>
-                    <label class="custom-file-label" for="imageInput">Choose image...</label>
-                    <div class="invalid-feedback">Please choose a valid file!</div>
-                </div>
-                <button class="btn btn-lg btn-primary btn-block mb-1" type="submit">Add image</button>
-            </form>
-        {% endif %}
-    </section>
+                <form id="imageForm" method="post" enctype="multipart/form-data" action="/persons/{{ chosen.id }}/images/">
+                    {% csrf_token %}
+                    <div class="custom-file mb-1">
+                        <input type="file" name="image" class="custom-file-input" id="imageInput" required>
+                        <label class="custom-file-label" for="imageInput">Choose image...</label>
+                        <div class="invalid-feedback">Please choose a valid file!</div>
+                    </div>
+                    <button class="btn btn-lg btn-primary btn-block mb-1" type="submit">Add image</button>
+                </form>
+            {% endif %}
+        </section>
 
-    <section id="imagesContainer" class="center-flex-item">
-        <div id="images">
-            {% for image in images %}
-                <div class="image">
-                    <img class="w-100" src="{{ image.image_file.url }}">
-                    <button url="/persons/{{ chosen.id }}/images/{{ image.id }}" class="btn btn-secondary btn-lg active" role="button">Delete</button>
-                </div>
-            {% endfor %}
-        </div>
+        <section id="imagesContainer" class="center-flex-item">
+            <div id="images">
+                {% for image in images %}
+                    <div class="image">
+                        <img class="w-100" src="{{ image.image_file.url }}">
+                        <button url="/persons/{{ chosen.id }}/images/{{ image.id }}" class="btn btn-secondary btn-lg active" role="button">Delete</button>
+                    </div>
+                {% endfor %}
+            </div>
+        </section>
     </section>
-</section>
 {% endblock %}
 
 {% block sidebar_scripts %}

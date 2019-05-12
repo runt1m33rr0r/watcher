@@ -9,16 +9,16 @@
 {% block content %}
     <section class="container-fluid">
         <section class="row" >
-            <section class="col" id="sidebar">
+            <section class="col bg-dark text-light" id="sidebar">
                 <nav class="nav flex-column" id="sidebarItems">
                     <li class="nav-item sidebar-search">
-                        <input type="text" class="form-control" placeholder="Search...">
+                        <input type="text" class="form-control form-control-dark" placeholder="Search...">
                     </li>
                     {% block sidebar_content %}{% endblock %}
                 </nav>
             </section>
             
-            <section class="col" id="content">
+            <section class="col bg-black" id="content">
                 {% block page_content %}{% endblock %}
             </section>
         </section>
