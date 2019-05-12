@@ -96,17 +96,13 @@
 })();
 
 function showMessage(successId, errorId, message) {
-    $(".template-message").remove();
-
     var messageElement = $(successId);
     messageElement = messageElement.clone();
-    $("#main").prepend(messageElement);
+    $("#messages").append(messageElement);
 
-    messageElement.addClass("d-none");
     $(errorId).addClass("d-none");
-    
     messageElement.removeClass("d-none");
-    messageElement.prepend(message);
+    messageElement.find(".message-text").html(message);
 }
 
 function showSuccessMessage(message) {
