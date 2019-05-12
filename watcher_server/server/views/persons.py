@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from django.core.exceptions import ValidationError
 from django.http import JsonResponse
 from ..forms import AddPersonForm, UploadImageForm
-from ..models import Person, Image
+from ..models import Person, Image, Detection
 from ..utils.storage import set_save_location, delete_file, PERSONS_FOLDER_NAME
 
 
@@ -64,6 +64,15 @@ def persons(request, person_id=None):
         return render(request, 'persons.html', ctx)
     elif request.method == 'DELETE':
         person = Person.objects.get(id=person_id)
+        person_images = person.images.all()
+        person_detectios = Detection.objects.filter(person=person)
+
+        for image in person_images:
+            delete_file(image.image_file.path)
+
+        for detection in person_detectios:
+            delete_file(detection.image.image_file.path)
+
         person.delete()
 
         return JsonResponse({ 'success': True, 'message': 'Person deleted!' })
