@@ -1,5 +1,5 @@
 (function() {
-    'use strict';
+    "use strict";
 
     var minNameLength = 2;
     var nameValid = false;

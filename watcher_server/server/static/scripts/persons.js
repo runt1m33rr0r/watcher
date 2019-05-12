@@ -1,5 +1,5 @@
 (function() {
-    'use strict';
+    "use strict";
     
     $(".image button").on("click", function() {
         var image = $("img[src=\"" + $(this).prev().attr("src") + "\"]");

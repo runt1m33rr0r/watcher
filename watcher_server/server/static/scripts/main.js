@@ -1,5 +1,5 @@
 (function() {
-    'use strict';
+    "use strict";
 
     $.each($(".nav-link"), function() {
         if ($(this).attr("href") == window.location.pathname) {
@@ -24,12 +24,12 @@
 
     function getCookie(name) {
         var cookieValue = null;
-        if (document.cookie && document.cookie !== '') {
-            var cookies = document.cookie.split(';');
+        if (document.cookie && document.cookie !== "") {
+            var cookies = document.cookie.split(";");
             for (var i = 0; i < cookies.length; i++) {
                 var cookie = cookies[i].trim();
                 // Does this cookie string begin with the name we want?
-                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                if (cookie.substring(0, name.length + 1) === (name + "=")) {
                     cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
                     break;
                 }
@@ -43,7 +43,7 @@
         return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
     }
 
-    var csrftoken = getCookie('csrftoken');
+    var csrftoken = getCookie("csrftoken");
     $.ajaxSetup({
         beforeSend: function(xhr, settings) {
             if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
@@ -51,9 +51,6 @@
             }
         }
     });
-
-    $("#errorMessage").hide();
-    $("#successMessage").hide();
 
     function notify(title, content) {
         var notificationClone = $("#templateNotification").clone();
@@ -82,7 +79,7 @@
         var data = JSON.parse(e.data);
         var detectionUrl = window.location.protocol + "//" + window.location.host + 
             "/" + data["detection_url"];
-        var detectionLink = '<a href="' + detectionUrl + '">Open detection page.</a>'
+        var detectionLink = "<a href=\"" + detectionUrl + "\">Open detection page.</a>"
         
         notify("Detected " + data["person_name"] + " in " + data["city_name"] + ".", detectionLink);
     };
@@ -105,10 +102,10 @@ function showMessage(successId, errorId, message) {
     messageElement = messageElement.clone();
     $("#main").prepend(messageElement);
 
-    messageElement.hide();
-    $(errorId).hide();
+    messageElement.addClass("d-none");
+    $(errorId).addClass("d-none");
     
-    messageElement.show();
+    messageElement.removeClass("d-none");
     messageElement.prepend(message);
 }
 

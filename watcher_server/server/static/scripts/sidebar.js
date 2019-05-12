@@ -1,9 +1,9 @@
 (function() {
-    'use strict';
+    "use strict";
 
     var open = true;
 
-    var leftElement = document.getElementById('sidebar');
+    var leftElement = document.getElementById("sidebar");
     var swipeLeftDetector = new Hammer(leftElement);
     swipeLeftDetector.on("swipeleft", function() {
         if (open) {
@@ -12,7 +12,7 @@
         }
     });
 
-    var rightElement = document.getElementById('content');
+    var rightElement = document.getElementById("content");
     var swipeRightDetector = new Hammer(rightElement);
     swipeRightDetector.on("swiperight", function() {
         if (!open) {

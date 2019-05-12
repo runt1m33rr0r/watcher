@@ -1,5 +1,5 @@
 (function() {
-    'use strict';
+    "use strict";
 
     if (window.location.pathname == "/detections") {
         $("#allLink").addClass("font-weight-bold");

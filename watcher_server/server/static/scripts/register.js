@@ -1,5 +1,5 @@
 (function() {
-    'use strict';
+    "use strict";
 
     var minUsernameLength = 6;
     var minPasswordLength = 6;
