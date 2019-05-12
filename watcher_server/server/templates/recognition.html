@@ -6,10 +6,10 @@
 {% endblock %}
 
 {% block content %}
-    <section class="text-center d-flex flex-column h-100 bg-black text-light">
+    <section class="d-flex flex-column h-100 bg-black text-light">
         <form class="form-signin was-validated center-flex-item" enctype="multipart/form-data" id="imageForm" method="post" action="/recognition">
             {% csrf_token %}
-            <h1 class="h3 mb-3 mt-1 font-weight-normal">Send image for recognition</h1>
+            <h1 class="h3 mb-3 mt-1 font-weight-normal text-center">Send image for recognition</h1>
 
             <img processed="{{ processed }}" class="d-block w-100 mb-1" id="fileImage" src="">
 
