@@ -1,8 +1,9 @@
 import urllib.request
 import os
-import requests
 import pickle
 from datetime import datetime
+import requests
+from threading import Thread
 
 
 camera_name = 'camera4'
@@ -21,6 +22,10 @@ alerts = {}
 
 
 def alert(name, frame):
+    def alert_request():
+        data = { 'name': name, 'city': camera_city }
+        requests.post(url=add_detection_url, data=data, files={'image': ('image.jpg', frame)})
+
     should_alert = False
 
     if not alerts.get(name):
@@ -36,8 +41,7 @@ def alert(name, frame):
             should_alert = True
         
     if should_alert:
-        data = { 'name': name, 'city': camera_city }
-        requests.post(url=add_detection_url, data=data, files={'image': ('image.jpg', frame)})
+        Thread(target=alert_request).start()
 
 
 def register_camera():
