@@ -10,17 +10,17 @@
         <form id="settingsForm" class="center-flex-item" method="post" action="/settings">
             {% csrf_token %}
             <label class="mt-3" for="sensitivity">Detection sensitivity: </label>
-            <input type="range" class="custom-range" value="0" min="0" max="1" step="0.01" name="sensitivity" id="sensitivity">
+            <input type="range" class="custom-range" value="{{ settings.detection_sensitivity }}" min="0" max="1" step="0.01" name="detection_sensitivity" id="sensitivity">
             <label for="downscale">Image downscale level: </label>
-            <input type="range" class="custom-range" value="0" min="0" max="10" step="0.5" name="downscale" id="downscale">
+            <input type="range" class="custom-range" value="{{ settings.downscale_level }}" min="0" max="10" step="0.5" name="downscale_level" id="downscale">
             <label for="alertTimeout">Alert timeout in minutes: </label>
-            <input type="range" class="custom-range" value="1" min="1" max="60" step="1" name="alert_timeout" id="alertTimeout">
+            <input type="range" class="custom-range" value="{{ settings.alert_timeout }}" min="1" max="60" step="1" name="alert_timeout" id="alertTimeout">
             <label for="cameraTimeout">Camera update timeout in minutes: </label>
-            <input type="range" class="custom-range" value="1" min="1" max="60" step="1" name="camera_timeout" id="cameraTimeout">
-            <label for="checkTimeout">Active camers check timeout in minutes: </label>
-            <input type="range" class="custom-range" value="1" min="1" max="60" step="1" name="check_timeout" id="checkTimeout">
+            <input type="range" class="custom-range" value="{{ settings.camera_update_timeout }}" min="1" max="60" step="1" name="camera_update_timeout" id="cameraTimeout">
+            <label for="checkTimeout">Active cameras check timeout in minutes: </label>
+            <input type="range" class="custom-range" value="{{ settings.camera_check_timeout }}" min="1" max="60" step="1" name="camera_check_timeout" id="checkTimeout">
             <label for="trainTimeout">Model training timeout in minutes: </label>
-            <input type="range" class="custom-range" value="1" min="1" max="60" step="1" name="train_timeout" id="trainTimeout">
+            <input type="range" class="custom-range" value="{{ settings.model_training_timeout }}" min="1" max="60" step="1" name="model_training_timeout" id="trainTimeout">
             <button id="resetButton" class="btn btn-lg btn-secondary btn-block">Reset</button>
             <button class="btn btn-lg btn-primary btn-block mb-3" type="submit">Save settings</button>
         </form>
