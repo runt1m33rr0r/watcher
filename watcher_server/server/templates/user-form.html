@@ -1,0 +1,20 @@
+<section class="d-flex flex-column bg-black text-light w-100 h-100 overflow-auto" id="page"> 
+    <form class="user-form needs-validation center-flex-item" action="{{ action }}" method="post">
+        {% csrf_token %}
+        <h1 class="text-center h3 mb-3 font-weight-normal">{{ form_title }}</h1>
+    
+        <input name="username" type="text" id="userInput" class="form-control" placeholder="{{ username_placeholder }}" autofocus="" 
+            {% if required %}
+                required=""
+            {% endif %}>
+        <input name="password" type="password" id="inputPassword" class="form-control" placeholder="{{ password_placeholder }}" 
+            {% if required %}
+                required=""
+            {% endif %}>
+        <input type="password" id="repeatPassword" class="form-control" placeholder="Repeat password" 
+            {% if required %}
+                required=""
+            {% endif %}>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">{{ submit_text }}</button>
+    </form>
+</section>

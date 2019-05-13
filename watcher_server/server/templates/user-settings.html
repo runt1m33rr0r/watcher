@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block content %}
-    {% include "user-form.html" with form_title="Register" username_placeholder="Username" password_placeholder="Password" action="/register" submit_text="register" required=True %}
+    {% include "user-form.html" with form_title="Change username and/or password" username_placeholder="New username" password_placeholder="New password" action="/user" submit_text="Save settings" required=False %}
 {% endblock %}
 
 {% block scripts %}

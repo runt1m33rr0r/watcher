@@ -7,3 +7,7 @@ def index(request):
 
 def settings(request):
     return render(request, 'settings.html')
+
+
+def user_settings(request):
+    return render(request, 'user-settings.html')
