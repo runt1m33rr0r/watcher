@@ -3,7 +3,7 @@ from rest_framework import status
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 from ..serializers import CameraSerializer, CitySerializer
-from ..models import City, Settings
+from ..models import City, Settings, SettingsCreationDate
 
 
 @csrf_exempt
@@ -32,3 +32,26 @@ def register_camera(request):
             return JsonResponse(camera.data, status=status.HTTP_201_CREATED)
         else:
             return JsonResponse(camera.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@csrf_exempt
+def get_settings_date(request):
+    if request.method == 'GET':
+        Settings.objects.get_or_create()
+        date = SettingsCreationDate.objects.get_or_create()[0].date
+        
+        return JsonResponse({ 'date': date })
+
+
+@csrf_exempt
+def get_settings(request):
+    if request.method == 'GET':
+        settings = Settings.objects.get_or_create()[0]
+        res = {
+            'detection_sensitivity': settings.detection_sensitivity,
+            'downscale_level': settings.downscale_level,
+            'alert_timeout': settings.alert_timeout,
+            'camera_update_timeout': settings.camera_update_timeout,
+        }
+        
+        return JsonResponse(res)

@@ -29,4 +29,7 @@ urlpatterns = [
 
     path('classifier', views.get_classifier_file, name='get_classifier'),
     path('classifier/date', views.get_classifier_date, name='get_classifier_date'),
+
+    path('rest/settings/date', views.get_settings_date, name='get_settings_date'),
+    path('rest/settings', views.get_settings, name='get_settings'),
 ]
