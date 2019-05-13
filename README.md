@@ -6,8 +6,8 @@
 3. page with camera list and monitoring: done
 4. page for adding and deleting persons: done
 5. notification on detection: done
-6. page for system settings: almost done
-7. maybe page for system status - number of cameras, number of persons, number of found persons, etc.: almost done
+6. page for system settings: done
+7. maybe page for system status - number of cameras, number of persons, number of found persons, etc.: done
 8. camera software - almost done
 9. page with unverified detections - done
 10. page with verified detections - done
