@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block content %}
-<section id="person" class="d-flex flex-row flex-wrap w-100 h-100 bg-black text-light">
+<section id="person" class="d-flex flex-row flex-wrap w-100 h-100 bg-black text-light overflow-auto">
     {% with input='<input type="text" id="nameInput" class="form-control mb-1 is-invalid" placeholder="Enter name" name="name" required>' %}
         {% include "image-input.html" with before_image_input=input send_text="Add person" action="/persons/add" %}
     {% endwith %}

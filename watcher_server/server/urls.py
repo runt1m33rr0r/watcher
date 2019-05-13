@@ -24,6 +24,7 @@ urlpatterns = [
     path('verified/<int:person_id>', views.verified, name='verified_by_id'),
     
     path('recognition', views.recognition, name='recognition'),
+    path('settings', views.settings, name='settings'),
 
     path('classifier', views.get_classifier_file, name='get_classifier'),
     path('classifier/date', views.get_classifier_date, name='get_classifier_date')

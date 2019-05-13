@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block content %}
-    <section class="text-center d-flex flex-column bg-black text-light" id="page"> 
+    <section class="text-center d-flex flex-column bg-black text-light overflow-auto" id="page"> 
         <form class="form-signin was-validated center-flex-item" action="/login" method="post">
             {% csrf_token %}
             <h1 class="h3 mb-3 font-weight-normal">Sign in</h1>
