@@ -12,7 +12,7 @@
             <label class="mt-3" for="sensitivity">Detection sensitivity: </label>
             <input type="range" class="custom-range" value="{{ settings.detection_sensitivity }}" min="0" max="1" step="0.01" name="detection_sensitivity" id="sensitivity">
             <label for="downscale">Image downscale level: </label>
-            <input type="range" class="custom-range" value="{{ settings.downscale_level }}" min="0" max="10" step="0.5" name="downscale_level" id="downscale">
+            <input type="range" class="custom-range" value="{{ settings.downscale_level }}" min="0" max="10" step="1" name="downscale_level" id="downscale">
             <label for="alertTimeout">Alert timeout in minutes: </label>
             <input type="range" class="custom-range" value="{{ settings.alert_timeout }}" min="1" max="60" step="1" name="alert_timeout" id="alertTimeout">
             <label for="cameraTimeout">Camera update timeout in minutes: </label>

@@ -6,6 +6,7 @@ import numpy as np
 from watcher_server.settings import BASE_DIR
 import pickle
 from PIL import Image
+from ..models import Settings
 
 
 UNKNOWN = 'unknown'
@@ -33,15 +34,18 @@ def get_classifier():
 
 class ImageProcessor(object):
     def __init__(self):
+        self.settings = Settings.objects.get_or_create()[0]
+        self.downscale = self.settings.downscale_level
+        self.sensitivity = self.settings.detection_sensitivity
         self.classifier = get_classifier()
 
     def draw_boxes(self, frame, prediction):
         for name, (top, right, bottom, left) in prediction:
             # Scale back up face locations since the frame we detected in was scaled to 1/4 size
-            top *= 2
-            right *= 2
-            bottom *= 2
-            left *= 2
+            top *= self.downscale
+            right *= self.downscale
+            bottom *= self.downscale
+            left *= self.downscale
 
             # Draw a box around the face
             cv2.rectangle(frame, (left, top), (right, bottom), (0, 0, 255), 2)
@@ -55,7 +59,8 @@ class ImageProcessor(object):
         if not self.classifier:
             return []
 
-        image = cv2.resize(image, (0, 0), fx=0.5, fy=0.5)
+        scale = 1.0 / self.downscale
+        image = cv2.resize(image, (0, 0), fx=scale, fy=scale)
         converted_frame = image[:, :, ::-1]
         face_locations = face_recognition.face_locations(image, model='cnn')
 
@@ -63,7 +68,7 @@ class ImageProcessor(object):
             return []
         
         faces_encodings = face_recognition.face_encodings(image, face_locations)
-        distance_threshold = 0.55
+        distance_threshold = self.sensitivity
         closest_distances = self.classifier.kneighbors(faces_encodings, n_neighbors=1)
         are_matches = [closest_distances[0][i][0] <= distance_threshold for i in range(len(face_locations))]
 

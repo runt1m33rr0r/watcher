@@ -34,9 +34,13 @@ class ClassifierCreationDate(models.Model):
     date = models.DateTimeField(auto_now=True)
 
 
+class SettingsCreationDate(models.Model):
+    date = models.DateTimeField(auto_now=True)
+
+
 class Settings(models.Model):
     detection_sensitivity = models.FloatField(default=0.5, validators=[MinValueValidator(0), MaxValueValidator(1)])
-    downscale_level = models.FloatField(default=2, validators=[MinValueValidator(0), MaxValueValidator(10)])
+    downscale_level = models.IntegerField(default=2, validators=[MinValueValidator(0), MaxValueValidator(10)])
     alert_timeout = models.IntegerField(default=3, validators=[MinValueValidator(1), MaxValueValidator(60)])
     camera_update_timeout = models.IntegerField(default=5, validators=[MinValueValidator(1), MaxValueValidator(60)])
     camera_check_timeout = models.IntegerField(default=5, validators=[MinValueValidator(1), MaxValueValidator(60)])

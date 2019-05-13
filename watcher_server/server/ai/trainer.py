@@ -13,8 +13,11 @@ from watchdog.events import LoggingEventHandler
 from time import sleep
 from .classifier import save_classifier
 from .classifier import classifier_path
-from ..models import ClassifierCreationDate
+from ..models import ClassifierCreationDate, Settings
 from ..utils.storage import PERSONS_FOLDER_NAME
+
+
+train_timeout = 180
 
 
 def resize_image(image):
@@ -73,12 +76,7 @@ class FileEvent(LoggingEventHandler):
 
 
 def save_date():
-    date = None
-    if ClassifierCreationDate.objects.filter().exists():
-        date = ClassifierCreationDate.objects.get()
-    else:
-        date = ClassifierCreationDate()
-    date.save()
+    ClassifierCreationDate.objects.update_or_create()
 
 
 def training_thread():
@@ -108,6 +106,7 @@ def training_thread():
 
 
 def start_training_thread():
+    train_timeout = Settings.objects.get_or_create()[0].model_training_timeout * 60
     thread = threading.Thread(target=training_thread)
     thread.start()
 

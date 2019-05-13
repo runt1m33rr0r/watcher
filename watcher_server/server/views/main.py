@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from ..forms import SettingsForm
-from ..models import Settings
+from ..models import Settings, SettingsCreationDate
 
 
 def index(request):
@@ -19,6 +19,7 @@ def settings(request):
         if form.is_valid():
             data = form.cleaned_data
             settings_data = Settings.objects.update_or_create(defaults=data)
+            SettingsCreationDate.objects.update_or_create()
             ctx['settings'] = settings_data[0]
         else:
             ctx['error'] = True

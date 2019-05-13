@@ -3,7 +3,7 @@ from rest_framework import status
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 from ..serializers import CameraSerializer, CitySerializer
-from ..models import City
+from ..models import City, Settings
 
 
 @csrf_exempt

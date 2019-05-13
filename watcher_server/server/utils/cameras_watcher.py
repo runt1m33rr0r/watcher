@@ -2,7 +2,10 @@ import urllib.request
 import threading
 from time import sleep
 from django.db import transaction
-from ..models import Camera
+from ..models import Camera, Settings
+
+
+check_interval = 180
 
 
 def delete_camera(camera):
@@ -23,9 +26,10 @@ def check_cameras():
             except:
                 delete_camera(camera)
         
-        sleep(180)
+        sleep(check_interval)
 
 
 def start_watcher_thread():
+    check_interval = Settings.objects.get_or_create()[0].camera_check_timeout * 60
     thread = threading.Thread(target=check_cameras)
     thread.start()
