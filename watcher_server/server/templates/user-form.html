@@ -3,11 +3,15 @@
         {% csrf_token %}
         <h1 class="text-center h3 mb-3 font-weight-normal">{{ form_title }}</h1>
     
-        <input name="username" type="text" id="userInput" class="form-control" placeholder="{{ username_placeholder }}" autofocus="" 
+        <input minlength="{{ min_username_length }}" maxlength="{{ max_username_length }}"
+            name="username" type="text" id="userInput" class="form-control"
+            placeholder="{{ username_placeholder }}" autofocus=""
             {% if required %}
                 required=""
             {% endif %}>
-        <input name="password" type="password" id="inputPassword" class="form-control" placeholder="{{ password_placeholder }}" 
+        <input minlength="{{ min_password_length }}" maxlength="{{ max_password_length }}" 
+            name="password" type="password" id="inputPassword" class="form-control" 
+            placeholder="{{ password_placeholder }}" 
             {% if required %}
                 required=""
             {% endif %}>

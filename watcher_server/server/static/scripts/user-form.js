@@ -1,35 +1,27 @@
 (function() {
     "use strict";
 
-    var minUsernameLength = 6;
-    var minPasswordLength = 6;
-    var maxPasswordLength = 30;
     var usernameValid = false;
     var passwordValid = false;
-    
-    $("#userInput").on("input", function() {
-        if ($(this).val().length >= minUsernameLength && 
-            $(this).val().match("^[A-z0-9]+$")) {
-            $(this).removeClass("is-invalid");
+
+    function validateUsername() {
+        var userInput = $("#userInput");
+
+        if (userInput.val().match("^[a-z0-9]+$") || userInput.val().length == 0) {
+            userInput.removeClass("is-invalid");
             usernameValid = true;
         } else {
-            $(this).addClass("is-invalid");
+            userInput.addClass("is-invalid");
             usernameValid = false;
         }
+    }
+    
+    $("#userInput").on("input", function() {
+        validateUsername();
     });
 
-    function isPasswordValid(password) {
-        if (password.length >= minPasswordLength && 
-            password.length <= maxPasswordLength) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
     function validateRepeatPassword() {
-        if ($("#repeatPassword").val() == $("#inputPassword").val() &&
-            isPasswordValid($("#repeatPassword").val())) {
+        if ($("#repeatPassword").val() == $("#inputPassword").val()) {
             $("#repeatPassword").removeClass("is-invalid");
             passwordValid = true;
         } else {
@@ -39,12 +31,6 @@
     }
 
     $("#inputPassword").on("input", function() {
-        if (isPasswordValid($(this).val())) {
-            $(this).removeClass("is-invalid");
-        } else {
-            $(this).addClass("is-invalid");
-        }
-
         validateRepeatPassword();
     });
 
@@ -54,8 +40,12 @@
 
     $("form").on("submit", function(ev) {
         if (!usernameValid || !passwordValid) {
+            console.log('prevent');
             ev.preventDefault();
             ev.stopPropagation();
         }
     });
+
+    validateUsername();
+    validateRepeatPassword();
 })();

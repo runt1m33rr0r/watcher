@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block content %}
-    {% include "user-form.html" with form_title="Register" username_placeholder="Username" password_placeholder="Password" action="/register" submit_text="register" required=True %}
+    {% include "user-form.html" with min_password_length="8" max_password_length="50" min_username_length="6" max_username_length="20" form_title="Register" username_placeholder="Username" password_placeholder="Password" action="/register" submit_text="register" required=True %}
 {% endblock %}
 
 {% block scripts %}

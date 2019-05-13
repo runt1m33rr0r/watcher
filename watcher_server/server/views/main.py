@@ -36,7 +36,3 @@ def settings(request):
             ctx['message'] = 'Ivalid input!'
 
         return render(request, 'settings.html', context=ctx)
-
-
-def user_settings(request):
-    return render(request, 'user-settings.html')

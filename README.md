@@ -11,5 +11,5 @@
 8. camera software - almost done
 9. page with unverified detections - done
 10. page with verified detections - done
-11. maybe password and username changing - almost done
+11. maybe password and username changing - done
 12. recognition from image taken from camera or file - done

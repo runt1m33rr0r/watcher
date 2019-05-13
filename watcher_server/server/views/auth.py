@@ -3,6 +3,7 @@ from django.contrib.auth import authenticate, login as django_login, logout as d
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from .main import index
+from ..forms import UsernameForm, PasswordForm
 
 
 def login(request):
@@ -16,7 +17,7 @@ def login(request):
 
             return redirect(index)
         else:
-            context = {'error': True, 'message': 'Login failed!'}
+            context = { 'error': True, 'message': 'Login failed!' }
 
             return render(request, 'login.html', context)
 
@@ -39,7 +40,47 @@ def register(request):
 
             return redirect(login)
         except IntegrityError:
-            context = {'error': True, 'message': 'Registration failed!'}
+            context = { 'error': True, 'message': 'Registration failed!' }
             return render(request, 'register.html', context)
 
     return render(request, 'register.html')
+
+
+def user_settings(request):
+    ctx = {}
+
+    if request.method == 'POST':
+        username_form = UsernameForm(request.POST)
+        password_form = PasswordForm(request.POST)
+        updated_username = False
+        updated_password = False
+        initial_username = request.user.username
+
+        if username_form.is_valid():
+            username_data = username_form.cleaned_data
+            current_user = User.objects.filter(username=initial_username)
+            current_user.update(username=username_data['username'])
+            request.user.username = username_data['username']
+            updated_username = True
+
+        if password_form.is_valid():
+            password_data = password_form.cleaned_data
+            current_user = User.objects.get(username=initial_username)
+            current_user.set_password(password_data['password'])
+            current_user.save()
+            updated_password = True
+        
+        if updated_password and updated_username:
+            ctx['success'] = True
+            ctx['message'] = 'Updated username and password!'
+        elif updated_password:
+            ctx['success'] = True
+            ctx['message'] = 'Updated password!'
+        elif updated_username:
+            ctx['success'] = True
+            ctx['message'] = 'Updated username!'
+        else:
+            ctx['error'] = True
+            ctx['message'] = 'Nothing updated!'
+
+    return render(request, 'user-settings.html', context=ctx)
