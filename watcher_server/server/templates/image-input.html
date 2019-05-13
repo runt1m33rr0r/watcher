@@ -1,0 +1,15 @@
+<section id="imageFormContainer" class="center-flex-item">
+    {{ before_input_content }}
+    <img class="d-block w-100 mb-1" id="fileImage" src="">
+    <form class="was-validated center-flex-item" enctype="multipart/form-data" id="imageForm" method="post" action="{{ action }}">
+        {% csrf_token %}
+        {{ before_image_input }}
+        <div class="custom-file mb-1">
+            <input type="file" name="image" class="custom-file-input" id="imageInput" required>
+            <label class="custom-file-label" for="imageInput">Choose image...</label>
+            <div class="invalid-feedback">Please choose a valid file!</div>
+        </div>
+        {{ after_image_input }}
+        <button class="btn btn-lg btn-primary btn-block mb-1 center-flex-item" type="submit">{{ send_text }}</button>
+    </form>
+</section>

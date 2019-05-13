@@ -7,20 +7,9 @@
 
 {% block content %}
 <section id="person" class="d-flex flex-row flex-wrap w-100 h-100 bg-black text-light">
-    <section id="imageFormContainer" class="center-flex-item">
-        <img src="" class="d-block w-100 mt-1 mb-1" id="fileImage">
-
-        <form class="was-validated" id="imageForm" method="post" enctype="multipart/form-data" action="/persons/add">
-            {% csrf_token %}
-            <input type="text" id="nameInput" class="form-control mb-1 is-invalid" placeholder="Enter name" name="name" required>
-            <div class="custom-file mb-1">
-                <input type="file" class="custom-file-input" id="imageInput" name="image" required>
-                <label class="custom-file-label" for="imageInput">Choose image...</label>
-                <div class="invalid-feedback">Please choose a valid file!</div>
-            </div>
-            <button class="btn btn-lg btn-primary btn-block mb-1" type="submit">Add person</button>
-        </form>
-    </section>
+    {% with input='<input type="text" id="nameInput" class="form-control mb-1 is-invalid" placeholder="Enter name" name="name" required>' %}
+        {% include "image-input.html" with before_image_input=input send_text="Add person" action="/persons/add" %}
+    {% endwith %}
 </section>
 {% endblock %}
 

@@ -20,21 +20,10 @@
 
 {% block page_content %}
     <section id="person" class="d-flex flex-row flex-wrap w-100 h-100">
-        <section id="imageFormContainer" class="center-flex-item">
-            {% if chosen %}
-                <img src="" class="d-block w-100 mt-1" id="fileImage">
-
-                <form id="imageForm" method="post" enctype="multipart/form-data" action="/persons/{{ chosen.id }}/images/">
-                    {% csrf_token %}
-                    <div class="custom-file mb-1">
-                        <input type="file" name="image" class="custom-file-input" id="imageInput" required>
-                        <label class="custom-file-label" for="imageInput">Choose image...</label>
-                        <div class="invalid-feedback">Please choose a valid file!</div>
-                    </div>
-                    <button class="btn btn-lg btn-primary btn-block mb-1" type="submit">Add image</button>
-                </form>
-            {% endif %}
-        </section>
+        {% if chosen %}
+            {% load server_extras %}
+            {% include "image-input.html" with send_text="Add image" action="/persons/"|addstr:chosen.id|addstr:"/images/" %}
+        {% endif %}
 
         <section id="imagesContainer" class="center-flex-item">
             <div id="images">

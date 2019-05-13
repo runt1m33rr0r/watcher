@@ -1,10 +1,9 @@
 (function() {
     "use strict";
 
-    var fileImage = $("#fileImage");
-    var processed = fileImage.attr("processed")
+    var processed = $("section").attr("processed")
     if (processed != "") {
         var base64 = "data:image/jpeg;base64," + processed;
-        fileImage.attr("src", base64);
+        $("#fileImage").attr("src", base64);
     }
 })();

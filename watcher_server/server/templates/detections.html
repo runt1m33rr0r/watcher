@@ -1,14 +1,6 @@
-{% extends "sidebar.html" %}
+{% extends "detections-list.html" %}
 
-{% block sidebar_css %}
-    {% load static %}
-    <link rel="stylesheet" href="{% static "styles/detections-list.css" %}">
-{% endblock %}
-
-{% block sidebar_content %}
-    <li class="nav-item">
-        <a id="allLink" class="nav-link text-light" href="/detections">All</a>
-    </li>
+{% block sidebar_list %}
     {% for person in persons %}
         <li class="nav-item d-flex flex-row justify-content-between">
             {% if person.person_id == chosen %}
@@ -21,7 +13,7 @@
     {% endfor %}
 {% endblock %}
 
-{% block page_content %}
+{% block detections_content %}
     {% for person in persons %}
         <div class="modal fade" id="{{ person.name }}" role="dialog">
             <div class="modal-dialog modal-dialog-centered" role="document">
@@ -39,34 +31,14 @@
             </div>
         </div>
     {% endfor %}
-
-    <nav class="mt-3">
-        {% include "pagination.html" %}
-    </nav>
-
-    <section class="d-flex flex-column">
-        <div class="card-columns center-flex-item">
-            {% for detection in elements %}
-                <div class="card text-white bg-dark border-primary">
-                    <img class="card-img-top" src="/media/{{ detection.image.image_file.name }}">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ detection.person.name }} in {{ detection.city.name }}</h5>
-                        <p class="card-text"><small class="text-muted">{{ detection.date }}</small></p>
-                        <button detection="{{ detection.id }}" class="btn btn-primary accurate-button">Accurate</button>
-                        <button detection="{{ detection.id }}" class="btn btn-secondary false-button">False positive</button>
-                    </div>
-                </div>
-            {% endfor %}
-        </div>        
-    </section>
-
-    <nav>
-        {% include "pagination.html" %}
-    </nav>
 {% endblock %}
 
-{% block sidebar_scripts %}
+{% block detection_controls %}
+    <button detection="{{ detection.id }}" class="btn btn-primary accurate-button">Accurate</button>
+    <button detection="{{ detection.id }}" class="btn btn-secondary false-button">False positive</button>
+{% endblock %}
+
+{% block detections_scripts %}
     {% load static %}
     <script src="{% static "scripts/detections.js" %}"></script>
-    <script src="{% static "scripts/detections-list.js" %}"></script>
 {% endblock %}

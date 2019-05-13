@@ -1,0 +1,46 @@
+{% extends "sidebar.html" %}
+
+{% block sidebar_css %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static "styles/detections-list.css" %}">
+{% endblock %}
+
+{% block sidebar_content %}
+    <li class="nav-item">
+        <a id="allLink" class="nav-link text-light" href="/detections">All</a>
+    </li>
+    {% block sidebar_list %}{% endblock %}
+{% endblock %}
+
+{% block page_content %}
+    {% block detections_content %}{% endblock %}
+
+    <nav class="mt-3">
+        {% include "pagination.html" %}
+    </nav>
+
+    <section class="d-flex flex-column">
+        <div class="card-columns center-flex-item">
+            {% for detection in elements %}
+                <div class="card text-white bg-dark border-primary">
+                    <img class="card-img-top" src="/media/{{ detection.image.image_file.name }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ detection.person.name }} in {{ detection.city.name }}</h5>
+                        <p class="card-text"><small class="text-muted">{{ detection.date }}</small></p>
+                        {% block detection_controls %}{% endblock %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>        
+    </section>
+
+    <nav>
+        {% include "pagination.html" %}
+    </nav>
+{% endblock %}
+
+{% block sidebar_scripts %}
+    {% load static %}
+    <script src="{% static "scripts/detections-list.js" %}"></script>
+    {% block detections_scripts %}{% endblock %}
+{% endblock %}
