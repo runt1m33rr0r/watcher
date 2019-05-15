@@ -35,17 +35,31 @@ def get_classifier():
 
 
 class ImageProcessor(object):
-    def __init__(self):
-        self.settings = Settings.objects.get_or_create()[0]
-        self.downscale = self.settings.downscale_level
-        self.sensitivity = self.settings.detection_sensitivity
-        self.classifier = get_classifier()
+    _settings = None
+    _downscale = None
+    _sensitivity = None
+    _classifier = None
+    _initialized = False
 
-    def process_frame(self, frame):
+    @classmethod
+    def _init(cls):
+        if cls._initialized:
+            return
+
+        cls._settings = Settings.objects.get_or_create()[0]
+        cls._downscale = cls._settings.downscale_level
+        cls._sensitivity = cls._settings.detection_sensitivity
+        cls._classifier = get_classifier()
+        cls._initialized = True
+
+    @classmethod
+    def process_frame(cls, frame):
+        cls._init()
+
         frame = Image.open(frame)
         frame = cv2.cvtColor(np.array(frame), cv2.COLOR_RGB2BGR)
-        prediction = predict(frame, self.classifier, self.downscale, self.sensitivity)
-        draw_boxes(frame, prediction, self.downscale)
+        prediction = predict(frame, cls._classifier, cls._downscale, cls._sensitivity)
+        draw_boxes(frame, prediction, cls._downscale)
 
         ret, jpeg = cv2.imencode('.jpg', frame)
 

@@ -168,8 +168,7 @@ def recognition(request):
         return render(request, 'recognition.html', context={ 'processed': '' })
     elif request.method == 'POST':
         image = request.FILES['image']
-        processor = ImageProcessor()
-        processed = processor.process_frame(image)
+        processed = ImageProcessor.process_frame(image)
         processed = base64.b64encode(processed).decode('utf-8')
 
         return render(request, 'recognition.html', context={ 'processed': str(processed) })
