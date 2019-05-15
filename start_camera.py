@@ -1,7 +1,7 @@
 from flask import Flask, Response
-from camera import Camera
+from camera.camera import Camera
 from time import sleep
-from api import get_classifier_date
+from camera.api import get_classifier_date
 
 
 app = Flask(__name__)
