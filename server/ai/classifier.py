@@ -8,7 +8,7 @@ import pickle
 from PIL import Image
 from ..models import Settings
 import sys
-from common.ai import *
+from common.ai import predict, draw_boxes
 
 
 UNKNOWN = 'unknown'
