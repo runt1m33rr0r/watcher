@@ -86,10 +86,7 @@ def camera(request, city_id, camera_id):
 
 def get_detections(request, verified, render_page, person_id):
     detections = Detection.objects.filter(verified=verified).order_by('person__name')
-    persons = detections.values(
-        'person_id',
-        name=F('person__name'), 
-        photo=F('person__images__image_file')).distinct()
+    persons = Person.objects.all()
     ctx = { 'elements': detections, 'persons': persons }
 
     if person_id:
