@@ -1,7 +1,9 @@
 from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
 from ..models import City
 
 
+@login_required
 def cameras(request):
     if request.method == 'GET':
         cities = City.objects.all()
@@ -33,6 +35,7 @@ def cameras(request):
         return render(request, 'cameras.html', context=ctx)
 
 
+@login_required
 def city(request, city_id):
     if request.method == 'GET':
         cities = City.objects.all()
@@ -54,6 +57,7 @@ def city(request, city_id):
         return render(request, 'cameras.html', context=ctx)
 
 
+@login_required
 def camera(request, city_id, camera_id):
     if request.method == 'GET':
         cities = City.objects.all()

@@ -2,6 +2,7 @@ from django.db.utils import IntegrityError
 from django.contrib.auth import authenticate, login as django_login, logout as django_logout
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
 from .main import index
 from ..forms import UsernameForm, PasswordForm
 
@@ -24,6 +25,7 @@ def login(request):
     return render(request, 'login.html')
 
 
+@login_required
 def logout(request):
     django_logout(request)
 
@@ -46,6 +48,7 @@ def register(request):
     return render(request, 'register.html')
 
 
+@login_required
 def user_settings(request):
     ctx = {}
 

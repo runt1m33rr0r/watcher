@@ -1,10 +1,12 @@
 import base64
 from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
 from ..ai.classifier import ImageProcessor
 from ..models import Settings, SettingsCreationDate
 from ..forms import SettingsForm
 
 
+@login_required
 def recognition(request):
     if request.method == 'GET':
         return render(request, 'recognition.html', context={ 'processed': '' })
@@ -16,6 +18,7 @@ def recognition(request):
         return render(request, 'recognition.html', context={ 'processed': str(processed) })
 
 
+@login_required
 def settings(request):  
     if request.method == 'GET':
         settings_data = Settings.objects.get_or_create()

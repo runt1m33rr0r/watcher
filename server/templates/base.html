@@ -21,31 +21,31 @@
             </button>
 
             <div class="navbar-collapse collapse" id="navbarCollapse">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'cameras' %}">Cameras</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" data-toggle="dropdown">Persons</a>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="{% url 'add_person' %}">Add</a>
-                            <a class="dropdown-item" href="{% url 'modify_persons' %}">Modify</a>
-                        </div>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" data-toggle="dropdown">Detections</a>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="{% url 'verified' %}">Verified</a>
-                            <a class="dropdown-item" href="{% url 'detections' %}">Uverified</a>
-                        </div>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'recognition' %}">Recognition</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'settings' %}">Settings</a>
-                    </li>
+                <ul class="navbar-nav mr-auto">              
                     {% if user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'cameras' %}">Cameras</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" data-toggle="dropdown">Persons</a>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="{% url 'add_person' %}">Add</a>
+                                <a class="dropdown-item" href="{% url 'modify_persons' %}">Modify</a>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" data-toggle="dropdown">Detections</a>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="{% url 'verified' %}">Verified</a>
+                                <a class="dropdown-item" href="{% url 'detections' %}">Uverified</a>
+                            </div>
+                        </li>  
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'recognition' %}">Recognition</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'settings' %}">Settings</a>
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'user_settings' %}">User settings</a>
                         </li>

@@ -1,11 +1,13 @@
 from django.shortcuts import render, redirect
 from django.core.exceptions import ValidationError
 from django.http import JsonResponse
+from django.contrib.auth.decorators import login_required
 from ..forms import AddPersonForm, UploadImageForm
 from ..models import Person, Image, Detection
 from ..utils.storage import set_save_location, delete_file, PERSONS_FOLDER_NAME
 
 
+@login_required
 def add_person(request):
     if request.method == 'POST':
         form = AddPersonForm(request.POST, request.FILES)
@@ -36,6 +38,7 @@ def add_person(request):
     return render(request, 'add-person.html')
 
 
+@login_required
 def persons(request, person_id=None):
     if request.method == 'GET':
         persons = Person.objects.all()
@@ -77,6 +80,7 @@ def persons(request, person_id=None):
         return JsonResponse({ 'success': True, 'message': 'Person deleted!' })
 
 
+@login_required
 def person_images(request, person_id):
     if request.method == 'POST':
         persons = Person.objects.all()
@@ -114,6 +118,7 @@ def person_images(request, person_id):
         return render(request, 'persons.html', context=ctx)
 
 
+@login_required
 def person_image(request, person_id, image_id):
     if request.method == 'DELETE':
         person = Person.objects.get(id=person_id)

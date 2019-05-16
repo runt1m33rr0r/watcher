@@ -22,10 +22,10 @@ urlpatterns = [
     path('recognition', views.recognition, name='recognition'),
     path('settings', views.settings, name='settings'),
 
-    path('user', views.user_settings, name='user_settings'),
-    path('user/login', views.login, name='login'),
-    path('user/register', views.register, name='register'),
-    path('user/logout', views.logout, name='logout'),
+    path('users', views.user_settings, name='user_settings'),
+    path('users/login', views.login, name='login'),
+    path('users/register', views.register, name='register'),
+    path('users/logout', views.logout, name='logout'),
 
     path('rest/settings/date', views.get_settings_date, name='get_settings_date'),
     path('rest/settings', views.get_settings, name='get_settings'),
