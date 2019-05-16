@@ -7,13 +7,12 @@ urlpatterns = [
     path('cameras', views.cameras, name='cameras'),
     path('cameras/<int:city_id>/', views.city, name='city'),
     path('cameras/<int:city_id>/<int:camera_id>', views.camera, name='camera'),
-    path('cameras/register', views.register_camera, name='register_camera'),
 
-    path('persons', views.persons, name='persons'),
     path('persons/add', views.add_person, name='add_person'),
-    path('persons/<int:person_id>/', views.persons, name='person'),
-    path('persons/<int:person_id>/images/', views.person_images, name='person_images'),
-    path('persons/<int:person_id>/images/<int:image_id>', views.person_image, name='person_image'),
+    path('persons/modify', views.persons, name='modify_persons'),
+    path('persons/modify/<int:person_id>/', views.persons, name='modify_person'),
+    path('persons/modify/<int:person_id>/images/', views.person_images, name='modify_person_images'),
+    path('persons/modify/<int:person_id>/images/<int:image_id>', views.person_image, name='modify_person_image'),
     
     path('detections', views.detections, name='detections'),
     path('detections/<int:person_id>', views.detections, name='detections_by_id'),
@@ -28,9 +27,10 @@ urlpatterns = [
     path('user/register', views.register, name='register'),
     path('user/logout', views.logout, name='logout'),
 
-    path('classifier', views.get_classifier_file, name='get_classifier'),
-    path('classifier/date', views.get_classifier_date, name='get_classifier_date'),
-
     path('rest/settings/date', views.get_settings_date, name='get_settings_date'),
     path('rest/settings', views.get_settings, name='get_settings'),
+    path('rest/detections', views.alert, name='alert'),
+    path('rest/classifier', views.get_classifier_file, name='get_classifier'),
+    path('rest/classifier/date', views.get_classifier_date, name='get_classifier_date'),
+    path('rest/cameras', views.register_camera, name='register_camera'),
 ]

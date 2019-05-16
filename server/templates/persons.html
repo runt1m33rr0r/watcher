@@ -9,11 +9,11 @@
     {% for person in persons %}
         <li class="nav-item d-flex flex-row justify-content-between">
             {% if person.id == chosen.id %}
-                <a class="nav-link text-light text-bold font-weight-bold" href="{% url 'person' person.id %}">{{ person.name }}</a>
+                <a class="nav-link text-light text-bold font-weight-bold" href="{% url 'modify_person' person.id %}">{{ person.name }}</a>
             {% else %}
-                <a class="nav-link text-light" href="{% url 'person' person.id %}">{{ person.name }}</a>
+                <a class="nav-link text-light" href="{% url 'modify_person' person.id %}">{{ person.name }}</a>
             {% endif %}
-            <button url="{% url 'person' person.id %}" type="button" class="btn btn-secondary mt-1 mb-1 delete-person">Delete</button>
+            <button url="{% url 'modify_person' person.id %}" type="button" class="btn btn-secondary mt-1 mb-1 delete-person">Delete</button>
         </li>
     {% endfor %}
 {% endblock %}
@@ -21,7 +21,7 @@
 {% block page_content %}
     <section id="person" class="d-flex flex-row flex-wrap w-100 h-100">
         {% if chosen %}
-            {% url 'person_images' chosen.id as person_images %}
+            {% url 'modify_person_images' chosen.id as person_images %}
             {% include "image-input.html" with send_text="Add image" action=person_images %}
         {% endif %}
 
@@ -30,7 +30,7 @@
                 {% for image in images %}
                     <div class="image">
                         <img class="w-100" src="{{ image.image_file.url }}">
-                        <button url="{% url 'person_image' chosen.id image.id %}" class="btn btn-secondary btn-lg active" role="button">Delete</button>
+                        <button url="{% url 'modify_person_image' chosen.id image.id %}" class="btn btn-secondary btn-lg active" role="button">Delete</button>
                     </div>
                 {% endfor %}
             </div>

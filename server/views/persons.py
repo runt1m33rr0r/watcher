@@ -1,4 +1,3 @@
-import os
 from django.shortcuts import render, redirect
 from django.core.exceptions import ValidationError
 from django.http import JsonResponse
@@ -59,7 +58,7 @@ def persons(request, person_id=None):
                     'images': chosen.images.all()
                 }
             else:
-                return redirect(f'/persons/{persons.first().id}')
+                return redirect(f'/persons/modify/{persons.first().id}')
 
         return render(request, 'persons.html', ctx)
     elif request.method == 'DELETE':

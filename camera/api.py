@@ -8,12 +8,12 @@ from threading import Thread
 
 camera_name = 'camera4'
 camera_city = 'Pernik'
-base_url = 'http://localhost:8000/'
+base_url = 'http://localhost:8000/rest/'
 classifier_url = f'{base_url}classifier'
-camera_register_url = f'{base_url}cameras/register'
-add_detection_url = f'{base_url}detections'
 classifier_date = f'{base_url}classifier/date'
-settings_url = f'{base_url}rest/settings'
+camera_register_url = f'{base_url}cameras'
+add_detection_url = f'{base_url}detections'
+settings_url = f'{base_url}settings'
 settings_date = f'{settings_url}/date'
 
 classifier_dir = os.path.abspath('./classifier/')

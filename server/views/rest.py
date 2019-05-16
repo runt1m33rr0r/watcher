@@ -1,9 +1,14 @@
+import os
 from rest_framework.parsers import JSONParser
 from rest_framework import status
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
+from django.views.static import serve
+from ..ai.classifier import classifier_path
 from ..serializers import CameraSerializer, CitySerializer
-from ..models import City, Settings, SettingsCreationDate
+from ..models import City, Settings, SettingsCreationDate, Detection, Image, Person, ClassifierCreationDate
+from ..utils.storage import set_save_location, DETECTIONS_FOLDER_NAME
+from ..utils.detections_watcher import detected
 
 
 @csrf_exempt
@@ -55,3 +60,41 @@ def get_settings(request):
         }
         
         return JsonResponse(res)
+
+
+@csrf_exempt
+def alert(request, person_id=None):
+    if request.method == 'POST':
+        person_name = request.POST['name']
+        person = Person.objects.get(name=person_name)
+        city_name = request.POST['city']
+        city = City.objects.get(name=city_name)
+        image_file = request.FILES['image']
+        image = Image(image_file=image_file)
+
+        set_save_location(f'{DETECTIONS_FOLDER_NAME}')
+        image.save()
+
+        detection = Detection(city=city, person=person, image=image)
+        detection.save()
+
+        detected(person_name, city_name, f'detections/{person.id}')
+
+        return JsonResponse({ 'success': True })
+
+
+@csrf_exempt
+def get_classifier_file(request):
+    if request.method == 'GET':
+        return serve(request, os.path.basename(classifier_path), os.path.dirname(classifier_path))
+
+
+@csrf_exempt
+def get_classifier_date(request):
+    if request.method == 'GET':
+        if ClassifierCreationDate.objects.filter().exists():
+            date = ClassifierCreationDate.objects.get()
+
+            return JsonResponse({ 'date': date.date })
+        else:
+            return JsonResponse({ 'date': None })

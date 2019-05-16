@@ -3,10 +3,10 @@
 {% block sidebar_list %}
     {% for person in persons %}
         <li class="nav-item">
-            {% if person.person_id == chosen %}
-                <a class="nav-link font-weight-bold text-light" href="{% url 'verified_by_id' person.person_id %}">{{ person.name }}</a>
+            {% if person.id == chosen %}
+                <a class="nav-link font-weight-bold text-light" href="{% url 'verified_by_id' person.id %}">{{ person.name }}</a>
             {% else %}
-                <a class="nav-link text-light" href="{% url 'verified_by_id' person.person_id %}">{{ person.name }}</a>
+                <a class="nav-link text-light" href="{% url 'verified_by_id' person.id %}">{{ person.name }}</a>
             {% endif %}
         </li>
     {% endfor %}
