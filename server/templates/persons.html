@@ -21,7 +21,6 @@
 {% block page_content %}
     <section id="person" class="d-flex flex-row flex-wrap w-100 h-100">
         {% if chosen %}
-            {% load server_extras %}
             {% url 'person_images' chosen.id as person_images %}
             {% include "image-input.html" with send_text="Add image" action=person_images %}
         {% endif %}
