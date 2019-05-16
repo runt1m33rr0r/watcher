@@ -7,7 +7,7 @@
 
 {% block content %}
     <section id="settings" class="d-flex flex-column h-100 bg-black text-light overflow-auto">
-        <form id="settingsForm" class="center-flex-item" method="post" action="/settings">
+        <form id="settingsForm" class="center-flex-item" method="post" action="{% url 'settings' %}">
             {% csrf_token %}
             <label class="mt-3" for="sensitivity">Detection sensitivity: </label>
             <input type="range" class="custom-range" value="{{ settings.detection_sensitivity }}" min="0" max="1" step="0.01" name="detection_sensitivity" id="sensitivity">

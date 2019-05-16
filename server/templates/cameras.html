@@ -9,22 +9,22 @@
     {% for city in cities %}
         {% if city.id == chosen_city.id %}
             <li class="nav-item item">
-                <a class="nav-link font-weight-bold text-white" href="/cameras/{{ city.id }}">{{ city.name }}</a>
+                <a class="nav-link font-weight-bold text-white" href="{% url 'city' city.id %}">{{ city.name }}</a>
             </li>
             {% for camera in cameras %}
                 {% if camera.id == chosen_camera.id %}
                     <li class="nav-item subitem">
-                        <a class="nav-link text-white" href="/cameras/{{ city.id }}/{{ camera.id }}">{{ camera.name }}</a>
+                        <a class="nav-link text-white" href="{% url 'camera' city.id camera.id %}">{{ camera.name }}</a>
                     </li>
                 {% else %}
                     <li class="nav-item subitem">
-                        <a class="nav-link text-light" href="/cameras/{{ city.id }}/{{ camera.id }}">{{ camera.name }}</a>
+                        <a class="nav-link text-light" href="{% url 'camera' city.id camera.id %}">{{ camera.name }}</a>
                     </li>
                 {% endif %}
             {% endfor %}
         {% else %}
             <li class="nav-item item">
-                <a class="nav-link text-white" href="/cameras/{{ city.id }}">{{ city.name }}</a>
+                <a class="nav-link text-white" href="{% url 'city' city.id %}">{{ city.name }}</a>
             </li>
         {% endif %}
     {% endfor %}

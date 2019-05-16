@@ -7,7 +7,7 @@
 
 {% block sidebar_content %}
     <li class="nav-item">
-        <a id="allLink" class="nav-link text-light" href="/detections">All</a>
+        <a id="allLink" class="nav-link text-light" href="{% url 'detections' %}">All</a>
     </li>
     {% block sidebar_list %}{% endblock %}
 {% endblock %}

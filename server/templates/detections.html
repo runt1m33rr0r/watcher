@@ -4,9 +4,9 @@
     {% for person in persons %}
         <li class="nav-item d-flex flex-row justify-content-between">
             {% if person.person_id == chosen %}
-                <a class="nav-link font-weight-bold text-light" href="/detections/{{ person.person_id }}">{{ person.name }}</a>
+                <a class="nav-link font-weight-bold text-light" href="{% url 'detections_by_id' person.person_id %}">{{ person.name }}</a>
             {% else %}
-                <a class="nav-link text-light" href="/detections/{{ person.person_id }}">{{ person.name }}</a>
+                <a class="nav-link text-light" href="{% url 'detections_by_id' person.person_id %}">{{ person.name }}</a>
             {% endif %}
             <button type="button" class="btn btn-secondary mt-1 mb-1" data-toggle="modal" data-target="#{{ person.name }}">Image</button>
         </li>

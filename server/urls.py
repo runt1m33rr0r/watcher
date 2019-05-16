@@ -3,9 +3,6 @@ from . import views
 
 urlpatterns = [
     path('', views.index, name='index'),
-    path('login', views.login, name='login'),
-    path('register', views.register, name='register'),
-    path('logout', views.logout, name='logout'),
 
     path('cameras', views.cameras, name='cameras'),
     path('cameras/<int:city_id>/', views.city, name='city'),
@@ -25,7 +22,11 @@ urlpatterns = [
     
     path('recognition', views.recognition, name='recognition'),
     path('settings', views.settings, name='settings'),
+
     path('user', views.user_settings, name='user_settings'),
+    path('user/login', views.login, name='login'),
+    path('user/register', views.register, name='register'),
+    path('user/logout', views.logout, name='logout'),
 
     path('classifier', views.get_classifier_file, name='get_classifier'),
     path('classifier/date', views.get_classifier_date, name='get_classifier_date'),

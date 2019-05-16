@@ -7,7 +7,7 @@
 
 {% block content %}
     <section class="text-center d-flex flex-column bg-black text-light overflow-auto w-100 h-100" id="page"> 
-        <form class="form-signin was-validated center-flex-item" action="/login" method="post">
+        <form class="form-signin was-validated center-flex-item" action="{% url 'login' %}" method="post">
             {% csrf_token %}
             <h1 class="h3 mb-3 font-weight-normal">Sign in</h1>
             <label for="userInput" class="sr-only">User name</label>
