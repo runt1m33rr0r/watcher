@@ -1,9 +1,8 @@
 import urllib.request
-import os
-import pickle
 from datetime import datetime
 import requests
 from threading import Thread
+from .storage import *
 
 
 camera_name = 'camera4'
@@ -16,11 +15,7 @@ add_detection_url = f'{base_url}detections'
 settings_url = f'{base_url}settings'
 settings_date = f'{settings_url}/date'
 
-classifier_dir = os.path.abspath('./classifier/')
-classifier_path = os.path.join(classifier_dir, 'classifier.clf')
-classifier_date_path = os.path.join(classifier_dir, 'date.pkl')
-settings_path = os.path.join(classifier_dir, 'settings.pkl')
-settings_date_path = os.path.join(classifier_dir, 'settings_date.pkl') 
+
 alerts = {}
 settings = {
     'detection_sensitivity': 0.55,
@@ -33,7 +28,7 @@ settings = {
 def alert(name, frame):
     def alert_request():
         data = { 'name': name, 'city': camera_city }
-        requests.post(url=add_detection_url, data=data, files={'image': ('image.jpg', frame)})
+        requests.post(url=add_detection_url, data=data, files={ 'image': ('image.jpg', frame) })
 
     should_alert = False
 
@@ -58,9 +53,14 @@ def register_camera():
     requests.post(url=camera_register_url, json=data)
 
 
-def create_classifier_dir():
-    if not os.path.isdir(classifier_dir):
-        os.mkdir(classifier_dir)
+def download_settings():
+    return requests.get(url=settings_url).json()
+
+
+def download_settings_date():
+    data = requests.get(url=settings_date).json()
+
+    return data['date']
 
 
 def download_classifier():
@@ -74,67 +74,6 @@ def download_classifier_date():
     data = requests.get(url=classifier_date).json()
 
     return data['date']
-
-
-def download_settings():
-    return requests.get(url=settings_url).json()
-
-
-def download_settings_date():
-    data = requests.get(url=settings_date).json()
-
-    return data['date']
-
-
-def _load_pickle(path):
-    if not os.path.isfile(path):
-        return
-
-    with open(path, 'rb') as f:
-        return pickle.load(f)
-
-
-def _dump_pickle(path, data):
-    with open(path, 'wb') as f:
-        pickle.dump(data, f)
-
-
-def save_classifier_date(date):
-    create_classifier_dir()
-    _dump_pickle(classifier_date_path, date)
-
-
-def save_classifier(classifier):
-    create_classifier_dir()
-
-    with open(classifier_path, 'wb') as f:
-        f.write(classifier)
-
-
-def save_settings_date(date):
-    create_classifier_dir()
-    _dump_pickle(settings_date_path, date)
-
-
-def save_settings(settings):
-    create_classifier_dir()
-    _dump_pickle(settings_path, settings)
-
-
-def get_classifier_date():
-    return _load_pickle(classifier_date_path)
-
-    
-def get_classifier():
-    return _load_pickle(classifier_path)
-
-
-def get_settings_date():
-    return _load_pickle(settings_date_path)
-
-
-def get_settings():
-    return _load_pickle(settings_path)
 
 
 def update():

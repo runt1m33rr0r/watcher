@@ -1,45 +1,46 @@
 import cv2
 import threading
 from time import sleep
-from .processing import ImageProcessor
+import camera.processing as processing
 from .api import register_camera
 
 
-class Camera(object):
-    _frame = None
-    _thread = None
-    _process_this_frame = True
+frame = None
+_thread = None
+_process_this_frame = True
 
-    @classmethod
-    def initialize(cls):
-        if cls._thread is None:
-            ImageProcessor.init()
-            cls._thread = threading.Thread(target=cls._run_camera)
-            cls._thread.start()
 
-            while cls.get_frame() is None:
-                sleep(0.1)
+def _run_camera():
+    global _process_this_frame
+    global frame
 
-            register_camera()
-        
-    @classmethod
-    def get_frame(cls):
-        return cls._frame
+    video = cv2.VideoCapture(0)
 
-    @classmethod
-    def _run_camera(cls):
-        video = cv2.VideoCapture(0)
+    if not video.isOpened():
+        raise RuntimeError('Could not start camera.')
 
-        if not video.isOpened():
-            raise RuntimeError('Could not start camera.')
+    while True:
+        success, image = video.read()
 
-        while True:
-            success, image = video.read()
+        if not success:
+            continue
 
-            if not success:
-                continue
+        if _process_this_frame:
+            frame = processing.process_video_frame(image)
 
-            if cls._process_this_frame:
-                cls._frame = ImageProcessor.process_video_frame(image)
 
-            cls._process_this_frame = not cls._process_this_frame
+        _process_this_frame = not _process_this_frame
+
+
+def init():
+    global _thread
+
+    if _thread is None:
+        processing.init()
+        _thread = threading.Thread(target=_run_camera)
+        _thread.start()
+
+        while frame is None:
+            sleep(0.1)
+
+        register_camera()
