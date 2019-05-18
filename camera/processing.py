@@ -1,7 +1,7 @@
 import cv2
 from PIL import Image
 from io import BytesIO
-from .api import alert, get_classifier, update, settings
+from .api import alert, update, get_settings, get_classifier
 import face_recognition
 from time import sleep
 import threading
@@ -10,19 +10,19 @@ from common.ai import draw_boxes, predict
 
 UNKNOWN = 'unknown'
 
-_can_process = True
-_classifier = None
+_can_process = False
 _updater_thread = None
 _update_timeout = 300
-_downscale = 2
+_settings = None
+_downscale = None
 _sensitivity = 0.55
 
 
 def _classifier_updater_thread():
     global _can_process
-    global _classifier
     global _can_process
     global _update_timeout
+    global _settings
     global _downscale
     global _sensitivity
 
@@ -31,12 +31,12 @@ def _classifier_updater_thread():
 
         _can_process = False
         update()
-        _classifier = get_classifier()
+        _settings = get_settings()
+        _update_timeout = _settings['camera_update_timeout'] * 60
+        _sensitivity = _settings['detection_sensitivity']
+        _downscale = _settings['downscale_level']
         _can_process = True
-        _update_timeout = settings['camera_update_timeout'] * 60
-        _downscale = settings['downscale_level']
-        _sensitivity = settings['detection_sensitivity']
-
+        
         sleep(_update_timeout)
 
 
@@ -52,7 +52,7 @@ def process_video_frame(frame):
     name = UNKNOWN
 
     if _can_process:
-        prediction = predict(frame, _classifier, _downscale, _sensitivity)
+        prediction = predict(frame, get_classifier(), _downscale, _sensitivity)
         draw_boxes(frame, prediction, _downscale)
 
         for person in prediction:

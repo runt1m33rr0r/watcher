@@ -1,7 +1,6 @@
 from flask import Flask, Response
 import camera.camera as camera
 from time import sleep
-from camera.api import get_classifier_date
 
 
 app = Flask(__name__)

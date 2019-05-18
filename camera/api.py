@@ -2,46 +2,49 @@ import urllib.request
 from datetime import datetime
 import requests
 from threading import Thread
-from .storage import *
 
 
-camera_name = 'camera4'
-camera_city = 'Pernik'
-base_url = 'http://localhost:8000/rest/'
-classifier_url = f'{base_url}classifier'
-classifier_date = f'{base_url}classifier/date'
-camera_register_url = f'{base_url}cameras'
-add_detection_url = f'{base_url}detections'
-settings_url = f'{base_url}settings'
-settings_date = f'{settings_url}/date'
+_camera_name = 'camera4'
+_camera_city = 'Pernik'
+_base_url = 'http://localhost:8000/rest/'
+_classifier_url = f'{_base_url}classifier'
+_classifier_date_url = f'{_base_url}classifier/date'
+_camera_register_url = f'{_base_url}cameras'
+_add_detection_url = f'{_base_url}detections'
+_settings_url = f'{_base_url}settings'
+_settings_date_url = f'{_settings_url}/date'
+_alerts = {}
+_settings_date = None
+_classifier_date = None
+_settings = None
+_classifier = None
 
 
-alerts = {}
-settings = {
-    'detection_sensitivity': 0.55,
-    'downscale_level': 2,
-    'alert_timeout': 3,
-    'camera_update_timeout': 3,
-}
+def get_settings():
+    return _settings
+
+
+def get_classifier():
+    return _classifier
 
 
 def alert(name, frame):
     def alert_request():
-        data = { 'name': name, 'city': camera_city }
-        requests.post(url=add_detection_url, data=data, files={ 'image': ('image.jpg', frame) })
+        data = { 'name': name, 'city': _camera_city }
+        requests.post(url=_add_detection_url, data=data, files={ 'image': ('image.jpg', frame) })
 
     should_alert = False
 
-    if not alerts.get(name):
-        alerts[name] = datetime.utcnow()
+    if not _alerts.get(name):
+        _alerts[name] = datetime.utcnow()
         should_alert = True
     else:
         now = datetime.utcnow()
-        last_alerted = alerts[name]
+        last_alerted = _alerts[name]
         diff = now - last_alerted
         
-        if diff.seconds / 60 > settings['alert_timeout']:
-            alerts[name] = now
+        if diff.seconds / 60 > _settings['alert_timeout']:
+            _alerts[name] = now
             should_alert = True
         
     if should_alert:
@@ -49,52 +52,47 @@ def alert(name, frame):
 
 
 def register_camera():
-    data = { 'city': camera_city, 'name': camera_name, 'url': 'http://localhost:5000/feed' }
-    requests.post(url=camera_register_url, json=data)
+    data = { 'city': _camera_city, 'name': _camera_name, 'url': 'http://localhost:5000/feed' }
+    requests.post(url=_camera_register_url, json=data)
 
 
 def download_settings():
-    return requests.get(url=settings_url).json()
+    print('pulled new settings')
+
+    return requests.get(url=_settings_url).json()
 
 
 def download_settings_date():
-    data = requests.get(url=settings_date).json()
-
-    return data['date']
+    return requests.get(url=_settings_date_url).json()['date']
 
 
 def download_classifier():
     print('pulled new classifier')
-    response = urllib.request.urlopen(classifier_url)
-
-    return response.read()
+    
+    return urllib.request.urlopen(_classifier_url).read()
 
 
 def download_classifier_date():
-    data = requests.get(url=classifier_date).json()
-
-    return data['date']
+    return requests.get(url=_classifier_date_url).json()['date']
 
 
 def update():
-    local_classifier_date = get_classifier_date()
-    local_classifier = get_classifier()
+    global _classifier
+    global _classifier_date
+    global _settings
+    global _settings_date
+
     remote_classifier_date = download_classifier_date()
     remote_classifier = download_classifier()
-
-    local_settings_date = get_settings_date()
-    local_settings = get_settings()
     remote_settings_date = download_settings_date()
     remote_settings = download_settings()
 
-    if (not local_classifier_date or not local_classifier) or \
-        local_classifier_date != remote_classifier_date:
-        save_classifier(remote_classifier)
-        save_classifier_date(remote_classifier_date)
+    if not _classifier_date or not _classifier or \
+        _classifier_date != remote_classifier_date:
+        _classifier = remote_classifier
+        _classifier_date = remote_classifier_date
 
-    if (not local_settings_date or not local_settings) or \
-        local_settings_date != remote_settings_date:
-        save_settings(remote_settings)
-        save_settings_date(remote_settings_date)
-
-    settings = get_settings()
+    if not _settings_date or not _settings or \
+        _settings_date != remote_settings_date:
+        _settings = remote_settings
+        _settings_date = remote_classifier_date
