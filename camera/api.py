@@ -4,9 +4,13 @@ import requests
 from threading import Thread
 
 
-_camera_name = 'camera4'
-_camera_city = 'Pernik'
-_base_url = 'http://localhost:8000/rest/'
+_camera_name = 'camera'
+_camera_city = 'City'
+_camera_host = '0.0.0.0'
+_camera_port = 5000
+_camera_url = f'http://{_camera_host}:{_camera_port}/feed'
+_central_server = 'http://localhost:8000/'
+_base_url = f'{_central_server}rest/'
 _classifier_url = f'{_base_url}classifier'
 _classifier_date_url = f'{_base_url}classifier/date'
 _camera_register_url = f'{_base_url}cameras'
@@ -20,12 +24,42 @@ _settings = None
 _classifier = None
 
 
+def _set_camera_url(host, port):
+    global _camera_url, _camera_port, _camera_host
+    _camera_host = host
+    _camera_port = port
+    _camera_url = f'http://{_camera_host}:{_camera_port}/feed'
+
+
 def get_settings():
     return _settings
 
 
 def get_classifier():
     return _classifier
+
+
+def set_camera_name(name):
+    global _camera_name
+    _camera_name = name
+
+
+def set_camera_city(city_name):
+    global _camera_city
+    _camera_city = city_name
+
+
+def set_camera_host(host):
+    _set_camera_url(host, _camera_port)
+
+
+def set_camera_port(port):
+    _set_camera_url(_camera_host, port)
+
+
+def set_central_server(server):
+    global _central_server
+    _central_server = server
 
 
 def alert(name, frame):
