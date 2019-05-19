@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from ..models import City
 
@@ -39,9 +39,9 @@ def cameras(request):
 def city(request, city_id):
     if request.method == 'GET':
         cities = City.objects.all()
-        city = cities.get(id=city_id)
+        city = get_object_or_404(cities, id=city_id)
         cameras = city.cameras.all()
-        chosen_camera = city.cameras.first()
+        chosen_camera = cameras.first()
 
         ctx = {
             'cities': cities, 
@@ -61,9 +61,9 @@ def city(request, city_id):
 def camera(request, city_id, camera_id):
     if request.method == 'GET':
         cities = City.objects.all()
-        chosen_city = City.objects.get(id=city_id)
+        chosen_city = get_object_or_404(cities, id=city_id)
         cameras = chosen_city.cameras.all()
-        camera = cameras.get(id=camera_id)
+        camera = get_object_or_404(cameras, id=camera_id)
 
         ctx = {
             'cities': cities,

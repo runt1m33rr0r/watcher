@@ -1,14 +1,13 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.core.paginator import Paginator
 from django.http import JsonResponse
-from rest_framework.parsers import JSONParser
 from django.contrib.auth.decorators import login_required
+from rest_framework.parsers import JSONParser
 from ..models import Detection, Person
 from ..utils.storage import delete_file
 
 
-@login_required
-def get_detections(request, verified, render_page, person_id):
+def _get_detections(request, verified, render_page, person_id):
     detections = Detection.objects.filter(verified=verified).order_by('person__name')
     persons = Person.objects.all()
     ctx = { 'elements': detections, 'persons': persons }
@@ -33,8 +32,7 @@ def get_detections(request, verified, render_page, person_id):
     return render(request, render_page, context=ctx)
 
 
-@login_required
-def delete_detection(request):
+def _delete_detection(request):
     data = JSONParser().parse(request)
     detection_id = data['id']
 
@@ -50,15 +48,15 @@ def delete_detection(request):
 @login_required
 def detections(request, person_id=None):
     if request.method == 'GET':
-        return get_detections(request, False, 'detections.html', person_id)
+        return _get_detections(request, False, 'detections.html', person_id)
     elif request.method == 'DELETE':
-        return delete_detection(request)
+        return _delete_detection(request)
 
 
 @login_required
 def verified(request, person_id=None):
     if request.method == 'GET':
-        return get_detections(request, True, 'verified.html', person_id)
+        return _get_detections(request, True, 'verified.html', person_id)
     elif request.method == 'POST':
         id = JSONParser().parse(request)['id']
         detection = Detection.objects.get(id=id)
@@ -67,4 +65,4 @@ def verified(request, person_id=None):
 
         return JsonResponse({ 'success': True })
     elif request.method == 'DELETE':
-        return delete_detection(request)
+        return _delete_detection(request)
