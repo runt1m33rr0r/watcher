@@ -14,12 +14,11 @@ _can_process = False
 _updater_thread = None
 _update_timeout = 300
 _settings = None
-_downscale = None
+_downscale = 2
 _sensitivity = 0.55
 
 
 def _classifier_updater_thread():
-    global _can_process
     global _can_process
     global _update_timeout
     global _settings
@@ -31,10 +30,14 @@ def _classifier_updater_thread():
 
         _can_process = False
         update()
-        _settings = get_settings()
-        _update_timeout = _settings['camera_update_timeout'] * 60
-        _sensitivity = _settings['detection_sensitivity']
-        _downscale = _settings['downscale_level']
+        new_settings = get_settings()
+        
+        if new_settings:
+            _settings = new_settings
+            _update_timeout = _settings['camera_update_timeout'] * 60
+            _sensitivity = _settings['detection_sensitivity']
+            _downscale = _settings['downscale_level']
+
         _can_process = True
         
         sleep(_update_timeout)
@@ -50,9 +53,10 @@ def init():
 
 def process_video_frame(frame):
     name = UNKNOWN
+    classifier = get_classifier()
 
-    if _can_process:
-        prediction = predict(frame, get_classifier(), _downscale, _sensitivity)
+    if _can_process and classifier:
+        prediction = predict(frame, classifier, _downscale, _sensitivity)
         draw_boxes(frame, prediction, _downscale)
 
         for person in prediction:

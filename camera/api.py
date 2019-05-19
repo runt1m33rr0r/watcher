@@ -2,7 +2,10 @@ import urllib.request
 from datetime import datetime
 import requests
 from threading import Thread
+import pickle
 
+
+CONNECTION_ERROR = 'COULD NOT CONNECT TO MAIN SERVER!!!'
 
 _camera_name = 'camera'
 _camera_city = 'City'
@@ -64,8 +67,11 @@ def set_central_server(server):
 
 def alert(name, frame):
     def alert_request():
-        data = { 'name': name, 'city': _camera_city }
-        requests.post(url=_add_detection_url, data=data, files={ 'image': ('image.jpg', frame) })
+        try:
+            data = { 'name': name, 'city': _camera_city }
+            requests.post(url=_add_detection_url, data=data, files={ 'image': ('image.jpg', frame) })
+        except:
+            print(CONNECTION_ERROR)
 
     should_alert = False
 
@@ -86,28 +92,58 @@ def alert(name, frame):
 
 
 def register_camera():
-    data = { 'city': _camera_city, 'name': _camera_name, 'url': 'http://localhost:5000/feed' }
-    requests.post(url=_camera_register_url, json=data)
+    try:
+        data = { 'city': _camera_city, 'name': _camera_name, 'url': 'http://localhost:5000/feed' }
+        requests.post(url=_camera_register_url, json=data)
+    except:
+        print(CONNECTION_ERROR)
 
 
 def download_settings():
-    print('pulled new settings')
+    try:
+        res = requests.get(url=_settings_url).json()
+        print('pulled new settings')
 
-    return requests.get(url=_settings_url).json()
+        return res
+    except:
+        print(CONNECTION_ERROR)
+
+    return None
 
 
 def download_settings_date():
-    return requests.get(url=_settings_date_url).json()['date']
+    try:
+        res = requests.get(url=_settings_date_url).json()['date']
+
+        return res
+    except:
+        print(CONNECTION_ERROR)
+
+    return None
 
 
 def download_classifier():
-    print('pulled new classifier')
+    try:
+        res = urllib.request.urlopen(_classifier_url).read()
+        print('pulled new classifier')
+
+        return pickle.loads(res)
+    except Exception as e:
+        print(e)
+        print(CONNECTION_ERROR)
     
-    return urllib.request.urlopen(_classifier_url).read()
+    return None
 
 
 def download_classifier_date():
-    return requests.get(url=_classifier_date_url).json()['date']
+    try:
+        res = requests.get(url=_classifier_date_url).json()['date']
+
+        return res
+    except:
+        print(CONNECTION_ERROR)
+        
+    return None
 
 
 def update():
