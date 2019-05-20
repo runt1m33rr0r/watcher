@@ -40,19 +40,19 @@ def _delete_detection(request):
     detection_id = data.get('id')
 
     if not detection_id:
-        return JsonResponse({ 'error': True })
+        return JsonResponse({ 'error': True, 'message': 'Missing detection id!' })
 
     try:
         detection = Detection.objects.get(id=detection_id)
     except Detection.DoesNotExist:
-        return JsonResponse({ 'error': True })
+        return JsonResponse({ 'error': True, 'message': 'Detection with this id does not exist!' })
     
     image = detection.image
     detection.delete()
     delete_file(image.image_file.path)
     image.delete()
 
-    return JsonResponse({ 'success': True })
+    return JsonResponse({ 'success': True, 'message': 'Deleted the image!' })
 
 
 @login_required
@@ -71,16 +71,16 @@ def verified(request, person_id=None):
         id = JSONParser().parse(request).get('id')
         
         if not id:
-            return JsonResponse({ 'error': True })
+            return JsonResponse({ 'error': True, 'message': 'Missing id!' })
 
         try:
             detection = Detection.objects.get(id=id)
         except Detection.DoesNotExist:
-            return JsonResponse({ 'error': True })
+            return JsonResponse({ 'error': True, 'message': 'Detection with this id does not exist!' })
             
         detection.verified = True
         detection.save()
 
-        return JsonResponse({ 'success': True })
+        return JsonResponse({ 'success': True, 'message': 'Verified successfully!' })
     elif request.method == 'DELETE':
         return _delete_detection(request)

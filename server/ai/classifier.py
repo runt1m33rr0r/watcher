@@ -15,6 +15,30 @@ UNKNOWN = 'unknown'
 classifier_dir = os.path.join(BASE_DIR, 'classifier')
 classifier_path = f'{classifier_dir}/knn_model.clf'
 
+_settings = None
+_downscale = None
+_sensitivity = None
+_classifier = None
+_initialized = False
+
+
+def _init():
+    global _initialized
+
+    if _initialized:
+        return
+
+    global _settings
+    global _downscale
+    global _sensitivity
+    global _classifier
+
+    _settings = Settings.objects.get_or_create()[0]
+    _downscale = _settings.downscale_level
+    _sensitivity = _settings.detection_sensitivity
+    _classifier = get_classifier()
+    _initialized = True
+
 
 def save_classifier(classifier):
     if not os.path.isdir(classifier_dir):
@@ -34,36 +58,17 @@ def get_classifier():
         return None
 
 
-class ImageProcessor(object):
-    _settings = None
-    _downscale = None
-    _sensitivity = None
-    _classifier = None
-    _initialized = False
+def process_frame(frame):
+    _init()
 
-    @classmethod
-    def _init(cls):
-        if cls._initialized:
-            return
+    frame = Image.open(frame)
+    frame = cv2.cvtColor(np.array(frame), cv2.COLOR_RGB2BGR)
+    prediction = predict(frame, _classifier, _downscale, _sensitivity)
+    draw_boxes(frame, prediction, _downscale)
 
-        cls._settings = Settings.objects.get_or_create()[0]
-        cls._downscale = cls._settings.downscale_level
-        cls._sensitivity = cls._settings.detection_sensitivity
-        cls._classifier = get_classifier()
-        cls._initialized = True
+    ret, jpeg = cv2.imencode('.jpg', frame)
 
-    @classmethod
-    def process_frame(cls, frame):
-        cls._init()
+    if not ret:
+        return
 
-        frame = Image.open(frame)
-        frame = cv2.cvtColor(np.array(frame), cv2.COLOR_RGB2BGR)
-        prediction = predict(frame, cls._classifier, cls._downscale, cls._sensitivity)
-        draw_boxes(frame, prediction, cls._downscale)
-
-        ret, jpeg = cv2.imencode('.jpg', frame)
-
-        if not ret:
-            return
-
-        return jpeg.tobytes()
+    return jpeg.tobytes()

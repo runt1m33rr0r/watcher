@@ -1,6 +1,5 @@
 import os
 from rest_framework.parsers import JSONParser
-from rest_framework import status
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 from django.views.static import serve
@@ -26,7 +25,7 @@ def register_camera(request):
             if city.is_valid():
                 city = city.save()
             else:
-                return JsonResponse(city.errors, status=status.HTTP_400_BAD_REQUEST)
+                return JsonResponse({ 'error': True, 'message': 'Invalid city!' })
 
         camera = CameraSerializer(data=data)
 
@@ -34,9 +33,9 @@ def register_camera(request):
             saved = camera.save()
             city.cameras.add(saved)
 
-            return JsonResponse(camera.data, status=status.HTTP_201_CREATED)
+            return JsonResponse({ 'success': True, 'message': 'City created!' })
         else:
-            return JsonResponse(camera.errors, status=status.HTTP_400_BAD_REQUEST)
+            return JsonResponse({ 'error': True, 'message': 'Invalid camera!' })
 
 
 @csrf_exempt
@@ -45,7 +44,7 @@ def get_settings_date(request):
         Settings.objects.get_or_create()
         date = SettingsCreationDate.objects.get_or_create()[0].date
         
-        return JsonResponse({ 'success': True, 'date': date })
+        return JsonResponse({ 'success': True, 'message': 'Success!', 'date': date })
 
 
 @csrf_exempt
@@ -54,6 +53,7 @@ def get_settings(request):
         settings = Settings.objects.get_or_create()[0]
         res = {
             'success': True,
+            'message': 'Success!',
             'detection_sensitivity': settings.detection_sensitivity,
             'downscale_level': settings.downscale_level,
             'alert_timeout': settings.alert_timeout,
@@ -92,9 +92,9 @@ def alert(request, person_id=None):
             detection.save()
             detected(person_name, city_name, f'detections/{person.id}')
 
-            return JsonResponse({ 'success': True })
+            return JsonResponse({ 'success': True, 'message': 'Alert successful!' })
         else:
-            return JsonResponse({ 'error': True })
+            return JsonResponse({ 'error': True, 'message': 'Invalid input data!' })
 
 
 @csrf_exempt
@@ -109,6 +109,6 @@ def get_classifier_date(request):
         if ClassifierCreationDate.objects.filter().exists():
             date = ClassifierCreationDate.objects.get()
 
-            return JsonResponse({ 'success': True, 'date': date.date })
+            return JsonResponse({ 'success': True, 'message': 'Success!', 'date': date.date })
         else:
-            return JsonResponse({ 'error': True, 'date': None })
+            return JsonResponse({ 'error': True, 'message': 'Failure!', 'date': None })

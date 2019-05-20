@@ -32,6 +32,7 @@ def logout(request):
     return redirect(index)
 
 
+@login_required
 def register(request):
     if request.method == 'POST':
         try:

@@ -1,7 +1,7 @@
 import base64
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-from ..ai.classifier import ImageProcessor
+from ..ai.classifier import process_frame
 from ..models import Settings, SettingsCreationDate
 from ..forms import SettingsForm, UploadImageForm
 
@@ -16,7 +16,7 @@ def recognition(request):
         if form.is_valid():
             data = form.cleaned_data
             image = data['image']
-            processed = ImageProcessor.process_frame(image)
+            processed = process_frame(image)
             processed = base64.b64encode(processed).decode('utf-8')
         else:
             return render(request, 'recognition.html', context={ 'error': True, 'message': 'Invalid form!' })

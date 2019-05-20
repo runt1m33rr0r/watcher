@@ -36,6 +36,8 @@
         if (!isFileValid) {
             ev.preventDefault();
             ev.stopPropagation();
+        } else {
+            $(this).find("button[type='submit']").attr("disabled", "");
         }
     });
 })();

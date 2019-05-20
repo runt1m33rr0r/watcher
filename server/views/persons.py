@@ -20,8 +20,8 @@ def add_person(request):
             try:
                 image.full_clean()
                 person.full_clean()
-            except ValidationError as e:
-                ctx = { 'error': True, 'message': e }
+            except ValidationError:
+                ctx = { 'error': True, 'message': 'Invalid input data!' }
 
                 return render(request, 'add-person.html', context=ctx)
             
@@ -106,9 +106,9 @@ def person_images(request, person_id):
 
             try:
                 image.full_clean()
-            except ValidationError as e:
+            except ValidationError:
                 ctx['error'] = True
-                ctx['message'] = e
+                ctx['message'] = 'Invalid image!'
                 return render(request, 'persons.html', context=ctx)
 
             set_save_location(f'{PERSONS_FOLDER_NAME}/{person.name}')
