@@ -8,29 +8,29 @@
             {% else %}
                 <a class="nav-link text-light" href="{% url 'detections_by_id' person.id %}">{{ person.name }}</a>
             {% endif %}
-            <button type="button" class="btn btn-secondary mt-1 mb-1" data-toggle="modal" data-target="#{{ person.name }}">Image</button>
+            <button person-name="{{ person.name }}" img-src="/media/{{ person.images.first.image_file }}"
+                type="button" class="btn btn-secondary mt-1 mb-1 image-button" 
+                data-toggle="modal" data-target="#imageModal">Image</button>
         </li>
     {% endfor %}
 {% endblock %}
 
 {% block detections_content %}
-    {% for person in persons %}
-        <div class="modal fade" id="{{ person.name }}" role="dialog">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content bg-dark text-light">
-                    <div class="modal-header">
-                        <h5 class="modal-title">{{ person.name }}</h5>
-                        <button type="button" class="close" data-dismiss="modal">
-                            <span class="text-light">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <img class="w-100" src="/media/{{ person.images.first.image_file }}">
-                    </div>
+    <div class="modal fade" id="imageModal" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content bg-dark text-light">
+                <div class="modal-header">
+                    <h5 class="modal-title"></h5>
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span class="text-light">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <img class="w-100" src="">
                 </div>
             </div>
         </div>
-    {% endfor %}
+    </div>
 {% endblock %}
 
 {% block detection_controls %}
