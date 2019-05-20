@@ -2,7 +2,7 @@
 
 # todo
 1. registration, login, logout: done
-2. user authorization: almost done
+2. user authorization: done
 3. page with camera list and monitoring: done
 4. page for adding and deleting persons: done
 5. notification on detection: done
