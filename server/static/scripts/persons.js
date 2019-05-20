@@ -19,16 +19,20 @@
     });
 
     $(".delete-person").on("click", function() {
-        $.ajax({
-            url: $(this).attr("url"),
-            method: "DELETE",
-            success: function(data) {
-                if (data.success == true) {
-                    window.location.replace("/persons/modify");
-                } else {
-                    showErrorMessage(data.message);
+        var url = $(this).attr("url");
+
+        $("#deleteModal .modal-footer .btn-danger").on("click", function() {
+            $.ajax({
+                url: url,
+                method: "DELETE",
+                success: function(data) {
+                    if (data.success == true) {
+                        window.location.replace("/persons/modify");
+                    } else {
+                        showErrorMessage(data.message);
+                    }
                 }
-            }
+            });
         });
     });
 })();
