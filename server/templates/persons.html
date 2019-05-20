@@ -15,7 +15,7 @@
             {% endif %}
             <button url="{% url 'modify_person' person.id %}" modal-title="Delete {{ person.name }}"
                 modal-body="Are you sure you want to completely delete {{ person.name }}?"
-                type="button" class="btn btn-secondary mt-1 mb-1 delete-person modal-button" data-toggle="modal" 
+                type="button" class="btn btn-secondary mt-1 mb-1 modal-button" data-toggle="modal" 
                 data-target="#deleteModal">Delete</button>
         </li>
     {% endfor %}

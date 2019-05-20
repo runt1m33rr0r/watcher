@@ -8,9 +8,8 @@
 {% block sidebar_content %}
     {% for city in cities %}
         {% if city.id == chosen_city.id %}
-            <li class="nav-item item">
-                <a class="nav-link font-weight-bold text-white" href="{% url 'city' city.id %}">{{ city.name }}</a>
-            </li>
+            {% include "city-list-item.html" with city=city %}
+
             {% for camera in cameras %}
                 {% if camera.id == chosen_camera.id %}
                     <li class="nav-item subitem">
@@ -23,15 +22,21 @@
                 {% endif %}
             {% endfor %}
         {% else %}
-            <li class="nav-item item">
-                <a class="nav-link text-white" href="{% url 'city' city.id %}">{{ city.name }}</a>
-            </li>
+            {% include "city-list-item.html" with city=city %}
         {% endif %}
     {% endfor %}
 {% endblock %}
 
 {% block page_content %}
     <section class="d-flex flex-row w-100 h-100">
+        {% include "delete-modal.html" %}
+
         <img src="{{ chosen_camera.url }}" class="center-flex-item">
     </section>
+{% endblock %}
+
+{% block sidebar_scripts %}
+    {% load static %}
+    <script src="{% static "scripts/delete-modal.js" %}"></script>
+    <script src="{% static "scripts/cameras.js" %}"></script>
 {% endblock %}

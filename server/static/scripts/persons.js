@@ -18,7 +18,7 @@
         });
     });
 
-    $(".delete-person").on("click", function() {
+    $(".modal-button").on("click", function() {
         var url = $(this).attr("url");
 
         $("#deleteModal .modal-footer .btn-danger").on("click", function() {

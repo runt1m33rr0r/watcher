@@ -34,6 +34,14 @@ def _set_camera_url(host, port):
     _camera_url = f'http://{_camera_host}:{_camera_port}/feed'
 
 
+def _register_camera():
+    try:
+        data = { 'city': _camera_city, 'name': _camera_name, 'url': 'http://localhost:5000/feed' }
+        requests.post(url=_camera_register_url, json=data)
+    except:
+        print(CONNECTION_ERROR)
+
+
 def get_settings():
     return _settings
 
@@ -91,14 +99,6 @@ def alert(name, frame):
         Thread(target=alert_request).start()
 
 
-def register_camera():
-    try:
-        data = { 'city': _camera_city, 'name': _camera_name, 'url': 'http://localhost:5000/feed' }
-        requests.post(url=_camera_register_url, json=data)
-    except:
-        print(CONNECTION_ERROR)
-
-
 def download_settings():
     try:
         res = requests.get(url=_settings_url).json()
@@ -147,6 +147,8 @@ def download_classifier_date():
 
 
 def update():
+    _register_camera()
+
     global _classifier
     global _classifier_date
     global _settings

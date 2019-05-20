@@ -1,0 +1,7 @@
+<li class="nav-item item d-flex flex-row justify-content-between mt-1 mb-1">
+    <a class="nav-link font-weight-bold text-white" href="{% url 'city' city.id %}">{{ city.name }}</a>
+    <button url="{% url 'city' city.id %}" modal-title="Delete {{ city.name }}"
+        modal-body="Are you sure you want to completely delete {{ city.name }}?"
+        type="button" class="btn btn-outline-secondary modal-button" data-toggle="modal" 
+        data-target="#deleteModal">Delete</button>
+</li>

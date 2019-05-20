@@ -73,13 +73,15 @@ def persons(request, person_id=None):
             return JsonResponse({ 'error': True, 'message': 'Person does not exist!' })
 
         person_images = person.images.all()
-        person_detectios = Detection.objects.filter(person=person)
+        person_detections = Detection.objects.filter(person=person)
 
         for image in person_images:
             delete_file(image.image_file.path)
+            image.delete()
 
-        for detection in person_detectios:
+        for detection in person_detections:
             delete_file(detection.image.image_file.path)
+            detection.image.delete()
 
         person.delete()
 

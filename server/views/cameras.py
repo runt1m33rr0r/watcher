@@ -1,6 +1,8 @@
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from ..models import City
+from django.http import JsonResponse
+from ..models import City, Detection
+from ..utils.storage import delete_file
 
 
 @login_required
@@ -55,6 +57,23 @@ def city(request, city_id):
             ctx['message'] = 'There are no cameras in this city!'
 
         return render(request, 'cameras.html', context=ctx)
+    elif request.method == 'DELETE':
+        try:
+            city = City.objects.get(id=city_id)
+        except City.DoesNotExist:
+            return JsonResponse({ 'error': True, 'message': 'City with this id does not exist!' })
+
+        detections = Detection.objects.filter(city=city)
+        for detection in detections:
+            image = detection.image
+            delete_file(image.image_file.path)
+            # detection will be deleted recursively by the image
+            image.delete()
+
+        city.cameras.all().delete()
+        city.delete()
+
+        return JsonResponse({ 'success': True, 'message': 'Deleted city!' })
 
 
 @login_required

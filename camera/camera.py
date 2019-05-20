@@ -2,7 +2,6 @@ import cv2
 import threading
 from time import sleep
 import camera.processing as processing
-from .api import register_camera
 
 
 frame = None
@@ -42,5 +41,3 @@ def init():
 
         while frame is None:
             sleep(0.1)
-
-        register_camera()

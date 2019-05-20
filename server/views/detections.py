@@ -48,8 +48,8 @@ def _delete_detection(request):
         return JsonResponse({ 'error': True, 'message': 'Detection with this id does not exist!' })
     
     image = detection.image
-    detection.delete()
     delete_file(image.image_file.path)
+    # detection will be deleted recursively by the image
     image.delete()
 
     return JsonResponse({ 'success': True, 'message': 'Deleted the image!' })
