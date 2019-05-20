@@ -13,7 +13,7 @@ from common.ai import predict, draw_boxes
 
 UNKNOWN = 'unknown'
 classifier_dir = os.path.join(BASE_DIR, 'classifier')
-classifier_path = f'{classifier_dir}/knn_model.clf'
+classifier_path = f'{classifier_dir}/classifier.clf'
 
 _settings = None
 _downscale = None

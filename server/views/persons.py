@@ -43,10 +43,10 @@ def add_person(request):
 @login_required
 def persons(request, person_id=None):
     if request.method == 'GET':
-        persons = Person.objects.all()
+        persons_data = Person.objects.all()
         ctx = {}
 
-        if persons.count() == 0:
+        if persons_data.count() == 0:
             ctx = {  
                 'persons': [], 
                 'images': [],
@@ -58,12 +58,12 @@ def persons(request, person_id=None):
             if person_id:
                 chosen = get_object_or_404(Person, id=person_id)
                 ctx = {
-                    'persons': persons,
+                    'persons': persons_data,
                     'chosen': chosen,
                     'images': chosen.images.all()
                 }
             else:
-                return redirect(persons, person_id=persons.first().id)
+                return redirect(persons, person_id=persons_data.first().id)
 
         return render(request, 'persons.html', ctx)
     elif request.method == 'DELETE':

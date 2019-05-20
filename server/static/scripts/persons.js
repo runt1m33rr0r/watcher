@@ -24,7 +24,7 @@
             method: "DELETE",
             success: function(data) {
                 if (data.success == true) {
-                    window.location.replace("/persons");
+                    window.location.replace("/persons/modify");
                 } else {
                     showErrorMessage(data.message);
                 }
