@@ -1,10 +1,10 @@
 from django import forms
 from django.forms import ModelForm
-from .models import Settings
+from .models import Settings, Detection
 
 
 class AddPersonForm(forms.Form):
-    name = forms.CharField(max_length=50)
+    name = forms.CharField(min_length=2, max_length=50)
     image = forms.ImageField()
 
 
@@ -19,8 +19,14 @@ class SettingsForm(ModelForm):
 
 
 class UsernameForm(forms.Form):
-    username = forms.CharField(max_length=20, min_length=6)
+    username = forms.CharField(min_length=6, max_length=20)
 
 
 class PasswordForm(forms.Form):
-    password = forms.CharField(max_length=50, min_length=8)
+    password = forms.CharField(min_length=8, max_length=50)
+
+
+class AlertForm(forms.Form):
+    name = forms.CharField(min_length=2, max_length=50)
+    city = forms.CharField(min_length=2, max_length=50)
+    image = forms.ImageField()

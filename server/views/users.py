@@ -1,7 +1,7 @@
 from django.db.utils import IntegrityError
 from django.contrib.auth import authenticate, login as django_login, logout as django_logout
 from django.contrib.auth.models import User
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .main import index
 from ..forms import UsernameForm, PasswordForm
@@ -58,17 +58,16 @@ def user_settings(request):
         updated_username = False
         updated_password = False
         initial_username = request.user.username
+        current_user = get_object_or_404(User, username=initial_username)
 
         if username_form.is_valid():
             username_data = username_form.cleaned_data
-            current_user = User.objects.filter(username=initial_username)
             current_user.update(username=username_data['username'])
             request.user.username = username_data['username']
             updated_username = True
 
         if password_form.is_valid():
             password_data = password_form.cleaned_data
-            current_user = User.objects.get(username=initial_username)
             current_user.set_password(password_data['password'])
             current_user.save()
             updated_password = True

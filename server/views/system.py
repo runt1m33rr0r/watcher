@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from ..ai.classifier import ImageProcessor
 from ..models import Settings, SettingsCreationDate
-from ..forms import SettingsForm
+from ..forms import SettingsForm, UploadImageForm
 
 
 @login_required
@@ -11,9 +11,15 @@ def recognition(request):
     if request.method == 'GET':
         return render(request, 'recognition.html', context={ 'processed': '' })
     elif request.method == 'POST':
-        image = request.FILES['image']
-        processed = ImageProcessor.process_frame(image)
-        processed = base64.b64encode(processed).decode('utf-8')
+        form = UploadImageForm(request.POST, request.FILES)
+
+        if form.is_valid():
+            data = form.cleaned_data
+            image = data['image']
+            processed = ImageProcessor.process_frame(image)
+            processed = base64.b64encode(processed).decode('utf-8')
+        else:
+            return render(request, 'recognition.html', context={ 'error': True, 'message': 'Invalid form!' })
 
         return render(request, 'recognition.html', context={ 'processed': str(processed) })
 

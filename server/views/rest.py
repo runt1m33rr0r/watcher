@@ -9,6 +9,7 @@ from ..serializers import CameraSerializer, CitySerializer
 from ..models import City, Settings, SettingsCreationDate, Detection, Image, Person, ClassifierCreationDate
 from ..utils.storage import set_save_location, DETECTIONS_FOLDER_NAME
 from ..utils.detections_watcher import detected
+from ..forms import AlertForm
 
 
 @csrf_exempt
@@ -20,7 +21,7 @@ def register_camera(request):
         if city.exists():
             city = city.first()
         else:
-            city = CitySerializer(data={'name': data.get('city')})
+            city = CitySerializer(data={ 'name': data.get('city') })
 
             if city.is_valid():
                 city = city.save()
@@ -31,7 +32,6 @@ def register_camera(request):
 
         if camera.is_valid():
             saved = camera.save()
-            print(saved)
             city.cameras.add(saved)
 
             return JsonResponse(camera.data, status=status.HTTP_201_CREATED)
@@ -45,7 +45,7 @@ def get_settings_date(request):
         Settings.objects.get_or_create()
         date = SettingsCreationDate.objects.get_or_create()[0].date
         
-        return JsonResponse({ 'date': date })
+        return JsonResponse({ 'success': True, 'date': date })
 
 
 @csrf_exempt
@@ -53,6 +53,7 @@ def get_settings(request):
     if request.method == 'GET':
         settings = Settings.objects.get_or_create()[0]
         res = {
+            'success': True,
             'detection_sensitivity': settings.detection_sensitivity,
             'downscale_level': settings.downscale_level,
             'alert_timeout': settings.alert_timeout,
@@ -65,22 +66,35 @@ def get_settings(request):
 @csrf_exempt
 def alert(request, person_id=None):
     if request.method == 'POST':
-        person_name = request.POST['name']
-        person = Person.objects.get(name=person_name)
-        city_name = request.POST['city']
-        city = City.objects.get(name=city_name)
-        image_file = request.FILES['image']
-        image = Image(image_file=image_file)
+        alert_form = AlertForm(request.POST, request.FILES)
 
-        set_save_location(f'{DETECTIONS_FOLDER_NAME}')
-        image.save()
+        if alert_form.is_valid():
+            data = alert_form.cleaned_data
+            person_name = data['name']
+            city_name = data['city']
+            image_file = data['image']
 
-        detection = Detection(city=city, person=person, image=image)
-        detection.save()
+            try:
+                person = Person.objects.get(name=person_name)
+            except Person.DoesNotExist:
+                return JsonResponse({ 'success': True, 'message': 'Person does not exist!' })
+            
+            try:
+                city = City.objects.get(name=city_name)
+            except City.DoesNotExist:
+                return JsonResponse({ 'success': True, 'message': 'Person does not exist!' }) 
 
-        detected(person_name, city_name, f'detections/{person.id}')
+            image = Image(image_file=image_file)
+            set_save_location(f'{DETECTIONS_FOLDER_NAME}')
+            image.save()
 
-        return JsonResponse({ 'success': True })
+            detection = Detection(city=city, person=person, image=image)
+            detection.save()
+            detected(person_name, city_name, f'detections/{person.id}')
+
+            return JsonResponse({ 'success': True })
+        else:
+            return JsonResponse({ 'error': True })
 
 
 @csrf_exempt
@@ -95,6 +109,6 @@ def get_classifier_date(request):
         if ClassifierCreationDate.objects.filter().exists():
             date = ClassifierCreationDate.objects.get()
 
-            return JsonResponse({ 'date': date.date })
+            return JsonResponse({ 'success': True, 'date': date.date })
         else:
-            return JsonResponse({ 'date': None })
+            return JsonResponse({ 'error': True, 'date': None })

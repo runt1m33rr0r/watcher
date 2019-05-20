@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.core.exceptions import ValidationError
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
@@ -21,18 +21,20 @@ def add_person(request):
                 image.full_clean()
                 person.full_clean()
             except ValidationError as e:
-                ctx = {'error': True, 'message': e}
+                ctx = { 'error': True, 'message': e }
+
                 return render(request, 'add-person.html', context=ctx)
             
             person.save()
             set_save_location(f'{PERSONS_FOLDER_NAME}/{person.name}')
             image.save()
             person.images.add(image)
+            ctx = { 'success': True, 'message': 'Created person!' }
 
-            ctx = {'success': True, 'message': 'Created person!'}
             return render(request, 'add-person.html', context=ctx)
         else:
-            ctx = {'error': True, 'message': 'The data provided is invalid!'}
+            ctx = { 'error': True, 'message': 'The data provided is invalid!' }
+
             return render(request, 'add-person.html', context=ctx)
 
     return render(request, 'add-person.html')
@@ -54,18 +56,22 @@ def persons(request, person_id=None):
             }
         else:
             if person_id:
-                chosen = Person.objects.get(id=person_id)
+                chosen = get_object_or_404(Person, id=person_id)
                 ctx = {
                     'persons': persons,
                     'chosen': chosen,
                     'images': chosen.images.all()
                 }
             else:
-                return redirect(f'/persons/modify/{persons.first().id}')
+                return redirect(persons, person_id=persons.first().id)
 
         return render(request, 'persons.html', ctx)
     elif request.method == 'DELETE':
-        person = Person.objects.get(id=person_id)
+        try:
+            person = Person.objects.get(id=person_id)
+        except Person.DoesNotExist:
+            return JsonResponse({ 'error': True, 'message': 'Person does not exist!' })
+
         person_images = person.images.all()
         person_detectios = Detection.objects.filter(person=person)
 
@@ -84,7 +90,7 @@ def persons(request, person_id=None):
 def person_images(request, person_id):
     if request.method == 'POST':
         persons = Person.objects.all()
-        chosen = Person.objects.get(id=person_id)
+        chosen = get_object_or_404(Person, id=person_id)
         images = chosen.images.all()
         ctx = {
             'persons': persons,
@@ -95,7 +101,7 @@ def person_images(request, person_id):
 
         if form.is_valid():
             data = form.cleaned_data
-            person = Person.objects.get(id=person_id)
+            person = get_object_or_404(Person, id=person_id)
             image = Image(image_file=data['image'])
 
             try:
@@ -121,8 +127,15 @@ def person_images(request, person_id):
 @login_required
 def person_image(request, person_id, image_id):
     if request.method == 'DELETE':
-        person = Person.objects.get(id=person_id)
-        image = person.images.get(id=image_id)
+        try:
+            person = Person.objects.get(id=person_id)
+        except Person.DoesNotExist:
+            return JsonResponse({ 'error': True, 'message': 'Person does not exist!' })
+
+        try:
+            image = person.images.get(id=image_id)
+        except Image.DoesNotExist:
+            return JsonResponse({ 'error': True, 'message': 'Image does not exist!' })
         
         delete_file(image.image_file.path)
         image.delete()

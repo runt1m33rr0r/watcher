@@ -47,9 +47,6 @@
                             <a class="nav-link" href="{% url 'settings' %}">Settings</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'user_settings' %}">User settings</a>
-                        </li>
-                        <li class="nav-item">
                             <a class="nav-link" href="{% url 'register' %}">Register</a>
                         </li>
                     {% endif %}
@@ -60,6 +57,7 @@
                             <a class="nav-link dropdown-toggle" data-toggle="dropdown">{{ user.get_username }}</a>
                             <div class="dropdown-menu dropdown-menu-right">
                                 <a class="dropdown-item" href="{% url 'logout' %}">Log out</a>
+                                <a class="dropdown-item" href="{% url 'user_settings' %}">User settings</a>
                             </div>
                         </li>
                     {% else %}
