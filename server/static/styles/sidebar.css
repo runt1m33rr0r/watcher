@@ -10,7 +10,7 @@
 #sidebar {
     overflow-y: scroll;
     overflow-x: hidden;
-    max-width: 250px;
+    max-width: 18rem;
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
     -webkit-transition: -webkit-transform 0.4s ease-out;
@@ -20,8 +20,8 @@
 }
 
 .open {
-    -webkit-transform: translate(-250px, 0);
-    transform: translate(-250px, 0);
+    -webkit-transform: translate(-18rem, 0);
+    transform: translate(-18rem, 0);
 }
   
 @media (min-width: 800px) {
