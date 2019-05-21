@@ -33,7 +33,7 @@ def register_camera(request):
             saved = camera.save()
             city.cameras.add(saved)
 
-            return JsonResponse({ 'success': True, 'message': 'City created!' })
+            return JsonResponse({ 'success': True, 'message': 'Camera registered!' })
         else:
             return JsonResponse({ 'error': True, 'message': 'Invalid camera!' })
 

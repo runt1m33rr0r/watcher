@@ -29,8 +29,10 @@
 
             if (!currentVal.includes(searchedVal)) {
                 $(this).hide();
+                $(this).siblings().hide();
             } else {
                 $(this).show();
+                $(this).siblings().show();
             }
         });
     });

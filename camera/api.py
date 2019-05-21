@@ -36,7 +36,7 @@ def _set_camera_url(host, port):
 
 def _register_camera():
     try:
-        data = { 'city': _camera_city, 'name': _camera_name, 'url': 'http://localhost:5000/feed' }
+        data = { 'city': _camera_city, 'name': _camera_name, 'url': _camera_url }
         requests.post(url=_camera_register_url, json=data)
     except:
         print(CONNECTION_ERROR)

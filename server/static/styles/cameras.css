@@ -9,3 +9,7 @@
 .nav-link {
     padding: .3rem 1rem;
 }
+
+.text-muted:hover {
+    color: white !important;
+}
