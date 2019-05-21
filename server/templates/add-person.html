@@ -8,7 +8,7 @@
 {% block content %}
     <section id="person" class="d-flex flex-row flex-wrap w-100 h-100 bg-black text-light overflow-auto">
         {% with heading='<h1 class="h3 mb-3 mt-1 font-weight-normal text-center">Add person</h1>' %}
-            {% with input='<input type="text" id="nameInput" class="form-control mb-1 is-invalid" placeholder="Enter name" name="name" required>' %}
+            {% with input='<input type="text" id="nameInput" minlength="2" maxlength="50" class="form-control mb-1 is-invalid" placeholder="Enter name" name="name" required>' %}
                 {% url 'add_person' as add_person %}
                 {% load server_extras %}
                 {% include "image-input.html" with before_input_content=heading before_image_input=input send_text="Add person" action=add_person %}
