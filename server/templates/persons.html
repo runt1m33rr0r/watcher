@@ -23,12 +23,12 @@
 
 {% block page_content %}
     <section id="person" class="d-flex flex-row flex-wrap w-100 h-100">
-        {% include "delete-modal.html" %}
-
         {% if chosen %}
             {% url 'modify_person_images' chosen.id as person_images %}
             {% include "image-input.html" with send_text="Add image" action=person_images %}
         {% endif %}
+
+        {% include "delete-modal.html" %}
 
         <section id="imagesContainer" class="center-flex-item">
             <div id="images">

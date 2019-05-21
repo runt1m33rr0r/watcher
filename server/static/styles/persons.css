@@ -4,7 +4,6 @@
 
 #fileImage {
     max-width: 20rem;
-    max-height: 40rem;
 }
 
 #imageForm {
@@ -35,10 +34,6 @@
 }
 
 @media (min-width: 800px) {
-    #person:first-child {
-        padding-top: 0rem;
-    }
-
     #imagesContainer {
         height: 100%;
     }
