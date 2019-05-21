@@ -1,7 +1,7 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
-from ..models import City, Detection
+from ..models import City, Detection, Camera
 from ..utils.storage import delete_file
 
 
@@ -81,12 +81,16 @@ def camera(request, city_id, camera_id):
     if request.method == 'GET':
         cities = City.objects.all()
         chosen_city = get_object_or_404(cities, id=city_id)
-        cameras = chosen_city.cameras.all()
-        camera = get_object_or_404(cameras, id=camera_id)
+        cameras_data = chosen_city.cameras.all()
+
+        try:
+            camera = cameras_data.get(id=camera_id)
+        except Camera.DoesNotExist:
+            return redirect(cameras)
 
         ctx = {
             'cities': cities,
-            'cameras': cameras,
+            'cameras': cameras_data,
             'chosen_city': chosen_city,
             'chosen_camera': camera,
         }
