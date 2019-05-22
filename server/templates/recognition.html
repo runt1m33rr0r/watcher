@@ -6,12 +6,12 @@
 {% endblock %}
 
 {% block content %}
-    <section processed="{{ processed }}" class="d-flex flex-column h-100 bg-black text-light overflow-auto">
+    <div processed="{{ processed }}" class="d-flex flex-column h-100 bg-black text-light overflow-auto">
         {% with heading='<h1 class="h3 mb-3 mt-1 font-weight-normal text-center">Send image for recognition</h1>' %}
             {% url 'recognition' as recognition %}
             {% include "image-input.html" with before_input_content=heading send_text="Send" action=recognition %}
         {% endwith %}   
-    </section>
+    </div>
 {% endblock %}
 
 {% block scripts %}

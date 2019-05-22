@@ -7,22 +7,22 @@
 {% endblock %}
 
 {% block content %}
-    <section class="container-fluid">
-        <section class="row">
+    <div class="container-fluid">
+        <div class="row">
             <aside class="shadow col bg-dark text-light" id="sidebar">
-                <nav class="nav flex-column" id="sidebarItems">
+                <ul class="nav flex-column" id="sidebarItems">
                     <li class="nav-item sidebar-search">
                         <input type="text" class="form-control form-control-dark" placeholder="Search...">
                     </li>
                     {% block sidebar_content %}{% endblock %}
-                </nav>
+                </ul>
             </aside>
             
-            <section class="col bg-black" id="content">
+            <div class="col bg-black" id="content">
                 {% block page_content %}{% endblock %}
-            </section>
-        </section>
-    </section>
+            </div>
+        </div>
+    </div>
 {% endblock %}
 
 {% block scripts %}

@@ -7,7 +7,7 @@
 
 {% block content %}
     {% url 'user_settings' as user_settings %}
-    {% include "user-form.html" with max_password_length="50" max_username_length="20" form_title="Change username and/or password" username_placeholder="New username" password_placeholder="New password" action=user_settings submit_text="Save settings" required=False %}
+    {% include "user-form.html" with min_password_length="0" min_username_length="0" max_password_length="50" max_username_length="20" form_title="Change username and/or password" username_placeholder="New username" password_placeholder="New password" action=user_settings submit_text="Save settings" required=False %}
 {% endblock %}
 
 {% block scripts %}

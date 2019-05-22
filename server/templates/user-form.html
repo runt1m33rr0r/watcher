@@ -1,4 +1,4 @@
-<section class="d-flex flex-column bg-black text-light w-100 h-100 overflow-auto" id="page"> 
+<div class="d-flex flex-column bg-black text-light w-100 h-100 overflow-auto" id="page"> 
     <form class="user-form needs-validation center-flex-item" action="{{ action }}" method="post">
         {% csrf_token %}
         <h1 class="text-center h3 mb-3 font-weight-normal">{{ form_title }}</h1>
@@ -21,4 +21,4 @@
             {% endif %}>
         <button class="btn btn-lg btn-primary btn-block" type="submit">{{ submit_text }}</button>
     </form>
-</section>
+</div>

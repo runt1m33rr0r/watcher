@@ -28,11 +28,11 @@
 {% endblock %}
 
 {% block page_content %}
-    <section class="d-flex flex-row w-100 h-100">
+    <div class="d-flex flex-row w-100 h-100">
         {% include "delete-modal.html" %}
 
-        <img src="{{ chosen_camera.url }}" class="center-flex-item">
-    </section>
+        <img src="{{ chosen_camera.url }}" alt="missing feed" class="center-flex-item">
+    </div>
 {% endblock %}
 
 {% block sidebar_scripts %}

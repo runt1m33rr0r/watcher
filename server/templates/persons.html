@@ -22,7 +22,7 @@
 {% endblock %}
 
 {% block page_content %}
-    <section id="person" class="d-flex flex-row flex-wrap w-100 h-100">
+    <div id="person" class="d-flex flex-row flex-wrap w-100 h-100">
         {% if chosen %}
             {% url 'modify_person_images' chosen.id as person_images %}
             {% include "image-input.html" with send_text="Add image" action=person_images %}
@@ -30,17 +30,17 @@
 
         {% include "delete-modal.html" %}
 
-        <section id="imagesContainer" class="center-flex-item">
+        <div id="imagesContainer" class="center-flex-item">
             <div id="images">
                 {% for image in images %}
                     <div class="image">
-                        <img class="w-100" src="{{ image.image_file.url }}">
-                        <button url="{% url 'modify_person_image' chosen.id image.id %}" class="btn btn-secondary btn-lg active" role="button">Delete</button>
+                        <img class="w-100" src="{{ image.image_file.url }}" alt="person image">
+                        <button url="{% url 'modify_person_image' chosen.id image.id %}" class="btn btn-secondary btn-lg active">Delete</button>
                     </div>
                 {% endfor %}
             </div>
-        </section>
-    </section>
+        </div>
+    </div>
 {% endblock %}
 
 {% block sidebar_scripts %}
