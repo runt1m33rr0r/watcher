@@ -52,7 +52,7 @@ def init():
 
 
 def process_video_frame(frame):
-    name = UNKNOWN
+    names = []
     classifier = get_classifier()
 
     if _can_process and classifier:
@@ -60,7 +60,7 @@ def process_video_frame(frame):
         draw_boxes(frame, prediction, _downscale)
 
         for person in prediction:
-            name = person[0]
+            names.append(person[0])
 
     ret, jpeg = cv2.imencode('.jpg', frame)
     if not ret:
@@ -68,7 +68,8 @@ def process_video_frame(frame):
 
     frame = jpeg.tobytes()
 
-    if name != UNKNOWN:
-        alert(name, frame)
+    if names:
+        for name in names:
+            alert(name, frame)
     
     return frame

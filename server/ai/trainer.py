@@ -22,7 +22,7 @@ train_timeout = 180
 
 def resize_image(image):
     converted = Image.fromarray(image)
-    size = 1024, 1024
+    size = 2048, 2048
 
     if converted.size[0] > size[0] or converted.size[1] > size[0]:
         converted.thumbnail(size, Image.ANTIALIAS)
@@ -43,7 +43,7 @@ def train(train_path):
 
         for img_path in image_files_in_folder(os.path.join(train_path, class_path)):
             image = face_recognition.load_image_file(img_path)
-            # image = resize_image(image)
+            image = resize_image(image)
             face_bounding_boxes = face_recognition.face_locations(image)
 
             if len(face_bounding_boxes) == 0:
@@ -102,7 +102,7 @@ def training_thread():
             
             folder_modified = False
         
-        sleep(180)
+        sleep(train_timeout)
 
 
 def start_training_thread():
