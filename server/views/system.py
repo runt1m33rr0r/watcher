@@ -18,10 +18,10 @@ def recognition(request):
             image = data['image']
             processed = process_frame(image)
             processed = base64.b64encode(processed).decode('utf-8')
+
+            return render(request, 'recognition.html', context={ 'processed': str(processed) })
         else:
             return render(request, 'recognition.html', context={ 'error': True, 'message': 'Invalid form!' })
-
-        return render(request, 'recognition.html', context={ 'processed': str(processed) })
 
 
 @login_required

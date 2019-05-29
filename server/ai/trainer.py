@@ -43,7 +43,7 @@ def train(train_path):
 
         for img_path in image_files_in_folder(os.path.join(train_path, class_path)):
             image = face_recognition.load_image_file(img_path)
-            image = resize_image(image)
+            # image = resize_image(image)
             face_bounding_boxes = face_recognition.face_locations(image)
 
             if len(face_bounding_boxes) == 0:
