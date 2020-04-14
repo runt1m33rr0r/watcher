@@ -30,3 +30,5 @@ To start the camera software you can run python3 start_camera.py with arguments:
     3. city name
     4. camera ip
     5. camera port
+
+### This is a github mirror of the original gitlab repository [here](https://gitlab.com/runt1m33rr0r/watcher).
